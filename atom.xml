@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Faith</title>
+  
+  <subtitle>林倡议的博客</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://linchangyi.github.io/"/>
+  <updated>2018-01-17T13:06:13.637Z</updated>
+  <id>https://linchangyi.github.io/</id>
+  
+  <author>
+    <name>Lin Changyi</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>服务器性能指标</title>
+    <link href="https://linchangyi.github.io/2018/01/17/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/"/>
+    <id>https://linchangyi.github.io/2018/01/17/性能指标/</id>
+    <published>2018-01-17T08:24:50.000Z</published>
+    <updated>2018-01-17T13:06:13.637Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li><p>吞吐率（throughout）</p><p>  web服务器单位时间内处理的请求数，单位req/s</p></li><li><p>吞吐量</p><p>  一次性能测试过程中网络传输的数据量的总和</p></li><li><p>事务，tps（Transaction per second）</p><p>  就是用户某一步或几步操作的集合。不过，我们要保证它有一个完整意义。比如用户对某一个页面的一次请求，用户对某系统的一次登录，淘宝用户对商品的一次确认支付过程。这些我们都可以看作一个事务。那么如何衡量服务器对事务的处理能力。又引出一个概念—-TPS 每秒钟系统能够处理事务或交易的数量，它是衡量系统处理能力的重要指标。 <strong>点击率是tps的一种特定情况</strong>，一次鼠标点击，客户端可能向服务器发送多个请求。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ul&gt;
+&lt;li&gt;&lt;p&gt;吞吐率（throughout）&lt;/p&gt;
+&lt;p&gt;  web服务器单位时间内处理的请求数，单位req/s&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;吞吐量&lt;/p&gt;
+&lt;p&gt;  一次性能测试过程中网络传输的数据量的总和&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;事务，tps（Tr
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://linchangyi.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Spring IoC 初探</title>
+    <link href="https://linchangyi.github.io/2017/01/20/spring-source-analysis/spring-IoC%E5%88%9D%E6%8E%A2/"/>
+    <id>https://linchangyi.github.io/2017/01/20/spring-source-analysis/spring-IoC初探/</id>
+    <published>2017-01-20T15:45:26.000Z</published>
+    <updated>2018-01-17T13:06:13.635Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="什么是IoC"><a href="#什么是IoC" class="headerlink" title="什么是IoC"></a>什么是IoC</h3><blockquote><p><a href="http://stamen.iteye.com/blog/1489223/" target="_blank" rel="noopener">透彻理解IoC</a></p></blockquote><p>一个完整的程序必然需要多个对象的协作才能完成，每个对象都需要引用与其合作的对象（即依赖的对象）。如果这种依赖关系都靠自身实现，那么程序将充斥着各式各样的对象创建构造的无关业务的代码，也将导致代码高度耦合。所谓IoC（依赖控制反转）就是将管理这种依赖关系的职责从具体对象中抽离出来，交由IoC容器来管理。spring作为一个框架所提供的最核心的功能就是IoC容器。它可以为我们管理对象的创建构造销毁等生命周期，可以通过配置文件、注解等方式方便的实现依赖注入。</p><h3 id="Spring-IoC-初探"><a href="#Spring-IoC-初探" class="headerlink" title="Spring IoC 初探"></a>Spring IoC 初探</h3><p>一个最简单的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line">Person person1 = applicationContext.getBean(<span class="string">"person1"</span>, Person.class);</span><br></pre></td></tr></table></figure></p><p>以上代码的作用就是从类的资源路径中读取配置文件，初始化容器，并获取到一个Person对象。</p><p>让我们看一下 <code>ClassPathXmlApplicationContext</code> 这个类的继承层次：</p><p><img src="/2017/01/20/spring-source-analysis/spring-IoC初探/type-hierachy.png" alt="ClassPathXmlApplicationContext type hierachy"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;什么是IoC&quot;&gt;&lt;a href=&quot;#什么是IoC&quot; class=&quot;headerlink&quot; title=&quot;什么是IoC&quot;&gt;&lt;/a&gt;什么是IoC&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://stamen.iteye.com/blog/148
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://linchangyi.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="spring" scheme="https://linchangyi.github.io/tags/spring/"/>
+    
+  </entry>
+  
+</feed>
