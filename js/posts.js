@@ -1,1 +1,1 @@
-[{"title":"服务器性能指标","date":"2018.01.17","uri":"2018/01/17/性能指标/","excerpt":""},{"title":"Spring IoC 初探","date":"2017.01.20","uri":"2017/01/20/spring-source-analysis/spring-IoC初探/","excerpt":""}]
+[{"title":"服务器性能指标","date":"2018.01.17","uri":"2018/01/17/性能指标/","excerpt":""},{"title":"zookeeper学习笔记（1）2PC和3PC","date":"2018.01.18","uri":"2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/","excerpt":""},{"title":"zookeeper学习笔记（2）Paxos Made Simple【翻译】","date":"2018.01.18","uri":"2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/","excerpt":""}]
