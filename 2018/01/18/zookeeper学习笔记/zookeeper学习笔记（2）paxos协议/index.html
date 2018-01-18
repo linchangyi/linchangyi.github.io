@@ -5,18 +5,18 @@
   
   <title>zookeeper学习笔记（2）Paxos Made Simple【翻译】 | 十万嬉皮</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Paxos Made Simple">
+  <meta name="description" content="原文 Paxos Made Simple摘自 Paxos Made Simple论文翻译">
 <meta name="keywords" content="zookeeper学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="zookeeper学习笔记（2）Paxos Made Simple【翻译】">
 <meta property="og:url" content="https://linchangyi.github.io/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/index.html">
 <meta property="og:site_name" content="十万嬉皮">
-<meta property="og:description" content="Paxos Made Simple">
+<meta property="og:description" content="原文 Paxos Made Simple摘自 Paxos Made Simple论文翻译">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-18T18:15:52.015Z">
+<meta property="og:updated_time" content="2018-01-18T18:17:30.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper学习笔记（2）Paxos Made Simple【翻译】">
-<meta name="twitter:description" content="Paxos Made Simple">
+<meta name="twitter:description" content="原文 Paxos Made Simple摘自 Paxos Made Simple论文翻译">
   
     <link rel="alternate" href="/atom.xml" title="十万嬉皮" type="application/atom+xml">
   
@@ -102,13 +102,8 @@
         <!-- Table of Contents -->
         
         <blockquote>
-<p><a href="https://lamport.azurewebsites.net/pubs/paxos-simple.pdf" target="_blank" rel="noopener">Paxos Made Simple</a></p>
+<p>原文 <a href="https://lamport.azurewebsites.net/pubs/paxos-simple.pdf" target="_blank" rel="noopener">Paxos Made Simple</a><br>摘自 <a href="https://www.jianshu.com/p/6d01a8d2df9f" target="_blank" rel="noopener">Paxos Made Simple论文翻译</a><br><a id="more"></a><br>【这篇论文我翻一下来，首先感觉还是不好懂，很多地方结论的得出不够清楚，需要读者自己思考其中的原因。要理解Paxos算法，个人建议先搜索下介绍算法的中文文章，大致了解下Paxos算法要做什么，然后就再读下论文，应该会有所感悟。】</p>
 </blockquote>
-<a id="more"></a>
-<blockquote>
-<p>摘自 <a href="https://www.jianshu.com/p/6d01a8d2df9f" target="_blank" rel="noopener">Paxos Made Simple论文翻译</a></p>
-</blockquote>
-<p>【这篇论文我翻一下来，首先感觉还是不好懂，很多地方结论的得出不够清楚，需要读者自己思考其中的原因。要理解Paxos算法，个人建议先搜索下介绍算法的中文文章，大致了解下Paxos算法要做什么，然后就再读下论文，应该会有所感悟。】</p>
 <h1 id="Paxos-Made-Simple"><a href="#Paxos-Made-Simple" class="headerlink" title="Paxos Made Simple"></a><strong>Paxos Made Simple</strong></h1><p>Leslie Lamport<br>01 Nov 2001</p>
 <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>【说明这部分是我自己加的，下面这几个词大量出现与论文的主体部分，提前了解它们的含义有助于后面对于算法原理和流程的理解。】</p>
 <p><strong>议案(proposal)</strong>:由提议人提出，由审批人进行初审和复审，包括议案编号和议案内容。<br><strong>内容(value)</strong>:议案的内容。<br><strong>编号(id)</strong>:议案的编号，全局唯一。<br><strong>提议人(proposer)</strong>:提出议案，接收审批人的初审和复审意见。<br><strong>审批人(acceptoer)</strong>:接收议案，根据规则决定初审和复审结果，返回给提议人。<br><strong>执行人(learner)</strong>:一旦议案成为决议，就要通知所有执行人。<br><strong>初审(accept)</strong>:议案的第一轮审核，通过后可以进行复审。<br><strong>复审(chossen)</strong>:议案的第二轮审核，通过后将成为决议。</p>
