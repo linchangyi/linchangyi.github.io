@@ -414,16 +414,15 @@ window.onload = function() {
   var disqus_url = 'https://linchangyi.coding.me/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/';
   
   (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-
     var p = document.createElement('p');
     p.innerHTML = "评论需翻墙。";
     p.setAttribute("class","article-nav-caption");
     document.getElementById("disqus_thread").appendChild(p);
 
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
