@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://linchangyi.coding.me/"/>
-  <updated>2018-01-19T15:44:53.804Z</updated>
+  <updated>2018-01-18T18:19:09.734Z</updated>
   <id>https://linchangyi.coding.me/</id>
   
   <author>
@@ -15,26 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>十万嬉皮</title>
-    <link href="https://linchangyi.coding.me/2018/01/19/%E5%8D%81%E4%B8%87%E5%AC%89%E7%9A%AE/"/>
-    <id>https://linchangyi.coding.me/2018/01/19/十万嬉皮/</id>
-    <published>2018-01-19T12:59:06.000Z</published>
-    <updated>2018-01-19T15:44:53.804Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/2018/01/19/十万嬉皮/捕获.PNG" alt="网易云音乐2017年度总结"><br><a id="more"></a><br>2017年2月21日大概真的是很特别的一天，这一天我从上家公司离职了，这一天我单曲循环了《十万嬉皮》，大概也是这一天我第一次能从一首歌中如此真切地体味到自己的心境。这首歌仿佛一面镜子，劈开了迷雾，扎在你跟前，贴着你的眼，好让你看清自己的面庞。</p><blockquote><p><strong>十万嬉皮</strong><br>大梦一场的董二千先生<br>推开窗户，举起望远镜<br>眼底映出，一阵浓烟<br>前已无通路，后不见归途<br>敌视现实，虚构远方<br>东张西望，一无所长<br>四体不勤，五谷不分<br>文不能测字，武不能防身<br>喜欢养狗，不爱洗头<br>不事劳作，一无所获<br>厌恶争执，不善言说</p><p>终于沦为沉默的帮凶<br>借酒消愁，不太能喝<br>蛊惑他人，麻醉内心<br>浇上汽油，舒展眉头<br>纵火的青年，迫近的时间<br>大梦一场的董二千先生<br>推开窗户，举起望远镜<br>眼底映出，一阵浓烟<br>前已无通路，后不见归途</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/2018/01/19/十万嬉皮/捕获.PNG&quot; alt=&quot;网易云音乐2017年度总结&quot;&gt;&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="随思" scheme="https://linchangyi.coding.me/categories/%E9%9A%8F%E6%80%9D/"/>
-    
-    
-  </entry>
   
   <entry>
     <title>zookeeper学习笔记（2）Paxos Made Simple【翻译】</title>
