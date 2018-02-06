@@ -8,7 +8,7 @@
   <meta name="description" content="吞吐率（throughout）   web服务器单位时间内处理的请求数，单位req/s  吞吐量   一次性能测试过程中网络传输的数据量的总和  事务，tps（Transaction per second）   就是用户某一步或几步操作的集合。不过，我们要保证它有一个完整意义。比如用户对某一个页面的一次请求，用户对某系统的一次登录，淘宝用户对商品的一次确认支付过程。这些我们都可以看作一个事务。那">
 <meta property="og:type" content="article">
 <meta property="og:title" content="服务器性能指标">
-<meta property="og:url" content="https://linchangyi.coding.me/2018/01/17/性能指标/index.html">
+<meta property="og:url" content="https://lincy.online/2018/01/17/性能指标/index.html">
 <meta property="og:site_name" content="十万嬉皮">
 <meta property="og:description" content="吞吐率（throughout）   web服务器单位时间内处理的请求数，单位req/s  吞吐量   一次性能测试过程中网络传输的数据量的总和  事务，tps（Transaction per second）   就是用户某一步或几步操作的集合。不过，我们要保证它有一个完整意义。比如用户对某一个页面的一次请求，用户对某系统的一次登录，淘宝用户对商品的一次确认支付过程。这些我们都可以看作一个事务。那">
 <meta property="og:locale" content="zh-CN">
@@ -45,7 +45,7 @@
         <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://linchangyi.coding.me"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://lincy.online"></form>
       </div>
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
@@ -115,10 +115,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://linchangyi.coding.me/2018/01/17/性能指标/" data-id="cjcksffbv00074otnb3jgnkz4" class="article-share-link">分享</a>
+      <a data-url="https://lincy.online/2018/01/17/性能指标/" data-id="cjcksffbv00074otnb3jgnkz4" class="article-share-link">分享</a>
       
       
-        <a href="https://linchangyi.coding.me/2018/01/17/性能指标/#disqus_thread" class="article-comment-link">留言</a>
+        <a href="https://lincy.online/2018/01/17/性能指标/#disqus_thread" class="article-comment-link">留言</a>
       
       
     </footer>
@@ -226,6 +226,10 @@
       <ul>
         
           <li>
+            <a href="/2018/02/06/命令模式/">命令模式</a>
+          </li>
+        
+          <li>
             <a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/">zookeeper学习笔记（2）Paxos Made Simple【翻译】</a>
           </li>
         
@@ -251,12 +255,11 @@
       <footer id="footer">
   
   <div class="outer">
-    <div id="footer-left">
-      &copy; 2014 - 2018 Lin Changyi&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
-    </div>
-     <div id="footer-right">
-      联系方式&nbsp;|&nbsp;talentlcy@hotmail.com
+    <div id="footer-center">
+      
+        <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+      
+      &copy; 2017 - 2018 <a href="https://lincy.online">Lincy</a>   
     </div>
   </div>
 </footer>
@@ -287,20 +290,32 @@ window.onload = function() {
 <script>
   var disqus_shortname = 'linchangyi';
   
-  var disqus_url = 'https://linchangyi.coding.me/2018/01/17/性能指标/';
+  var disqus_url = 'https://lincy.online/2018/01/17/性能指标/';
   
   (function(){
-    var p = document.createElement('p');
-    p.innerHTML = "评论需翻墙 👈";
-    p.setAttribute("class","article-nav-caption");
-    document.getElementById("disqus_thread").setAttribute("align","center");
-    document.getElementById("disqus_thread").appendChild(p);
+    if(document.getElementById("disqus_thread")!=null){
+      document.getElementById("disqus_thread").setAttribute("align","center");
 
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      var loading = document.createElement('div');
+      loading.setAttribute("style","height:17px;");
+      loading.innerHTML = '<img id="loading_gif" src="/images/comment_loading.gif"/>';
+
+      document.getElementById("disqus_thread").appendChild(loading);
+
+      $.ajax({
+        url:'//' + disqus_shortname + '.disqus.com/embed.js',
+        timeout: 2000,
+        success: function(data){
+          var dsq = document.createElement('script');
+          dsq.type = 'text/javascript';
+          dsp.innerHTML=data;
+          (document.getElementsByTagName('body')[0]).appendChild(dsq);
+        },
+        error: function(){
+          loading.innerHTML='<font style="color:grey;">Oops! Comments blocked by GFW. 👈</font>';
+        }
+      });
+    }
   })();
 </script>
 
@@ -337,7 +352,7 @@ window.onload = function() {
         }
       })
     </script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script>
   
 
 

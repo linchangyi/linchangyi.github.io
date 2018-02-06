@@ -5,21 +5,43 @@
   <subtitle>Lincy&#39;s Blog</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://linchangyi.coding.me/"/>
-  <updated>2018-01-18T18:19:09.734Z</updated>
-  <id>https://linchangyi.coding.me/</id>
+  <link href="https://lincy.online/"/>
+  <updated>2018-02-06T12:06:26.301Z</updated>
+  <id>https://lincy.online/</id>
   
   <author>
-    <name>Lin Changyi</name>
+    <name>Lincy</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>命令模式</title>
+    <link href="https://lincy.online/2018/02/06/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://lincy.online/2018/02/06/命令模式/</id>
+    <published>2018-02-06T08:19:40.000Z</published>
+    <updated>2018-02-06T12:06:26.301Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2018/02/06/命令模式/捕获.PNG" alt="命令模式"><br><a id="more"></a></p><p>优点：</p><ul><li>command子类可以快速扩展</li><li>调用者和接收者间解耦，调用者只需要调用command的execute方法，不需要了解接收者</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通用Receiver类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体Receiver类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteReciver1</span> <span class="keyword">extends</span> <span class="title">Receiver</span></span>&#123; </span><br><span class="line">    <span class="comment">//每个接收者都必须处理一定的业务逻辑 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteReciver2</span> <span class="keyword">extends</span> <span class="title">Receiver</span></span>&#123; </span><br><span class="line">    <span class="comment">//每个接收者都必须处理一定的业务逻辑 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象Command类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体的Command类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand1</span> <span class="keyword">extends</span> <span class="title">Command</span> </span>&#123; </span><br><span class="line">    <span class="comment">//对哪个Receiver类进行命令处理 </span></span><br><span class="line">    <span class="keyword">private</span> Receiver receiver; </span><br><span class="line">    <span class="comment">//构造函数传递接收者 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand1</span><span class="params">(Receiver _receiver)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = _receiver; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//必须实现一个命令 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="comment">//业务处理 </span></span><br><span class="line">        <span class="keyword">this</span>.receiver.doSomething(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand2</span> <span class="keyword">extends</span> <span class="title">Command</span> </span>&#123; </span><br><span class="line">    <span class="comment">//哪个Receiver类进行命令处理 </span></span><br><span class="line">    <span class="keyword">private</span> Receiver receiver; </span><br><span class="line">    <span class="comment">//构造函数传递接收者 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand2</span><span class="params">(Receiver _receiver)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = _receiver; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">//必须实现一个命令 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="comment">//业务处理 </span></span><br><span class="line">        <span class="keyword">this</span>.receiver.doSomething();</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用者Invoker类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invoker</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Command command;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCommand</span><span class="params">(Command _command)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.command = _command;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.command.execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//场景类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Invoker invoker = <span class="keyword">new</span> Invoker();</span><br><span class="line">        Receiver receiver = <span class="keyword">new</span> ConcreteReceiver1();</span><br><span class="line">        </span><br><span class="line">        Command command = <span class="keyword">new</span> ConcreteCommand1(receiver);</span><br><span class="line">        invoker.setCommand(command);</span><br><span class="line">        invoker.action();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/2018/02/06/命令模式/捕获.PNG&quot; alt=&quot;命令模式&quot;&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="设计模式" scheme="https://lincy.online/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>zookeeper学习笔记（2）Paxos Made Simple【翻译】</title>
-    <link href="https://linchangyi.coding.me/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89paxos%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://linchangyi.coding.me/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/</id>
+    <link href="https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89paxos%E5%8D%8F%E8%AE%AE/"/>
+    <id>https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/</id>
     <published>2018-01-18T08:50:04.000Z</published>
     <updated>2018-01-18T18:19:09.734Z</updated>
     
@@ -33,17 +55,17 @@
     
     </summary>
     
-      <category term="技术" scheme="https://linchangyi.coding.me/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="zookeeper学习笔记" scheme="https://linchangyi.coding.me/tags/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="zookeeper学习笔记" scheme="https://lincy.online/tags/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>zookeeper学习笔记（1）2PC和3PC</title>
-    <link href="https://linchangyi.coding.me/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%892PC%E5%92%8C3PC/"/>
-    <id>https://linchangyi.coding.me/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/</id>
+    <link href="https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%892PC%E5%92%8C3PC/"/>
+    <id>https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/</id>
     <published>2018-01-18T03:02:33.000Z</published>
     <updated>2018-01-18T16:16:04.003Z</updated>
     
@@ -55,17 +77,17 @@
     
     </summary>
     
-      <category term="技术" scheme="https://linchangyi.coding.me/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="zookeeper学习笔记" scheme="https://linchangyi.coding.me/tags/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="zookeeper学习笔记" scheme="https://lincy.online/tags/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>服务器性能指标</title>
-    <link href="https://linchangyi.coding.me/2018/01/17/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/"/>
-    <id>https://linchangyi.coding.me/2018/01/17/性能指标/</id>
+    <link href="https://lincy.online/2018/01/17/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/"/>
+    <id>https://lincy.online/2018/01/17/性能指标/</id>
     <published>2018-01-17T08:24:50.000Z</published>
     <updated>2018-01-17T15:12:29.045Z</updated>
     
@@ -87,7 +109,7 @@
     
     </summary>
     
-      <category term="技术" scheme="https://linchangyi.coding.me/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
   </entry>
