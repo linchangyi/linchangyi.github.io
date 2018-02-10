@@ -323,11 +323,10 @@
     
      
     <section id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
+      <div id="disqus_thread" align="center">
+        <div style="height:17px">
+            <img src="/images/comment_loading.gif"/>
+        </div>
       </div>
       </section>
       
@@ -414,26 +413,13 @@ window.onload = function() {
   
   (function(){
     if(document.getElementById("disqus_thread")!=null){
-      document.getElementById("disqus_thread").setAttribute("align","center");
-
-      var loading = document.createElement('div');
-      loading.setAttribute("style","height:17px;");
-      loading.innerHTML = '<img id="loading_gif" src="/images/comment_loading.gif"/>';
-
-      document.getElementById("disqus_thread").appendChild(loading);
-
       $.ajax({
         url:'//' + disqus_shortname + '.disqus.com/embed.js',
-        timeout: 2000,
-        success: function(data){
-          var dsq = document.createElement('script');
-          dsq.type = 'text/javascript';
-          dsp.innerHTML=data;
-          (document.getElementsByTagName('body')[0]).appendChild(dsq);
-        },
-        error: function(){
-          loading.innerHTML='<font style="color:LightGray;font-weight:bold;">⚠️ Oops! Comments blocked by GFW.</font>';
-        }
+        dataType:'script',
+        timeout: 3000
+      })
+      .fail(function(jqxhr, settings, exception) {
+        document.getElementById("disqus_thread").innerHTML='<font style="color:LightGray;">👉 评论需翻墙！</font>';
       });
     }
   })();

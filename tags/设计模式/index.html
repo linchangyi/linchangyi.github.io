@@ -80,7 +80,7 @@
         <div class="archive-year-wrap">
           <a href="/archives/2018" class="archive-year">2018</a>
         </div>
-         <span class="archive-year-post">5 post  this year</span>
+         <span class="archive-year-post">6 post  this year</span>
         <div class="archives">
     
     <article class="archive-article archive-type-post">
@@ -120,7 +120,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/zookeeper学习笔记/" style="font-size: 25px;">zookeeper学习笔记</a> <a href="/tags/行摄/" style="font-size: 14px;">行摄</a> <a href="/tags/设计模式/" style="font-size: 14px;">设计模式</a>
+      <a href="/tags/springboot/" style="font-size: 14px;">springboot</a> <a href="/tags/zookeeper学习笔记/" style="font-size: 25px;">zookeeper学习笔记</a> <a href="/tags/行摄/" style="font-size: 14px;">行摄</a> <a href="/tags/设计模式/" style="font-size: 14px;">设计模式</a>
     </div>
   </div>
 
@@ -130,6 +130,10 @@
     <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/09/SpringBoot启动过程分析/">SpringBoot启动过程分析</a>
+          </li>
         
           <li>
             <a href="/2018/02/06/行摄/丙州大桥/">丙州三调</a>
@@ -145,10 +149,6 @@
         
           <li>
             <a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/">zookeeper学习笔记（1）2PC和3PC</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/17/性能指标/">服务器性能指标</a>
           </li>
         
       </ul>
@@ -202,26 +202,13 @@ window.onload = function() {
   
   (function(){
     if(document.getElementById("disqus_thread")!=null){
-      document.getElementById("disqus_thread").setAttribute("align","center");
-
-      var loading = document.createElement('div');
-      loading.setAttribute("style","height:17px;");
-      loading.innerHTML = '<img id="loading_gif" src="/images/comment_loading.gif"/>';
-
-      document.getElementById("disqus_thread").appendChild(loading);
-
       $.ajax({
         url:'//' + disqus_shortname + '.disqus.com/count.js',
-        timeout: 2000,
-        success: function(data){
-          var dsq = document.createElement('script');
-          dsq.type = 'text/javascript';
-          dsp.innerHTML=data;
-          (document.getElementsByTagName('body')[0]).appendChild(dsq);
-        },
-        error: function(){
-          loading.innerHTML='<font style="color:LightGray;font-weight:bold;">⚠️ Oops! Comments blocked by GFW.</font>';
-        }
+        dataType:'script',
+        timeout: 3000
+      })
+      .fail(function(jqxhr, settings, exception) {
+        document.getElementById("disqus_thread").innerHTML='<font style="color:LightGray;">👉 评论需翻墙！</font>';
       });
     }
   })();
