@@ -4,6 +4,50 @@
 
     
     
+  <url>
+    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89paxos%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2018-02-12T11:23:30.380Z</lastmod>
+    <data>
+        <display>
+        <title>zookeeper学习笔记（2）Paxos Made Simple【翻译】</title>
+        <pubTime>2018-01-18T08:50:04.000Z</pubTime>
+        
+        <tag>zookeeper</tag>
+         
+        <tag>笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术" url="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%892PC%E5%92%8C3PC/</loc>
+    <lastmod>2018-02-12T11:23:30.374Z</lastmod>
+    <data>
+        <display>
+        <title>zookeeper学习笔记（1）2PC和3PC</title>
+        <pubTime>2018-01-18T03:02:33.000Z</pubTime>
+        
+        <tag>zookeeper</tag>
+         
+        <tag>笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术" url="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
   <url>
@@ -55,46 +99,6 @@
         <pubTime>2018-02-06T08:19:40.000Z</pubTime>
         
         <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="技术" url="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89paxos%E5%8D%8F%E8%AE%AE/</loc>
-    <lastmod>2018-01-18T18:19:09.734Z</lastmod>
-    <data>
-        <display>
-        <title>zookeeper学习笔记（2）Paxos Made Simple【翻译】</title>
-        <pubTime>2018-01-18T08:50:04.000Z</pubTime>
-        
-        <tag>zookeeper学习笔记</tag>
-         
-         
-           
-             
-              <breadCrumb title="技术" url="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%892PC%E5%92%8C3PC/</loc>
-    <lastmod>2018-01-18T16:16:04.003Z</lastmod>
-    <data>
-        <display>
-        <title>zookeeper学习笔记（1）2PC和3PC</title>
-        <pubTime>2018-01-18T03:02:33.000Z</pubTime>
-        
-        <tag>zookeeper学习笔记</tag>
          
          
            

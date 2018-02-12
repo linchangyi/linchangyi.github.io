@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lincy.online/about/index.html</loc>
+    
+    <lastmod>2018-02-12T11:23:30.631Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89paxos%E5%8D%8F%E8%AE%AE/</loc>
+    
+    <lastmod>2018-02-12T11:23:30.380Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%892PC%E5%92%8C3PC/</loc>
+    
+    <lastmod>2018-02-12T11:23:30.374Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lincy.online/tags/index.html</loc>
     
     <lastmod>2018-02-11T11:41:50.404Z</lastmod>
@@ -12,13 +33,6 @@
     <loc>https://lincy.online/categories/index.html</loc>
     
     <lastmod>2018-02-11T11:41:50.400Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lincy.online/about/index.html</loc>
-    
-    <lastmod>2018-02-11T11:41:50.387Z</lastmod>
     
   </url>
   
@@ -40,20 +54,6 @@
     <loc>https://lincy.online/2018/02/06/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</loc>
     
     <lastmod>2018-02-06T12:06:26.301Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89paxos%E5%8D%8F%E8%AE%AE/</loc>
-    
-    <lastmod>2018-01-18T18:19:09.734Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lincy.online/2018/01/18/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%892PC%E5%92%8C3PC/</loc>
-    
-    <lastmod>2018-01-18T16:16:04.003Z</lastmod>
     
   </url>
   
