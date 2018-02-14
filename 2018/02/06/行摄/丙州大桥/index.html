@@ -350,10 +350,6 @@
     <div id="disqus_thread" align="center">
         <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
     </div>
-    <script>
-    var disqus_shortname = 'linchangyi';
-    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
-    </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
 
@@ -464,7 +460,7 @@
         }
     })();
 </script>
-
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
@@ -494,6 +490,19 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 <script src="/js/search.min.js?v=1.7.2" async></script>
 
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            success: function(){
+                $('#comments').addClass('comments-card');
+            }
+        });
+    </script>
 
 
 
