@@ -45,7 +45,7 @@
 <body>
     <div id="loading" class="active"></div>
 
-    <aside id="menu"  >
+    <aside id="menu" class="hide">
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
@@ -117,7 +117,34 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Tags</div>
+        <div class="top-menu" id="top-menu">
+            
+                <a href="/" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis">Tags</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -152,11 +179,11 @@
              active">全部</a>
         
 
-            <a href="/tags/springboot/" style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">springboot</a>
+            <a href="/tags/设计模式/" style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">设计模式</a>
 
         
 
-            <a href="/tags/设计模式/" style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light">设计模式</a>
+            <a href="/tags/springboot/" style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light">springboot</a>
 
         
 
@@ -184,47 +211,6 @@
 
 <div class="container body-wrap fade">
     
-
-            <h3 class="archive-separator" id="tag-springboot">springboot</h3>
-
-            <div class="waterfall">
-            
-
-                <div class="waterfall-item">
-  <article class="article-card archive-article">
-    <div class="post-meta">
-      <time class="post-time" title="2018-02-09 11:49:43" datetime="2018-02-09T03:49:43.000Z"  itemprop="datePublished">2018-02-09</time>
-
-      
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/09/SpringBoot启动过程分析/">SpringBoot启动过程分析</a>
-    </h3>
-  
-
-
-
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
-
-    </div>
-    
-  </article>
-</div>
-
-            
-            </div>
-            
 
             <h3 class="archive-separator" id="tag-设计模式">设计模式</h3>
 
@@ -291,6 +277,47 @@
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    
+  </article>
+</div>
+
+            
+            </div>
+            
+
+            <h3 class="archive-separator" id="tag-springboot">springboot</h3>
+
+            <div class="waterfall">
+            
+
+                <div class="waterfall-item">
+  <article class="article-card archive-article">
+    <div class="post-meta">
+      <time class="post-time" title="2018-02-09 11:49:43" datetime="2018-02-09T03:49:43.000Z"  itemprop="datePublished">2018-02-09</time>
+
+      
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+    </div>
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/02/09/SpringBoot启动过程分析/">SpringBoot启动过程分析</a>
+    </h3>
+  
+
+
+
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
 
     </div>
     
@@ -567,7 +594,24 @@
 
 
 
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu == 1){
+                document.getElementById('top-menu').classList.add('enable');
+            } else {
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 0 );
+        }
+    })();
+</script>
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -608,6 +652,8 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>
     
+    
+        <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
     
 </body>
 </html>
