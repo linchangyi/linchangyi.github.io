@@ -594,6 +594,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
         $.ajax({
             url: '//' + disqus_shortname + '.disqus.com/embed.js',
             dataType: "script",
+            timeout: 10000,
             success: function(){
                 
                 $('#comments').addClass('post-comments-card');
