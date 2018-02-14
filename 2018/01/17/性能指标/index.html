@@ -477,7 +477,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
             url: '//' + disqus_shortname + '.disqus.com/embed.js',
             dataType: "script",
             success: function(){
-                $('#comments').addClass('comments-card');
+                
+                $('#comments').addClass('post-comments-card');
+                
             }
         });
     </script>
