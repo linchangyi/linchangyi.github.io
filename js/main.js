@@ -61,10 +61,8 @@
         },
         enableTopMenu: function() {
             top_menu.classList.remove('disable');
-            top_menu.classList.add('enable');
         },
         disableTopMenu: function(){
-            top_menu.classList.remove('enable');
             top_menu.classList.add('disable');
         },
         toggleMenu: function (flag) {
