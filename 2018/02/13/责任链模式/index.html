@@ -330,12 +330,6 @@
 
 
 
-<section class="comments" id="comments">
-    <div id="disqus_thread" align="center">
-        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
-    </div>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</section>
 
 
 
@@ -345,6 +339,29 @@
 
 
 
+    <!-- Valine Comments -->
+    <div class="comments vcomment  post-comments-card " id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'talentlcy@hotmail.com' == 'true',
+            verify: 'false' == 'true',
+            appId: "dBU9X0bDXv6rtTr792RUNDBK-gzGzoHsz",
+            appKey: "7VpowGq5aM7pwR7eEOPOMjYK",
+            avatar: "identicon",
+            placeholder: "说点什么？",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "20"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
@@ -478,21 +495,6 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="/js/search.min.js?v=1.7.2" async></script>
 
 
-
-    <script type="text/javascript">
-        var disqus_shortname = 'linchangyi';
-    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
-        $.ajax({
-            url: '//' + disqus_shortname + '.disqus.com/embed.js',
-            dataType: "script",
-            timeout: 3000,
-            success: function(){
-                
-                $('#comments').addClass('post-comments-card');
-                
-            }
-        });
-    </script>
 
 
 
