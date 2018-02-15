@@ -324,15 +324,15 @@
 
 
 
-<section class="comments" id="comments">
-    <div id="disqus_thread" align="center">
-        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
-    </div>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+<section class="comments  post-comments-card " id="comments">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script src="http://v2.uyan.cc/code/uyan.js?uid=2155336"></script>
+    <!-- UY END -->
 </section>
-
-
-
 
 
 
@@ -467,21 +467,6 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="/js/search.min.js?v=1.7.2" async></script>
 
 
-
-    <script type="text/javascript">
-        var disqus_shortname = 'true';
-    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
-        $.ajax({
-            url: '//' + disqus_shortname + '.disqus.com/embed.js',
-            dataType: "script",
-            timeout: 3000,
-            success: function(){
-                
-                $('#comments').addClass('post-comments-card');
-                
-            }
-        });
-    </script>
 
 
 
