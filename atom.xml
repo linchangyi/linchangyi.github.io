@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lincy.online/"/>
-  <updated>2018-02-15T19:39:42.441Z</updated>
+  <updated>2018-02-15T19:41:58.602Z</updated>
   <id>https://lincy.online/</id>
   
   <author>
@@ -21,17 +21,15 @@
     <link href="https://lincy.online/2018/02/16/New-Year-s-Day/"/>
     <id>https://lincy.online/2018/02/16/New-Year-s-Day/</id>
     <published>2018-02-15T16:35:59.000Z</published>
-    <updated>2018-02-15T19:39:42.441Z</updated>
+    <updated>2018-02-15T19:41:58.602Z</updated>
     
-    <content type="html"><![CDATA[<script type="text/javascript" src="https://www.xiami.com/widget/player-single?uid=1722104&sid=2080749&mode=js"></script><p>2018<br>I will be with you again<br>I will begin again</p>]]></content>
+    <content type="html"><![CDATA[<embed src="http://www.xiami.com/widget/1722104_2080749/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"><p>2018<br>I will be with you again<br>I will begin again</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;script type=&quot;text/javascript&quot; src=&quot;https://www.xiami.com/widget/player-single?uid=1722104&amp;sid=2080749&amp;mode=js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;2018&lt;br&gt;I will
+        &lt;embed src=&quot;http://www.xiami.com/widget/1722104_2080749/singlePlayer.swf&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;257&quot; height=&quot;33&quot; wmode
       
     
     </summary>
