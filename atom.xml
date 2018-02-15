@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lincy.online/"/>
-  <updated>2018-02-15T19:42:39.211Z</updated>
+  <updated>2018-02-15T19:57:17.237Z</updated>
   <id>https://lincy.online/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://lincy.online/2018/02/16/New-Year-s-Day/"/>
     <id>https://lincy.online/2018/02/16/New-Year-s-Day/</id>
     <published>2018-02-15T16:35:59.000Z</published>
-    <updated>2018-02-15T19:42:39.211Z</updated>
+    <updated>2018-02-15T19:57:17.237Z</updated>
     
     <content type="html"><![CDATA[<embed src="https://www.xiami.com/widget/1722104_2080749/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"><p>2018<br>I will be with you again<br>I will begin again</p>]]></content>
     
@@ -33,6 +33,8 @@
       
     
     </summary>
+    
+      <category term="生活" scheme="https://lincy.online/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
   </entry>
