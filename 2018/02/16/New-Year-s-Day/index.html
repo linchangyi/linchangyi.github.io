@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="Lincy&#39;s Blog">
 <meta property="og:description" content="2018I will be with you againI will begin again">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-15T19:57:17.237Z">
+<meta property="og:updated_time" content="2018-02-16T06:25:45.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="New Year&#39;s Day">
 <meta name="twitter:description" content="2018I will be with you againI will begin again">
@@ -220,7 +220,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-02-15T19:57:17.237Z" itemprop="dateUpdated">2018-02-16 03:57:17</time>
+    最后更新时间：<time datetime="2018-02-16T06:25:45.952Z" itemprop="dateUpdated">2018-02-16 14:25:45</time>
 </span><br>
 
 
@@ -316,15 +316,15 @@
 
 
 
-
-
-
-<section class="comments  post-comments-card " id="comments">
-    <!-- UY BEGIN -->
-    <div id="uyan_frame"></div>
-    <script src="http://v2.uyan.cc/code/uyan.js?uid=2155336"></script>
-    <!-- UY END -->
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+
+
+
 
 
 
@@ -459,6 +459,21 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="/js/search.min.js?v=1.7.2" async></script>
 
 
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
 
 
 
