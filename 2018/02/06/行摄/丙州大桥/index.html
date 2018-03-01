@@ -47,7 +47,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -122,10 +122,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -438,7 +438,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/2018/02/06/行摄/丙州大桥/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aS4rDMBAFwNz/0pntwGDnvZYzYLm0CsGxVFk06s/rFa/3wUqe//3N0dv+/vb1jYWBgXFbxvt05c/ku+SwYl8MDIwHMI42zp85Om4eIVf2xcDAwFj/fP5NEpQxMDAwZgE3OUR71cPAwMBYSWJbRvvX/FMujoGBcUNGXiz7/89f6W9gYGDcivEu16xw1obg+lQYGBhbM2bXvjztPE9B8/GL6BqKgYGxNSMPdu31ccZOBsUOz4OBgbEpo20u5uGybUmeH/fDezAwMLZmzIJdEkavajYMr4YYGBgbMdqy2iwQX3sBjdJXDAyM7Rgrww3nz7TFtWQIY6nDgIGBcSvGSpOyDab5WFh7QcTAwNib0Zbpk9e1R5+V+T50YjEwMDZizJLPltGW6pJvokIbBgbGFow8CLbXu6uC9XDYAgMDYyPGrA0QTZkFhbzL9sLAwHgAo57LiMcj2nZC287EwMB4DqPdvm12XtXCjO62GBgY2zFmm7VtgPVEdzh4gYGBsREjCbvtoNhshCIH18MWGBgYWzBWxljz1sKsXRpdKzEwMB7AaNPIleC7Usj7MDmCgYGxHeNdrlmrsm0/1EMeGBgYWzNWgl0Uy0fthzapxsDAeAIjTzWTo1yVEtdpMwYGxgMY7YBXftBZmK7HzjAwMDDKgNsmuvVsyKxTioGB8RjGrNy2PlTx4c0YGBgPYOQjESsBOomTw9E0DAyMrRlLqWNZUMv/praFgIGBsSnjB5qgslAXfm/eAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
@@ -460,6 +460,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -513,6 +514,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>

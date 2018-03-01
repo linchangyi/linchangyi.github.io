@@ -22,19 +22,20 @@
     
     
     <meta name="keywords" content="springboot">
-    <meta name="description" content="入口123456@SpringBootApplicationpublic class SpringbootstarterApplication &amp;#123;	public static void main(String[] args) &amp;#123;		SpringApplication.run(SpringbootstarterApplication.class, args);	&amp;#125;&amp;#1">
+    <meta name="description" content="入口@SpringBootApplication public class SpringbootstarterApplication {     public static void main(String[] args) {         SpringApplication.run(SpringbootstarterApplication.class, args);     } }">
 <meta name="keywords" content="springboot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot启动过程分析">
 <meta property="og:url" content="https://lincy.online/2018/02/09/SpringBoot启动过程分析/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="入口123456@SpringBootApplicationpublic class SpringbootstarterApplication &amp;#123;	public static void main(String[] args) &amp;#123;		SpringApplication.run(SpringbootstarterApplication.class, args);	&amp;#125;&amp;#1">
+<meta property="og:description" content="入口@SpringBootApplication public class SpringbootstarterApplication {     public static void main(String[] args) {         SpringApplication.run(SpringbootstarterApplication.class, args);     } }">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2018/02/09/SpringBoot启动过程分析/1.PNG">
-<meta property="og:updated_time" content="2018-02-11T11:41:50.386Z">
+<meta property="og:image" content="https://lincy.online/2018/02/09/SpringBoot启动过程分析/springfactories.PNG">
+<meta property="og:updated_time" content="2018-03-01T15:26:05.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot启动过程分析">
-<meta name="twitter:description" content="入口123456@SpringBootApplicationpublic class SpringbootstarterApplication &amp;#123;	public static void main(String[] args) &amp;#123;		SpringApplication.run(SpringbootstarterApplication.class, args);	&amp;#125;&amp;#1">
+<meta name="twitter:description" content="入口@SpringBootApplication public class SpringbootstarterApplication {     public static void main(String[] args) {         SpringApplication.run(SpringbootstarterApplication.class, args);     } }">
 <meta name="twitter:image" content="https://lincy.online/2018/02/09/SpringBoot启动过程分析/1.PNG">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
@@ -45,7 +46,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -120,10 +121,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -196,7 +197,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#入口"><span class="post-toc-number">1.</span> <span class="post-toc-text">入口</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#初始化"><span class="post-toc-number">2.</span> <span class="post-toc-text">初始化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行"><span class="post-toc-number">3.</span> <span class="post-toc-text">运行</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#入口"><span class="post-toc-number">1.</span> <span class="post-toc-text">入口</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#初始化"><span class="post-toc-number">2.</span> <span class="post-toc-text">初始化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化器和监听器的创建："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">初始化器和监听器的创建：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行"><span class="post-toc-number">3.</span> <span class="post-toc-text">运行</span></a></li></ol>
         </nav>
     </aside>
     
@@ -220,9 +221,29 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringbootstarterApplication</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(SpringbootstarterApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><pre><code class="java">@SpringBootApplication
+public class SpringbootstarterApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootstarterApplication.class, args);
+    }
+}
+</code></pre>
 <a id="more"></a>
-<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(Object[] sources)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//sources为入口的传入的class</span></span><br><span class="line">    <span class="keyword">if</span> (sources != <span class="keyword">null</span> &amp;&amp; sources.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.sources.addAll(Arrays.asList(sources));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//是否web应用</span></span><br><span class="line">    <span class="keyword">this</span>.webEnvironment = deduceWebEnvironment();</span><br><span class="line">    <span class="comment">//设置初始化器</span></span><br><span class="line">    setInitializers((Collection) getSpringFactoriesInstances(</span><br><span class="line">            ApplicationContextInitializer.class));</span><br><span class="line">    <span class="comment">//设置监听器</span></span><br><span class="line">    setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));</span><br><span class="line">    <span class="keyword">this</span>.mainApplicationClass = deduceMainApplicationClass();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><pre><code class="java">private void initialize(Object[] sources) {
+    //sources为入口的传入的class
+    if (sources != null &amp;&amp; sources.length &gt; 0) {
+        this.sources.addAll(Arrays.asList(sources));
+    }
+    //是否web应用
+    this.webEnvironment = deduceWebEnvironment();
+    //设置初始化器
+    setInitializers((Collection) getSpringFactoriesInstances(
+            ApplicationContextInitializer.class));
+    //设置监听器
+    setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
+    this.mainApplicationClass = deduceMainApplicationClass();
+}
+</code></pre>
 <p>加载的初始化器和监听器如下：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -230,7 +251,65 @@
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
-<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ConfigurableApplicationContext <span class="title">run</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line">    StopWatch stopWatch = <span class="keyword">new</span> StopWatch();</span><br><span class="line">    stopWatch.start();</span><br><span class="line">    ConfigurableApplicationContext context = <span class="keyword">null</span>;</span><br><span class="line">    FailureAnalyzers analyzers = <span class="keyword">null</span>;</span><br><span class="line">    configureHeadlessProperty();</span><br><span class="line">    <span class="comment">//SpringApplicationRunListener监听事件：</span></span><br><span class="line">    <span class="comment">//starting, environmentPrepared, contextPrepared, contextLoaded, finished </span></span><br><span class="line">    SpringApplicationRunListeners listeners = getRunListeners(args);</span><br><span class="line">    listeners.starting();</span><br><span class="line">    <span class="keyword">try</span>  &#123;</span><br><span class="line">        ApplicationArguments applicationArguments = <span class="keyword">new</span> DefaultApplicationArguments(</span><br><span class="line">                args);</span><br><span class="line">        ConfigurableEnvironment environment = prepareEnvironment(listeners,</span><br><span class="line">                applicationArguments);</span><br><span class="line">        Banner printedBanner = printBanner(environment);</span><br><span class="line">        context = createApplicationContext();</span><br><span class="line">        analyzers = <span class="keyword">new</span> FailureAnalyzers(context);</span><br><span class="line">        <span class="comment">//初始化一些配置</span></span><br><span class="line">        prepareContext(context, environment, listeners, applicationArguments,</span><br><span class="line">                printedBanner);</span><br><span class="line">        refreshContext(context);</span><br><span class="line">        afterRefresh(context, applicationArguments);</span><br><span class="line">        listeners.finished(context, <span class="keyword">null</span>);</span><br><span class="line">        stopWatch.stop();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.logStartupInfo) &#123;</span><br><span class="line">            <span class="keyword">new</span> StartupInfoLogger(<span class="keyword">this</span>.mainApplicationClass)</span><br><span class="line">                    .logStarted(getApplicationLog(), stopWatch);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> context;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        handleRunFailure(context, listeners, analyzers, ex);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="初始化器和监听器的创建："><a href="#初始化器和监听器的创建：" class="headerlink" title="初始化器和监听器的创建："></a>初始化器和监听器的创建：</h2><p>可以看到初始化器和监听器的创建都是通过 getSpringFactoriesInstances 这个方法：</p>
+<pre><code class="java">private &lt;T&gt; Collection&lt;? extends T&gt; getSpringFactoriesInstances(Class&lt;T&gt; type,
+        Class&lt;?&gt;[] parameterTypes, Object... args) {
+    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    // SpringFactoriesLoader读取spring.factories文件，找到类名
+    Set&lt;String&gt; names = new LinkedHashSet&lt;String&gt;(
+            SpringFactoriesLoader.loadFactoryNames(type, classLoader));
+    //根据上面找到的类名，创建实例
+    List&lt;T&gt; instances = createSpringFactoriesInstances(type, parameterTypes,
+            classLoader, args, names);
+    AnnotationAwareOrderComparator.sort(instances);
+    return instances;
+}
+</code></pre>
+<p>springboot jar包底下的\META-INF\spring.factories配置的初始化器和监听器:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/02/09/SpringBoot启动过程分析/springfactories.PNG" alt="spring.factories一部分配置" title="">
+                </div>
+                <div class="image-caption">spring.factories一部分配置</div>
+            </figure></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><pre><code class="java">public ConfigurableApplicationContext run(String... args) {
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start();
+    ConfigurableApplicationContext context = null;
+    FailureAnalyzers analyzers = null;
+    configureHeadlessProperty();
+    //SpringApplicationRunListener监听事件：
+    //starting, environmentPrepared, contextPrepared, contextLoaded, finished 
+    SpringApplicationRunListeners listeners = getRunListeners(args);
+    listeners.starting();
+    try  {
+        ApplicationArguments applicationArguments = new DefaultApplicationArguments(
+                args);
+        ConfigurableEnvironment environment = prepareEnvironment(listeners,
+                applicationArguments);
+        Banner printedBanner = printBanner(environment);
+        context = createApplicationContext();
+        analyzers = new FailureAnalyzers(context);
+        //初始化一些配置
+        prepareContext(context, environment, listeners, applicationArguments,
+                printedBanner);
+        refreshContext(context);
+        afterRefresh(context, applicationArguments);
+        listeners.finished(context, null);
+        stopWatch.stop();
+        if (this.logStartupInfo) {
+            new StartupInfoLogger(this.mainApplicationClass)
+                    .logStarted(getApplicationLog(), stopWatch);
+        }
+        return context;
+    }
+    catch (Throwable ex) {
+        handleRunFailure(context, listeners, analyzers, ex);
+        throw new IllegalStateException(ex);
+    }
+}
+</code></pre>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -238,7 +317,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-02-11T11:41:50.386Z" itemprop="dateUpdated">2018-02-11 19:41:50</time>
+    最后更新时间：<time datetime="2018-03-01T15:26:05.475Z" itemprop="dateUpdated">2018-03-01 23:26:05</time>
 </span><br>
 
 
@@ -280,7 +359,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/02/09/SpringBoot启动过程分析/&title=《SpringBoot启动过程分析》 — Lincy's Blog&source=入口123456@SpringBootApplicationpublic class SpringbootstarterApplication &#123..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/02/09/SpringBoot启动过程分析/&title=《SpringBoot启动过程分析》 — Lincy's Blog&source=入口@SpringBootApplication
+public class SpringbootstarterApplication {
+    publ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -409,7 +490,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/02/09/SpringBoot启动过程分析/&title=《SpringBoot启动过程分析》 — Lincy's Blog&source=入口123456@SpringBootApplicationpublic class SpringbootstarterApplication &#123..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/02/09/SpringBoot启动过程分析/&title=《SpringBoot启动过程分析》 — Lincy's Blog&source=入口@SpringBootApplication
+public class SpringbootstarterApplication {
+    publ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -435,7 +518,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/2018/02/09/SpringBoot启动过程分析/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3ay27CMBAFUP7/p+mWLgj3jkPVOMerCkHik0oTz+PxiNfzZb375PXzd1fI7/X4xsLAwLgs43m4Wsa7Dc0eRLI3DAyM+zBmmzi+Tkt9d98oKGNgYGAcbug4RB6HzuRXGBgYGOsB9/gKszCNgYGBMUti29JYHnCTRPe0XBwDA+OCjLZY/5d/f6W/gYGBcSnGc7TyxLVtTA73g4GBsTXjrKJ/m+7OQjAGBsY9GbNi/Xqhfza0Ef0fMDAwtmOcdaG2KLaCiRoDGBgYWzParcy2dRzEk+8Ubw8MDIyLM9p2YB5k15PbJHku3hgYGBiXZeRFrjZQJo2BfNgiajBgYGBsyphtqC6ElVfI25+/joYYGBhbM84dqqiPdKMDKAYGxn0Y57YH8jDdHk//tMuBgYHxzxhnlcDy0LzSeCiqhhgYGBsxZmF01gBo09Q6PcbAwNiUMQuIs4JaHlLrkhwGBsbWjHxz+dDYSnid3REDA2NvRjs8sT74NUtlh5VCDAyMLRhtwG3bk/lgWRKyi4QWAwNjI0Y7+jAr2OXFuOHQBgYGxtaM9oA4Sz7zR9B+80M/FgMDYwvGs1xJapoX/ZPEtXhvYGBgbMpo25ArA2HfeAQ1BgMD47KMlSC70jBoy2of2gkYGBg3YORhdCUs5slw3aLAwMDAiLey0s6cjWtgYGBgtM2DlbJaOy5W3AYDA2MLRptYroTX/GhY3BcDA2Nrxix1bMtnbSjPf4uBgbE14wcXnKh2z5EDYQAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
@@ -457,6 +540,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -510,6 +594,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>

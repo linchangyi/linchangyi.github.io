@@ -38,7 +38,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -113,10 +113,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -398,6 +398,40 @@
 </div>
 
         
+
+            <div class="waterfall-item">
+  <article class="article-card archive-article">
+    <div class="post-meta">
+      <time class="post-time" title="2017-02-27 17:25:20" datetime="2017-02-27T09:25:20.000Z"  itemprop="datePublished">2017-02-27</time>
+
+      
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+    </div>
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/02/27/代理模式/">代理模式</a>
+    </h3>
+  
+
+
+
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    
+  </article>
+</div>
+
+        
             </div>
         
     
@@ -471,7 +505,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/categories/技术/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABw0lEQVR42u3aQW7DMAwEwPz/0+4DDLtL0pITYHQqGkOa00Ik9fnE6zit86/nL8+/Xn3z8MLFxR1zj9t1BbriVtG5ARcXdz/3KjGS7e53yOPv3oCLi/vN3Ml/8pjDxcX9Fe59qOVBhouL+yvcpPhJcHnjY3mthouLO+DmXcp1fy/p7+Li4ra4x2AlgZWXRtGJuLi4W7jV0MmjpzpuKZRGuLi4i7l5iTKJuaSZEkUkLi7uS9zqVaYXWL0LEy4u7h7u5FVkvkP+TRKIuLi4+7mTQqiHq45dcXFxV3PfKn6qoYaLi7uTO2mGVuPs/vvytQYXF3cZNzkyibne4628vfLPKAUXF/dRbnVQ2huazkuj8tsxXFzcAff+yLxo6bVBq7cXXFzcPdxmwrVaqHmRE02GcXFxl3GTh1O9+Uz1QhMNdXBxcbdwn6qTqsdXG7K4uLg7ub3RaRI3vfFtYeaDi4u7jDuJqqTB0bzEzNG4uLhj7lNlT2+H5FkGLi7uW9zq9SXvYeaXnlF/FxcX9yVuNZ4mEVZ+FYKLi/sSNy+K8utL9UEGLi7uTm5+QSkfECdS1ELFxcXdwq1unT/AynHVZisuLu4y7h+i+nadnM4hoAAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
@@ -493,6 +527,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -531,6 +566,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>

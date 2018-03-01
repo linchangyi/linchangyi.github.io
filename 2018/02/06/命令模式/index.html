@@ -45,7 +45,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -120,10 +120,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -225,7 +225,81 @@
 <li>command子类可以快速扩展</li>
 <li>调用者和接收者间解耦，调用者只需要调用command的execute方法，不需要了解接收者</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通用Receiver类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体Receiver类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteReciver1</span> <span class="keyword">extends</span> <span class="title">Receiver</span></span>&#123; </span><br><span class="line">    <span class="comment">//每个接收者都必须处理一定的业务逻辑 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteReciver2</span> <span class="keyword">extends</span> <span class="title">Receiver</span></span>&#123; </span><br><span class="line">    <span class="comment">//每个接收者都必须处理一定的业务逻辑 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象Command类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体的Command类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand1</span> <span class="keyword">extends</span> <span class="title">Command</span> </span>&#123; </span><br><span class="line">    <span class="comment">//对哪个Receiver类进行命令处理 </span></span><br><span class="line">    <span class="keyword">private</span> Receiver receiver; </span><br><span class="line">    <span class="comment">//构造函数传递接收者 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand1</span><span class="params">(Receiver _receiver)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = _receiver; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//必须实现一个命令 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="comment">//业务处理 </span></span><br><span class="line">        <span class="keyword">this</span>.receiver.doSomething(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand2</span> <span class="keyword">extends</span> <span class="title">Command</span> </span>&#123; </span><br><span class="line">    <span class="comment">//哪个Receiver类进行命令处理 </span></span><br><span class="line">    <span class="keyword">private</span> Receiver receiver; </span><br><span class="line">    <span class="comment">//构造函数传递接收者 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand2</span><span class="params">(Receiver _receiver)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = _receiver; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">//必须实现一个命令 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="comment">//业务处理 </span></span><br><span class="line">        <span class="keyword">this</span>.receiver.doSomething();</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用者Invoker类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invoker</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Command command;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCommand</span><span class="params">(Command _command)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.command = _command;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.command.execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//场景类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Invoker invoker = <span class="keyword">new</span> Invoker();</span><br><span class="line">        Receiver receiver = <span class="keyword">new</span> ConcreteReceiver1();</span><br><span class="line">        </span><br><span class="line">        Command command = <span class="keyword">new</span> ConcreteCommand1(receiver);</span><br><span class="line">        invoker.setCommand(command);</span><br><span class="line">        invoker.action();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">//通用Receiver类
+public abstract class Receiver {
+    public abstract void doSomething();
+}
+
+//具体Receiver类
+public class ConcreteReciver1 extends Receiver{ 
+    //每个接收者都必须处理一定的业务逻辑 
+    public void doSomething(){ } 
+} 
+public class ConcreteReciver2 extends Receiver{ 
+    //每个接收者都必须处理一定的业务逻辑 
+    public void doSomething(){ } 
+}
+
+//抽象Command类
+public abstract class Command {
+    public abstract void execute();
+}
+
+//具体的Command类
+public class ConcreteCommand1 extends Command { 
+    //对哪个Receiver类进行命令处理 
+    private Receiver receiver; 
+    //构造函数传递接收者 
+    public ConcreteCommand1(Receiver _receiver){
+        this.receiver = _receiver; 
+    } 
+
+    //必须实现一个命令 
+    public void execute() { 
+    //业务处理 
+        this.receiver.doSomething(); 
+    } 
+} 
+
+public class ConcreteCommand2 extends Command { 
+    //哪个Receiver类进行命令处理 
+    private Receiver receiver; 
+    //构造函数传递接收者 
+    public ConcreteCommand2(Receiver _receiver){
+        this.receiver = _receiver; 
+    } 
+    //必须实现一个命令 
+    public void execute() { 
+        //业务处理 
+        this.receiver.doSomething();
+    } 
+}
+
+//调用者Invoker类
+public class Invoker {
+    private Command command;
+
+    public void setCommand(Command _command){
+        this.command = _command;
+    }
+
+    public void action() {
+        this.command.execute();
+    }
+}
+
+//场景类
+public class Client {
+    public static void main(String[] args){
+        Invoker invoker = new Invoker();
+        Receiver receiver = new ConcreteReceiver1();
+
+        Command command = new ConcreteCommand1(receiver);
+        invoker.setCommand(command);
+        invoker.action();
+    }
+}
+</code></pre>
 
         </div>
 
@@ -441,7 +515,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/2018/02/06/命令模式/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACPklEQVR42u3aSY7DMAwFUd//0u5tgG6p65NJAFOlleEM1vOC4KDrwut+Wav7r5/ei7X/1eun1yeWDBkyHsu4t2vFIHd+b2t/zV/HH1QZMmQcwFhFsP31nrTn1Z61vC9DhgwZOLCS4EheigwZMmS8l7EPqTzdlCFDhow9gxSxJB38p9TEv/1gLS5DhowHMnjX/fvXH5lvyJAh41GMO1y1UJs22uJdyZAhYzSDB7i0lZamhnyEsPymDBkyDmN0BpbpUDNtwC3vy5AhYyiDh8tafUwSSj5sWO5HhgwZoxm1Rj8vcUkor40w0SBThgwZIxi1kFpL4EhZW2vPyZAhYzajdvShnw7yQULwdBkyZIxmdFI60srvH6pAXUMZMmQcwEgTNZIapq1/0v7jr0+GDBmTGJ2DX2SLaUHLS+IrfWcyZMh4IKO23dpxCt5o46FchgwZJzDSbfWHlOmhiqBklSFDxmgGD6w8EKeJYO37MmTIOIHBS9DadtODX8XiVoYMGaMZJOXqbLF2dIPvR4YMGacxOhvqpJvFthrpHcqQIWMoo9Z06yR86XmQZciWIUPGAQw+JOg31/j/o6RQhgwZoxl3uNKW2X6jpDwmAV2GDBmzGZ0xZzpo7ATx2ghBhgwZkxhki53Hk9eRNvXiBFGGDBkjGGng4y371hGKTrtNhgwZBzNqYZoHXD5OaAVcGTJkHMBIU730f0gB/IaAK0OGjEcxSOhMB5a1/+EDAxkyZJzD6JSO/KAYD6y1axkyZAxl/ABxDNE/UfMHrAAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
@@ -463,6 +537,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -516,6 +591,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>

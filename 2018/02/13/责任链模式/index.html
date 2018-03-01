@@ -42,7 +42,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -117,10 +117,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -217,9 +217,69 @@
                 <div class="image-caption"></div>
             </figure>
 <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 职责接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LinChangyi</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/2/13</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 持有后继的职责对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> Handler successor;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSuccessor</span><span class="params">(Handler successor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.successor = successor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理请求的方法</span></span><br><span class="line"><span class="comment">     * 可以根据需求传入参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LinChangyi</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/2/13</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler1</span> <span class="keyword">extends</span> <span class="title">Handler</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//根据某些条件来判断是否属于自己的职责范围</span></span><br><span class="line">        <span class="comment">//判断条件比如，从外部传入的参数，或者这里主动去获取的外部数据</span></span><br><span class="line">        <span class="comment">//如从数据库中获取等，下面只是个示意</span></span><br><span class="line">        <span class="keyword">boolean</span> someCondition = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(someCondition)&#123;</span><br><span class="line">            <span class="comment">//属于自己的职责</span></span><br><span class="line">            System.out.println(<span class="string">"ConcreteHandler1 handle request"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.successor!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.successor.handleRequest();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LinChangyi</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/2/13</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//组装责任链</span></span><br><span class="line">        Handler handler1 = <span class="keyword">new</span> ConcreteHandler1();</span><br><span class="line">        Handler handler2 = <span class="keyword">new</span> ConcreteHandler2();</span><br><span class="line"></span><br><span class="line">        handler1.setSuccessor(handler2);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//提交请求</span></span><br><span class="line">        handler1.handleRequest();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">/**
+ * 职责接口
+ * @author LinChangyi
+ * @date 2018/2/13
+ **/
+public abstract class Handler {
+    /**
+     * 持有后继的职责对象
+     */
+    protected Handler successor;
+
+    public void setSuccessor(Handler successor) {
+        this.successor = successor;
+    }
+
+    /**
+     * 处理请求的方法
+     * 可以根据需求传入参数
+     */
+    public abstract void handleRequest();
+}
+</code></pre>
+<pre><code class="java">/**
+ * @author LinChangyi
+ * @date 2018/2/13
+ **/
+public class ConcreteHandler1 extends Handler{
+    @Override
+    public void handleRequest() {
+        //根据某些条件来判断是否属于自己的职责范围
+        //判断条件比如，从外部传入的参数，或者这里主动去获取的外部数据
+        //如从数据库中获取等，下面只是个示意
+        boolean someCondition = false;
+
+        if(someCondition){
+            //属于自己的职责
+            System.out.println(&quot;ConcreteHandler1 handle request&quot;);
+        } else {
+            if(this.successor!=null){
+                this.successor.handleRequest();
+            }
+        }
+    }
+}
+</code></pre>
+<pre><code class="java">/**
+ * @author LinChangyi
+ * @date 2018/2/13
+ **/
+public class Client {
+    public static void main(String[] args){
+        //组装责任链
+        Handler handler1 = new ConcreteHandler1();
+        Handler handler2 = new ConcreteHandler2();
+
+        handler1.setSuccessor(handler2);
+
+        //提交请求
+        handler1.handleRequest();
+    }
+}
+</code></pre>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -434,7 +494,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/2018/02/13/责任链模式/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aO47DMAxF0ex/0542je37SGUAUddVkJnYOi4I/j4ffF03F/n/72+eP999s+ySIUPGtozr8bo7VvrIZzx57stLlCFDxgGMu1uT4xIwvz95rgwZMmT0b82D9XMQlyFDhoxOwCXpI0n1eOkrQ4YMGaSIfb4Rb8PVXs2yWlyGDBkbMniz7P8//2S+IUOGjK0YV3jVhpH99PHlVDJkyBjN4AGOjzA5jBe36DwyZMgYzSCNrVVLEvxXtZUOGTJkTGV00r5aIpi+DlToypAhYyiD/Ixj0oY+D+Uvf5UhQ8ZoRr9ATQ/aCcqofJUhQ8ZQRrqYlY4bfxFwg6GmDBkyRjBqRWatDZceMSikZciQMZRRa9+nYTQ9brr9JUOGjBMYq7rr/Fgk4PIXJ0OGjNkMnvz11yZqI08+QJUhQ8ZsBj9WsKSFBwkkuKPnypAhYygjba7VVi7SsURxmiFDhoyhjDTY1QrL2j2Lua0MGTJGM/gheOJIit5OoilDhowzGemSBF/UqCWOQTiWIUPGkQx+CJ448kZbvHAmQ4aMAxhpmsiLUnKH1lqYDBkyRjNqCxb9gSVf1EBppQwZMkYz0vlgbTzwi6I3bdXJkCFjd0ZaaqaDyTR818YGMmTIOIGRjgx5oUtCcDrIfKnFZciQcTyj1m4jSxtp864VcGXIkHEAo1/0dkYOywKuDBkytmKQInbtulitVRfvjMiQIWMEo5Z3dQafaXK5bJApQ4aM/Rh/QP7bGdYMY90AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
@@ -456,6 +516,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -509,6 +570,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>

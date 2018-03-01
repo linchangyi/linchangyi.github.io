@@ -38,7 +38,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -113,10 +113,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -353,7 +353,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/tags/zookeeper/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3aQY7DIAwF0Ln/pTPbkao03zYwrfRYVQktjy4sbPPzE4/rz3h9fjf/bs7dry0buLi4Y+71duRLvl/+debdkzsDLi7ueW51gSQkXcHIDbi4uN/CTcJc7xiEi4v7LdzkgFLdDC4u7idzkyNIkpz0trElV8PFxR1w8yrlvs9b6ru4uLgt7jUek9ZLeS1cXNwj3GrQ6R1ZqqWTh+/i4uIe5Oa48gID4kOuhouLu42bX5bqHVyS/KV8YQsXF3cbN8fNy6PJ5h8uZ+Di4h7h5pPyt70rF/khCRcXdze3h6iGs3wbD2ERFxf3CLcc8wYXrfJ0qBB3cXFxt3F7KcpkY9WZBTouLu6YW91TTu8Fxyj5wcXFPcKtXpbqFU3y5uvtH4qLi3uEmx9Eeg2StWkSLi7uGW5SoJyEs0k79iH5wcXF3cad/1DvokY1FOLi4p7kXsUxKbAu7vng4uJu4/Z6l6sKpvlbXFzc89y8PFq9bpWnQIXN4OLiHuTmhYlqoyVPq5r1XVxc3H/lThqrvRCGi4v7+dy8uZI3XaoXMnBxcU9yq8lP73m1JbMsV8PFxd3QraiGqipuUmrBxcVdyv0FJ6VN1At1HZ4AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
@@ -375,6 +375,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -413,6 +414,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>

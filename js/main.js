@@ -95,13 +95,6 @@
                 }
             }
         },
-        fixedHeader: function (top) {
-            if (top > header.clientHeight) {
-                header.classList.add('fixed');
-            } else {
-                header.classList.remove('fixed');
-            }
-        },
         toc: (function () {
             var toc = $('#post-toc');
 
@@ -518,7 +511,6 @@
     d.addEventListener('scroll', function () {
         var top = rootScollTop();
         Blog.toggleGotop(top);
-        Blog.fixedHeader(top);
         Blog.toc.fixed(top);
         Blog.toc.actived(top);
     }, false);
@@ -530,6 +522,10 @@
     if (w.BLOG.REWARD) {
         Blog.reward()
     }
+
+    var myElement = document.getElementById('header');
+    var headroom  = new Headroom(myElement);
+    headroom.init();   
 
     Blog.noop = noop;
     Blog.even = even;

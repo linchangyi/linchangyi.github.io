@@ -42,7 +42,7 @@
 
     <!-- custom head -->
     
-
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
 </head>
 
 <body>
@@ -117,10 +117,10 @@
     <main id="main">
         <header class="top-header" id="header">
     <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
         <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
             
                 <a href="/" class="header-icon waves-effect waves-circle waves-light on">
                     <i class="icon icon-lg icon-home"></i>
@@ -560,7 +560,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADMElEQVR42u3aS24CMRAFQO5/6WQbKYG81w0SY8orBGTsMlJa/bnd4vX1YyWffv1aP99Pdvn9zce73F6xsLGxsS/C/nq47h333qePXz9+fvL95CTJX2FjY2Ofx773Hz45dBsdHgen2cot2NjY2NhJYEtgSabQJkjY2NjY2LNkI08PWlK7OzY2NvYns/Oiz2yz9vltnf+FtTRsbGzst2fPHv2er1/S38bGxsZ+Y/azCvGzZKNOHkYt4T/Oj42NjX0QezNwM2sGJ8M6ebkqOdvdHwMbGxv7CPam0NOO77RFn3bo5/FlYWNjY38COy8k7dsAbcO4vfR/ghk2Njb2QezZQTdXMMM8Tkja8hM2Njb2Sew8gNV3WTYDWsym7IWNjY39OexNGWifMCRhKb+auxEbGxsb++LspIH6infy8LMZBi0GMbGxsbEvy84bvcm4TFugb3fMh3j+OSE2Njb2Qey8SNQW7tty1Sx0tWf44/nY2NjYF2fPmq9JMWgWFDelqyLIYWNjYx/EXrVLy8LQZvQnKR7VzQZsbGzsg9htLb395qz0v7m+IgPDxsbGPoKdbzBLBpJ3nnV9ddzGxsbGPoi9CUuz0tIsHZoVlaJcBxsbG/uy7Flpvk0J2mGaV4zvYGNjY5/HniUMSXWqPdC+VVA0M7CxsbEPYufbt4Wh/aXMOhv5FWBjY2OfxJ6Fh3ZY51lpzGyvqD2AjY2NfUF2G2BmAzSzhCFfdbjFxsbGPojdHq7IaeKgMrvKTWMYGxsb+yR2XhLKeW2CsWkMPKErgo2NjX0Qez/OmDd383SiTVqKxAMbGxv7CHYbVJJ0YtZayNOMp414YmNjYx/BTrbfFHTycZzZM4fBDxsbG/sgdjvBUk8DxWEm3z0vckVxGxsbG/vi7NlwTF6gz5OQNoytgig2Njb2Qex85VfQBq12QKdtSLeBExsbG/uK7Dxo7UNdXvSfjQdFw5fY2NjYh7LbwDDbsv1OOwxUNLCxsbGxP5I9y29mgbAd30lOiI2NjY2dh4e2MbAPb/VPgo2NjX0cex8eNmNAsx9j1czAxsbGPog9O0QOnjUDZs+/PXdhY2Njvzv7G4HxRSih9H3fAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
@@ -582,6 +582,7 @@
 </script>
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
@@ -635,6 +636,9 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
     
         <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>
