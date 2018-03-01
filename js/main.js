@@ -8,6 +8,7 @@
         menu = $('#menu'),
         top_menu = $('#top-menu'),
         header = $('#header'),
+        headerTitle = $('#header-title'),
         mask = $('#mask'),
         menuToggle = $('#menu-toggle'),
         menuOff = $('#menu-off'),
@@ -237,6 +238,17 @@
             }
 
             $('#search').addEventListener(even, toggleSearch);
+        },
+        showHeaderTitle: function(top){
+            if(top>75) {
+                headerTitle.classList.remove('hidden');
+            } else {
+                headerTitle.classList.add('hidden');
+            }
+        },
+        autoHideHeader: function(){
+            var headroom  = new Headroom(header);
+            headroom.init();   
         },
         reward: function () {
             var modal = new this.modal('#reward');
@@ -513,6 +525,7 @@
         Blog.toggleGotop(top);
         Blog.toc.fixed(top);
         Blog.toc.actived(top);
+        Blog.showHeaderTitle(top);
     }, false);
 
     if (w.BLOG.SHARE) {
@@ -523,9 +536,7 @@
         Blog.reward()
     }
 
-    var myElement = document.getElementById('header');
-    var headroom  = new Headroom(myElement);
-    headroom.init();   
+    Blog.autoHideHeader();
 
     Blog.noop = noop;
     Blog.even = even;
