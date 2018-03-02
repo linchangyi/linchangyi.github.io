@@ -22,13 +22,13 @@
     
     
     <meta name="keywords" content="JVM">
-    <meta name="description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
+    <meta name="description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解JVM-（3）GC算法">
 <meta property="og:url" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
+<meta property="og:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/复制算法.PNG">
@@ -40,10 +40,10 @@
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG">
-<meta property="og:updated_time" content="2018-03-02T15:53:53.347Z">
+<meta property="og:updated_time" content="2018-03-02T15:55:37.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM-（3）GC算法">
-<meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
+<meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象">
 <meta name="twitter:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
@@ -235,7 +235,7 @@
                     <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure><br>缺点：</p>
+            </figure><br><a id="more"></a><br>缺点：</p>
 <ul>
 <li>效率低</li>
 <li><strong>产生大量不连续的内存碎片</strong></li>
@@ -356,7 +356,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-02T15:53:53.347Z" itemprop="dateUpdated">2018-03-02 23:53:53</time>
+    最后更新时间：<time datetime="2018-03-02T15:55:37.321Z" itemprop="dateUpdated">2018-03-02 23:55:37</time>
 </span><br>
 
 
@@ -398,7 +398,10 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&source=标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象
+                
+                    
+ ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -520,7 +523,10 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&source=标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象
+                
+                    
+ ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
