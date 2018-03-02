@@ -12,10 +12,10 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="lincy.online/2018/03/02/JVM系列-（3）GC算法/">
+    <link rel="canonical" href="lincy.online/2018/03/02/深入理解JVM-（3）GC算法/">
     
     
-    <title>JVM系列-（3）GC算法 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <title>深入理解JVM-（3）GC算法 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -25,26 +25,26 @@
     <meta name="description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM系列-（3）GC算法">
-<meta property="og:url" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/index.html">
+<meta property="og:title" content="深入理解JVM-（3）GC算法">
+<meta property="og:url" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
 <meta property="og:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/复制算法.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/标记整理算法.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/垃圾收集器.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/ParNew收集器.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/ParallelOld收集器.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/cms收集器.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/GC常用参数.PNG">
-<meta property="og:updated_time" content="2018-03-02T15:33:46.080Z">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/复制算法.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/标记整理算法.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/垃圾收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/ParNew收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG">
+<meta property="og:updated_time" content="2018-03-02T15:39:55.198Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM系列-（3）GC算法">
+<meta name="twitter:title" content="深入理解JVM-（3）GC算法">
 <meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
-<meta name="twitter:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG">
+<meta name="twitter:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -159,7 +159,7 @@
                 </a>
             
         </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">JVM系列-（3）GC算法</span>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">深入理解JVM-（3）GC算法</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -181,7 +181,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">JVM系列-（3）GC算法</h1>
+        <h1 class="title">深入理解JVM-（3）GC算法</h1>
         <h5 class="subtitle">
             
                 <time datetime="2018-03-02T13:02:17.000Z" itemprop="datePublished" class="page-time">
@@ -212,11 +212,11 @@
 
 
 <div class="container body-wrap">
-    <article id="post-JVM系列-（3）GC算法"
+    <article id="post-深入理解JVM-（3）GC算法"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">JVM系列-（3）GC算法</h1>
+        <h1 class="post-card-title">深入理解JVM-（3）GC算法</h1>
         <div class="post-meta">
             <time class="post-time" title="2018-03-02 21:02:17" datetime="2018-03-02T13:02:17.000Z"  itemprop="datePublished">2018-03-02</time>
 
@@ -232,7 +232,7 @@
             <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure><br>缺点：</p>
@@ -244,7 +244,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/复制算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/复制算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -264,7 +264,7 @@
 <p><strong>标记过程和标记清除算法一样</strong>，后续步骤<strong>让所有存货的对象都向一端移动，然后清理掉边界以外的内存</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/标记整理算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记整理算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -273,7 +273,7 @@
 <h1 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/垃圾收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/垃圾收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -281,14 +281,14 @@
 <h2 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h2><p>最基本最悠久的收集器，<strong>单线程收集器</strong>，<em>新生代</em>采用<strong>复制算法</strong>。gc时，必须暂停其他所有的工作线程（Stop The World）。<br>单个CPU环境下，效率较高，对于运行在Client模式下的虚拟机是个好选择。<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <h2 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h2><p><strong>Serial收集器的多线程版本</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/ParNew收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParNew收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -306,7 +306,7 @@
 <h2 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h2><p>Serial收集器的老年代版本<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -314,7 +314,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/ParallelOld收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -329,7 +329,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/cms收集器.PNG" alt="CMS收集器" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG" alt="CMS收集器" title="">
                 </div>
                 <div class="image-caption">CMS收集器</div>
             </figure>
@@ -344,7 +344,7 @@
 <h1 id="GC常用参数总结"><a href="#GC常用参数总结" class="headerlink" title="GC常用参数总结"></a>GC常用参数总结</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/GC常用参数.PNG" alt="CMS收集器" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG" alt="CMS收集器" title="">
                 </div>
                 <div class="image-caption">CMS收集器</div>
             </figure>
@@ -356,12 +356,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-02T15:33:46.080Z" itemprop="dateUpdated">2018-03-02 23:33:46</time>
+    最后更新时间：<time datetime="2018-03-02T15:39:55.198Z" itemprop="dateUpdated">2018-03-02 23:39:55</time>
 </span><br>
 
 
         
-        原始链接：<a href="/2018/03/02/JVM系列-（3）GC算法/" target="_blank" rel="external">https://lincy.online/2018/03/02/JVM系列-（3）GC算法/</a>
+        原始链接：<a href="/2018/03/02/深入理解JVM-（3）GC算法/" target="_blank" rel="external">https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/</a>
         
     </div>
     
@@ -388,7 +388,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -398,22 +398,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（3）GC算法》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入理解JVM-（3）GC算法》 — Lincy's Blog&url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -438,9 +438,9 @@
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/03/02/JVM系列-垃圾回收/" id="post-next" class="post-nav-link">
+      <a href="/2018/03/02/深入理解JVM-（2）垃圾回收/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">JVM系列-（2）垃圾回收, 对象已死？</h4>
+        <h4 class="title">深入理解JVM-（2）垃圾回收, 对象已死？</h4>
       </a>
     </div>
   
@@ -510,7 +510,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -520,22 +520,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&title=《深入理解JVM-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（3）GC算法》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入理解JVM-（3）GC算法》 — Lincy's Blog&url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -546,7 +546,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACPUlEQVR42u3a0YrjMAwF0P7/T2dgnxY69VxJyTBOjp9KCcTHBVWW9HrF6/i3/v/8/s3785+eOd7Wp3edvDAwMLZlHMv1aRM95Pot+fPfUDEwMB7A+M0gm4fgZG8YGBgYSbrWC9B5wMXAwMDoBdz589XjwMDAwEgusb1r5xqWpI8n38UxMDA2ZPQaA7/z+fL+BgYGxp9nHMW1Ts7mxbXmrjAwMG7NSDaUf98rok2O45WfKwYGxuaMarCrltvytkF1UOyHXwYDA+N2jHnZq7fRXvPgVT1LDAyMbRnVQa4rqnrV4TAMDIynMZLw2ttEL1nME9DCb4KBgbE5o5rM5QGxWm5LGB/fi4GBcWvG/BKbBOhJK7T8l4CBgXE7RjX5SzaXhMVyv2IdfDEwMB7AqDYs56MY+Q07GRrDwMC4N6O3uWqCeG7DsnCJxcDAuBEjf31CnTQGegeKgYHxBMYk5CWXzOq19pKRMgwMjG0Z61CbDz3kCeJZ1+PCPwYGBsbmjLxhOQmj87AbHTEGBsZNGXk5fl7Pu2LkAgMD4zmMZpwO7sd5Wa2XnmJgYDyB0WsAzFsI5S1WxywwMDBuxDiK64pmZC+JLE+3YWBgbMuoBruklNYrxuXtzMmQGQYGxr6M3iZ6m1u/ZdTsxMDAeAAjr1/lIxrnFtR+OFYMDAyM+HM56wxCbfQWDAwMjOXm8kGKXsMgGVnDwMB4AiNvBlRLZuvEsRegR3dxDAyMDRm9C2TS2szTvl6Zb9TfwMDA2IPxBejTS6kDEEKWAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3a0W7bMAwF0P7/T2dAn1Zg6e4lpaTDjp8Mp7Z0XECkSX18xMfj88jP219/v5I//9iBh4eHN5r6s+PZMPlfJk/4HpnP4Q+vAA8PD+8arw0Gz2AtuwXkT8DDw8P7CbzvF/F8+NmIeHh4eP8iL/nSn5FmwQkPDw/vvbwkhZ2FivbePPAcrrXg4eHhxbwbDbDb52/u7+Hh4f3HvMfimJUM9kXeYoZ4eHh4F3hJOSAJFUnanbPzlD0KGHh4eHhHefsW12zrVVuYaJ/wJe7h4eHhXeC1H/xFOrsILXmYefpMPDw8vAu8PAtt2/+z5DhP8Y81uvDw8PBK3vdTz8sK+9JtO59odDw8PLwLvPbm2TKdBInZToBitnh4eHhHefu2U1vGbQPGagMWHh4e3lFenubWzadRMp03wKIXgYeHh3eBlw/Qbiaoh1+02YoggYeHh7fmzRLf5Nd2k9amcPw0i8bDw8O7wJslqbPNT21K3ZYhijIuHh4e3iFe/sGf8GYNtvw7oAgYeHh4eBd4eWN+Nkze5t9sLCj+h3h4eHgL3qM88hfRFmr35WM8PDy81/DyCe3LtTPMLAXHw8PDez1vP922nJE/py1S4OHh4Z3l5U2pNgC0Zdm2VRa9bjw8PLwLvDyFPdska0PRDI+Hh4f3el6yuiZFgVOl4TxlL6aOh4eHN+K1i++mCJu0svLmVkTFw8PDu8abTaiFtYWMvISx2qGAh4eHN4INy6NxQ2sWNtpNV1+u4OHh4V3gtWvsvoDbbg7Iz2fNNjw8PLwZb7YJoF2m8xLwLDD8pfWFh4eHd4G3CQaz65u7ioQeDw8P74fxkmU6T7LzL4Ci7IuHh4f3Vt6mmJtQ24T+cEqNh4eHd6EYsbmyGSUvVdQbCPDw8PBGvFkDrG1W5WEmn3obuvDw8PDWvF8o6GnOocAM2wAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

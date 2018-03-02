@@ -12,32 +12,30 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="lincy.online/2018/03/02/JVM系列-Java内存结构/">
+    <link rel="canonical" href="lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/">
     
     
-    <title>JVM系列-（1）Java内存结构 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <title>深入理解JVM-（2）垃圾回收, 对象已死？ | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="JVM">
-    <meta name="description" content="运行时数据区域">
+    <meta name="description" content="引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM系列-（1）Java内存结构">
-<meta property="og:url" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/index.html">
+<meta property="og:title" content="深入理解JVM-（2）垃圾回收, 对象已死？">
+<meta property="og:url" content="https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="运行时数据区域">
+<meta property="og:description" content="引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/内存模型.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/句柄.PNG">
-<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/直接指针.PNG">
-<meta property="og:updated_time" content="2018-03-02T12:05:11.946Z">
+<meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/finalize.PNG">
+<meta property="og:updated_time" content="2018-03-02T15:39:48.348Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM系列-（1）Java内存结构">
-<meta name="twitter:description" content="运行时数据区域">
-<meta name="twitter:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/内存模型.PNG">
+<meta name="twitter:title" content="深入理解JVM-（2）垃圾回收, 对象已死？">
+<meta name="twitter:description" content="引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。">
+<meta name="twitter:image" content="https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/finalize.PNG">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -152,7 +150,7 @@
                 </a>
             
         </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">JVM系列-（1）Java内存结构</span>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">深入理解JVM-（2）垃圾回收, 对象已死？</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -174,10 +172,10 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">JVM系列-（1）Java内存结构</h1>
+        <h1 class="title">深入理解JVM-（2）垃圾回收, 对象已死？</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-03-02T07:50:26.000Z" itemprop="datePublished" class="page-time">
+                <time datetime="2018-03-02T09:06:31.000Z" itemprop="datePublished" class="page-time">
   2018-03-02
 </time>
 
@@ -198,20 +196,20 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行时数据区域"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行时数据区域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#程序计数器"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">程序计数器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">虚拟机栈</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地方法栈"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">本地方法栈</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java堆"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Java堆</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方法区"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">方法区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行时常量池"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">运行时常量池</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#直接内存"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">直接内存</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对象的引用"><span class="post-toc-number">2.</span> <span class="post-toc-text">对象的引用</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#引用计数法"><span class="post-toc-number">1.</span> <span class="post-toc-text">引用计数法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#根搜索算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">根搜索算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#引用"><span class="post-toc-number">3.</span> <span class="post-toc-text">引用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#强引用"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">强引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#软引用"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">软引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#弱引用"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">弱引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚引用"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">虚引用</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生还是死"><span class="post-toc-number">4.</span> <span class="post-toc-text">生还是死</span></a></li></ol>
         </nav>
     </aside>
     
 
 
 <div class="container body-wrap">
-    <article id="post-JVM系列-Java内存结构"
+    <article id="post-深入理解JVM-（2）垃圾回收"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">JVM系列-（1）Java内存结构</h1>
+        <h1 class="post-card-title">深入理解JVM-（2）垃圾回收, 对象已死？</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-03-02 15:50:26" datetime="2018-03-02T07:50:26.000Z"  itemprop="datePublished">2018-03-02</time>
+            <time class="post-time" title="2018-03-02 17:06:31" datetime="2018-03-02T09:06:31.000Z"  itemprop="datePublished">2018-03-02</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
@@ -222,43 +220,30 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-Java内存结构/内存模型.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+            <h1 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h1><p>算法：引用计数为0即为死对象<br>缺陷: 无法解决循环引用的问题，JDK不采用这种方法。</p>
 <a id="more"></a>
-<h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>线程私有， 当前线程所执行的字节码的行号指示器，可以通过改变这个计数器的值来选取吓一跳需要执行的字节码指令。</p>
-<h2 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h2><p>线程私有，生命周期与线程相同。<br>描述Java方法执行的内存模型，每个方法被执行都会创建一个栈帧用于<strong>存储局部变量表、操作栈、动态链接、方法出口等信息</strong>。每一个方法从调用到执行完成的过程，对应一个栈帧再虚拟机栈中从入栈到出栈的过程。</p>
-<p>如果请求的栈深度超过虚拟机所允许的深度，将抛出StackOverflowError异常；如果虚拟机栈动态扩展无法申请得到足够的内存，将会排除OutOfMemoryError。</p>
-<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>跟虚拟机栈类似，本地方法栈服务于Native方法</p>
-<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><p><strong>被所有线程共享，目的是存放对象实例</strong>(对象实例不一定都分配在Java堆上，也可能在栈上——逃逸分析、栈上分配)。</p>
-<p>GC的主要区域。通过-Xms和-Xmx控制扩展大小，无法扩展时，抛出OutOfMemoryError。</p>
-<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p><strong>线程共享，存储类信息、常量、静态变量、即时编译器编译后的代码等数据</strong>。习惯称为<strong>永久代</strong>。<br>垃圾收集在这个区域较少出现，但数据也并非“永久”存在。</p>
-<p>可能会抛出OutOfMemoryError。典型场景如Spring和Hibernate对类增强时，用到CGLib字节码技术，增强的类越多，就需要越大的方法区来保证动态生成的Class可以载入内存。</p>
-<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p>属于方法区的一部分，<strong>存放编译器生成的各种字面量和符号引用</strong>。</p>
-<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p>堆外内存。NIO基于通道（channel）与缓冲区（buffer），使用Nativ函数直接分配堆外内存。因为避免了在Java堆和Navite堆中来回复制数据，所以可以提高性能。</p>
-<h1 id="对象的引用"><a href="#对象的引用" class="headerlink" title="对象的引用"></a>对象的引用</h1><p>两种方式:</p>
+<h1 id="根搜索算法"><a href="#根搜索算法" class="headerlink" title="根搜索算法"></a>根搜索算法</h1><p>根对象——GC Roots：</p>
 <ul>
-<li>通过句柄<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-Java内存结构/句柄.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></li>
-<li>通过直接指针<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-Java内存结构/直接指针.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-</li>
+<li><strong>虚拟机栈中引用的对象（栈帧中的本地变量表）</strong></li>
+<li><strong>方法去中的静态属性引用的对象</strong></li>
+<li><strong>方法区中常量引用的对象</strong></li>
+<li><strong>本地方法栈中JNI（Native方法）的引用的对象</strong></li>
 </ul>
-<p>直接指针速度优于句柄方式，因为少了一次寻址。Sun HotSpot（JDK默认）采用直接指针方式。</p>
+<p>不能从GC Roots追溯到的对象，为可回收的对象。</p>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><ul>
+<li><h2 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h2>  类似 “Object obj = new Object()”，只要强引用还在，就不会被回收</li>
+<li><h2 id="软引用"><a href="#软引用" class="headerlink" title="软引用"></a>软引用</h2>  JDK中提供的SoftReference类——还有用，但并非必须的对象。<strong>在内存溢出之前，会把软引用对象列进回收范围，进行二次回收</strong>，如果还是没有足够的内存，才会抛出内存溢出异常。</li>
+<li><h2 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h2>  WeakReference——非必需对象，只能生存到下一次垃圾收集之前。无论当前内存是否足够，都会回收掉弱引用对象。</li>
+<li><h2 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h2>  PhantomReference——完全不会对对象的生存构成影响，也无法通过其获取对象实例，唯一的目的是对象被垃圾回收时收到一个系统通知。</li>
+</ul>
+<h1 id="生还是死"><a href="#生还是死" class="headerlink" title="生还是死"></a>生还是死</h1><p>根搜索算法中不可达的对象，并非“非死不可”，可以通过finalize()方法自救：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/深入理解JVM-（2）垃圾回收/finalize.PNG" alt="finalize执行流程" title="">
+                </div>
+                <div class="image-caption">finalize执行流程</div>
+            </figure></p>
+<p>不建议使用finalize(), 应使用try-finally, 更好更及时。</p>
 
         </div>
 
@@ -267,12 +252,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-02T12:05:11.946Z" itemprop="dateUpdated">2018-03-02 20:05:11</time>
+    最后更新时间：<time datetime="2018-03-02T15:39:48.348Z" itemprop="dateUpdated">2018-03-02 23:39:48</time>
 </span><br>
 
 
         
-        原始链接：<a href="/2018/03/02/JVM系列-Java内存结构/" target="_blank" rel="external">https://lincy.online/2018/03/02/JVM系列-Java内存结构/</a>
+        原始链接：<a href="/2018/03/02/深入理解JVM-（2）垃圾回收/" target="_blank" rel="external">https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/</a>
         
     </div>
     
@@ -299,7 +284,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/&title=《深入理解JVM-（2）垃圾回收, 对象已死？》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -309,26 +294,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&source=运行时数据区域
-                
-                    
-                    
-          ..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/&title=《深入理解JVM-（2）垃圾回收, 对象已死？》 — Lincy's Blog&source=引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（1）Java内存结构》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入理解JVM-（2）垃圾回收, 对象已死？》 — Lincy's Blog&url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -351,18 +332,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/03/02/JVM系列-垃圾回收/" id="post-prev" class="post-nav-link">
+      <a href="/2018/03/02/深入理解JVM-（3）GC算法/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">JVM系列-（2）垃圾回收, 对象已死？</h4>
+        <h4 class="title">深入理解JVM-（3）GC算法</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/02/16/New-Year-s-Day/" id="post-next" class="post-nav-link">
+      <a href="/2018/03/02/深入理解JVM-（1）Java内存结构/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">New Year&#39;s Day</h4>
+        <h4 class="title">深入理解JVM-（1）Java内存结构</h4>
       </a>
     </div>
   
@@ -432,7 +413,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/&title=《深入理解JVM-（2）垃圾回收, 对象已死？》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -442,26 +423,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&source=运行时数据区域
-                
-                    
-                    
-          ..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/&title=《深入理解JVM-（2）垃圾回收, 对象已死？》 — Lincy's Blog&source=引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（1）Java内存结构》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入理解JVM-（2）垃圾回收, 对象已死？》 — Lincy's Blog&url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/深入理解JVM-（2）垃圾回收/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -472,7 +449,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3awY6DMAxF0f7/TzPbSqPQ++xQFXOzqkoLOSwsO/brhdfxtlbfv189Fuv96v/Pq2+2LRkyZNyWcZwust1z6uoqv//53mTIkPEcxurBZLvnWyRP4eF4+b0MGTJk4Ft/CIs40ZQhQ4aMDqP2SH4HGTJkyOgUsdcF3K/W4jJkyLghg5+6f//zJf0NGTJk3IpxhKvTzkzTwWBXMmTIGM3gAY4nZHtTw2A/MmTIGM3gZSQ69gobkzyUFw/dZMiQMZRRqxbTYjh9fYgnQ4aMcQzi6yRttfZkHOhlyJAxmpH+LW1tdhLEYjktQ4aMoYza1vujEvz3cZdVhgwZQxnpLdLWJh/gOP/N8l8yZMh4AIOEvDTIbhj5qnViZciQMYhxHhx5Ubr3KI0cBQanhjJkyLg5g6R0vHlAKso0+eMvVIYMGbMZaWHZmekgG+VtSxkyZDyHUUvj0gTxisEONn8hQ4aMezPIUdqug/saL5i9lSFDxlAGCXNpq6BzT/7iPhy3yZAhYygjTRbJi7jioC0oYmXIkDGOwdsDfHNXBN8NqaEMGTJuzni1Fz+8S5/44b8yZMgYyjjCxR+QDlu02gwyZMgYzagFu/Sgv99s4EWvDBkypjJqZWQtIJJAnI69ypAh4zkMHvj4kEQ6UrahlJUhQ4YMHKD5i4iHKtJzPhkyZMgojYXV2qiXB1wZMmT8PIMUsZ3kLx3FIE+UIUPGcxj9vIuPjpFgXWsVyJAhYyjjD+5d2xnb8VPdAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3awW7kQAgFQP//T2evOaw9D2icRCqfomhiUx3JMMB1xdfX43X3meRvv3/y7onff3NtXHh4eHgvhv784Ls7PDOe75DHjIeHh7fNy2+dB/d8iNWg83jw8PDw/iIvSSEb5TUeHh7eb+ZVA60W6EkKwcPDw/tZXl7C5gV03pjI08NirwUPDw+vNm+68nB/w88r8z08PDy88VT9VJKoHl8vGfwnWjw8PLwFXrVEzlcH8lZFM+ggTjw8PLwN3uSmees2WRSoFvRR2wIPDw/vFV7SZq0O9fPFglMN32iShoeHh9fizUOfr23Nh3CF+R4eHh7emJcngPyt2wsoP+JCaY6Hh4e3wOs1XrfTSX70hVYvHh4e3iFe3kSYtGirBXe1eXF7WHh4eHgLvLyZOxmGJSkkP75yKsLDw8Nb4+01XvPlgN6hfIgZDw8Pb4FX/fJ/6iCq5XJ10QEPDw9vg5c3CzbSRtJ6aPakq7tdeHh4eDFvMgb7Cq486N7iQt4yxsPDw9vj9V7W86nTJEWN/od4eHh4xQiTcM8GkZTj+UF8WFbAw8PDe4XXex0nxfF8SFZORXh4eHgLvOry07wUriaGpH38Ib3h4eHhHeX1lqJ66aSXGHojtKuac/Dw8PBiXkLNSeWMFI/f8nvexomHh4d3lNe7xTygJC1VR1/laR4eHh7emHd2qJ+nhOrCQeHrAR4eHt4yL/+Sn4+s8v5As9EwmZjh4eHhDR5QXW/qNSN6I7fmX+Hh4eEt8CYv8UnzorqSNW+I4OHh4Z3lzZNB0pKYPKWaGAqFNR4eHt6Al0yOem3c6upANXeVVwfw8PDwXufNU0h+h15so8SAh4eH9wqvipm0g6vLDXh4eHh7vCSUyfJTXi5PyvRRrwUPDw+vVqOWF7N6I7F8Fpcgr1MXHh4eXsr7BxDdIhbUjNXyAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

@@ -183,7 +183,7 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-JVM系列-（3）GC算法"
+            <article id="post-深入理解JVM-（3）GC算法"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -201,7 +201,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/JVM系列-（3）GC算法/">JVM系列-（3）GC算法</a>
+      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（3）GC算法/">深入理解JVM-（3）GC算法</a>
     </h3>
   
 
@@ -214,7 +214,7 @@
         <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure><br>缺点：</p>
@@ -226,7 +226,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/复制算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/复制算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -246,7 +246,7 @@
 <p><strong>标记过程和标记清除算法一样</strong>，后续步骤<strong>让所有存货的对象都向一端移动，然后清理掉边界以外的内存</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/标记整理算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记整理算法.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -255,7 +255,7 @@
 <h1 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/垃圾收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/垃圾收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -263,14 +263,14 @@
 <h2 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h2><p>最基本最悠久的收集器，<strong>单线程收集器</strong>，<em>新生代</em>采用<strong>复制算法</strong>。gc时，必须暂停其他所有的工作线程（Stop The World）。<br>单个CPU环境下，效率较高，对于运行在Client模式下的虚拟机是个好选择。<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <h2 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h2><p><strong>Serial收集器的多线程版本</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/ParNew收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParNew收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -288,7 +288,7 @@
 <h2 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h2><p>Serial收集器的老年代版本<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -296,7 +296,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/ParallelOld收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -311,7 +311,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/cms收集器.PNG" alt="CMS收集器" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG" alt="CMS收集器" title="">
                 </div>
                 <div class="image-caption">CMS收集器</div>
             </figure>
@@ -326,14 +326,14 @@
 <h1 id="GC常用参数总结"><a href="#GC常用参数总结" class="headerlink" title="GC常用参数总结"></a>GC常用参数总结</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-（3）GC算法/GC常用参数.PNG" alt="CMS收集器" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG" alt="CMS收集器" title="">
                 </div>
                 <div class="image-caption">CMS收集器</div>
             </figure>
 
     
 
-        <a href="/2018/03/02/JVM系列-（3）GC算法/" class="post-more waves-effect waves-button">
+        <a href="/2018/03/02/深入理解JVM-（3）GC算法/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -349,7 +349,7 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-JVM系列-垃圾回收"
+            <article id="post-深入理解JVM-（2）垃圾回收"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -367,7 +367,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/JVM系列-垃圾回收/">JVM系列-（2）垃圾回收, 对象已死？</a>
+      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（2）垃圾回收/">深入理解JVM-（2）垃圾回收, 对象已死？</a>
     </h3>
   
 
@@ -380,7 +380,7 @@
         <h1 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h1><p>算法：引用计数为0即为死对象<br>缺陷: 无法解决循环引用的问题，JDK不采用这种方法。</p>
     
 
-        <a href="/2018/03/02/JVM系列-垃圾回收/" class="post-more waves-effect waves-button">
+        <a href="/2018/03/02/深入理解JVM-（2）垃圾回收/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -396,7 +396,7 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-JVM系列-Java内存结构"
+            <article id="post-深入理解JVM-（1）Java内存结构"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -414,7 +414,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/JVM系列-Java内存结构/">JVM系列-（1）Java内存结构</a>
+      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（1）Java内存结构/">深入理解JVM-（1）Java内存结构</a>
     </h3>
   
 
@@ -427,13 +427,13 @@
         <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-Java内存结构/内存模型.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（1）Java内存结构/内存模型.PNG" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
     
 
-        <a href="/2018/03/02/JVM系列-Java内存结构/" class="post-more waves-effect waves-button">
+        <a href="/2018/03/02/深入理解JVM-（1）Java内存结构/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
