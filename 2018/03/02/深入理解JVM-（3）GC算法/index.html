@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG">
-<meta property="og:updated_time" content="2018-03-02T15:46:47.946Z">
+<meta property="og:updated_time" content="2018-03-02T15:53:53.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM-（3）GC算法">
 <meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
@@ -258,7 +258,7 @@
 <ul>
 <li><strong>将内存分为一块较大的Eden空间和两块较小的Survior空间（默认是8：1，这样只浪费10%的空间），每次使用Eden和其中的一块Survior。</strong></li>
 <li><strong>回收时，将Eden和Survior中还存活着的对象一次性拷贝到另一块Survior上，最后清理掉Eden和刚刚的Survior。</strong></li>
-<li><strong>但是没办法保证每次都只有10%的对象存货</strong>，有时还需要以来其他内存（老年代）分配担保。<strong>如果一块Survior无法容纳一次新生代gc存活下来的对象，那么这些对象将直接进入老年代</strong></li>
+<li><strong>但是没办法保证每次都只有10%的对象存活</strong>，有时还需要以来其他内存（老年代）分配担保。<strong>如果一块Survior无法容纳一次新生代gc存活下来的对象，那么这些对象将直接进入老年代</strong></li>
 </ul>
 <h1 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h1><p>标记-整理算法适用于存活率较高的老年代。(不适用复制算法，存活率高要复制的内存多，且浪费的空间大)</p>
 <p><strong>标记过程和标记清除算法一样</strong>，后续步骤<strong>让所有存货的对象都向一端移动，然后清理掉边界以外的内存</strong><br><figure class="image-bubble">
@@ -356,7 +356,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-02T15:46:47.946Z" itemprop="dateUpdated">2018-03-02 23:46:47</time>
+    最后更新时间：<time datetime="2018-03-02T15:53:53.347Z" itemprop="dateUpdated">2018-03-02 23:53:53</time>
 </span><br>
 
 
