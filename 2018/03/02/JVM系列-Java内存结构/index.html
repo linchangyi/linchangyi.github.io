@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="lincy.online/2018/03/02/JVM系列-Java内存结构/">
+    
+    
+    <title>JVM系列-（1）Java内存结构 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JVM">
+    <meta name="description" content="运行时数据区域">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM系列-（1）Java内存结构">
+<meta property="og:url" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/index.html">
+<meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="运行时数据区域">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/内存模型.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/句柄.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/直接指针.PNG">
+<meta property="og:updated_time" content="2018-03-02T12:05:11.946Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM系列-（1）Java内存结构">
+<meta name="twitter:description" content="运行时数据区域">
+<meta name="twitter:image" content="https://lincy.online/2018/03/02/JVM系列-Java内存结构/内存模型.PNG">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lincy</h5>
+          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linchangyi" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-link"></i>
+                about
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <div class="top-menu" id="top-menu">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+            <i class="icon icon-lg icon-navicon"></i>
+            </a>
+            
+                <a href="/" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">JVM系列-（1）Java内存结构</span>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JVM系列-（1）Java内存结构</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-02T07:50:26.000Z" itemprop="datePublished" class="page-time">
+  2018-03-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行时数据区域"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行时数据区域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#程序计数器"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">程序计数器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">虚拟机栈</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地方法栈"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">本地方法栈</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java堆"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Java堆</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方法区"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">方法区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行时常量池"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">运行时常量池</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#直接内存"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">直接内存</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对象的引用"><span class="post-toc-number">2.</span> <span class="post-toc-text">对象的引用</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+
+<div class="container body-wrap">
+    <article id="post-JVM系列-Java内存结构"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JVM系列-（1）Java内存结构</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-02 15:50:26" datetime="2018-03-02T07:50:26.000Z"  itemprop="datePublished">2018-03-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/JVM系列-Java内存结构/内存模型.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<a id="more"></a>
+<h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>线程私有， 当前线程所执行的字节码的行号指示器，可以通过改变这个计数器的值来选取吓一跳需要执行的字节码指令。</p>
+<h2 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h2><p>线程私有，生命周期与线程相同。<br>描述Java方法执行的内存模型，每个方法被执行都会创建一个栈帧用于<strong>存储局部变量表、操作栈、动态链接、方法出口等信息</strong>。每一个方法从调用到执行完成的过程，对应一个栈帧再虚拟机栈中从入栈到出栈的过程。</p>
+<p>如果请求的栈深度超过虚拟机所允许的深度，将抛出StackOverflowError异常；如果虚拟机栈动态扩展无法申请得到足够的内存，将会排除OutOfMemoryError。</p>
+<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>跟虚拟机栈类似，本地方法栈服务于Native方法</p>
+<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><p><strong>被所有线程共享，目的是存放对象实例</strong>(对象实例不一定都分配在Java堆上，也可能在栈上——逃逸分析、栈上分配)。</p>
+<p>GC的主要区域。通过-Xms和-Xmx控制扩展大小，无法扩展时，抛出OutOfMemoryError。</p>
+<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p><strong>线程共享，存储类信息、常量、静态变量、即时编译器编译后的代码等数据</strong>。习惯称为<strong>永久代</strong>。<br>垃圾收集在这个区域较少出现，但数据也并非“永久”存在。</p>
+<p>可能会抛出OutOfMemoryError。典型场景如Spring和Hibernate对类增强时，用到CGLib字节码技术，增强的类越多，就需要越大的方法区来保证动态生成的Class可以载入内存。</p>
+<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p>属于方法区的一部分，<strong>存放编译器生成的各种字面量和符号引用</strong>。</p>
+<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p>堆外内存。NIO基于通道（channel）与缓冲区（buffer），使用Nativ函数直接分配堆外内存。因为避免了在Java堆和Navite堆中来回复制数据，所以可以提高性能。</p>
+<h1 id="对象的引用"><a href="#对象的引用" class="headerlink" title="对象的引用"></a>对象的引用</h1><p>两种方式:</p>
+<ul>
+<li>通过句柄<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/JVM系列-Java内存结构/句柄.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+<li>通过直接指针<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/JVM系列-Java内存结构/直接指针.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ul>
+<p>直接指针速度优于句柄方式，因为少了一次寻址。Sun HotSpot（JDK默认）采用直接指针方式。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-03-02T12:05:11.946Z" itemprop="dateUpdated">2018-03-02 20:05:11</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/03/02/JVM系列-Java内存结构/" target="_blank" rel="external">https://lincy.online/2018/03/02/JVM系列-Java内存结构/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&source=运行时数据区域
+                
+                    
+                    
+          ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（1）Java内存结构》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/02/JVM系列-垃圾回收/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JVM系列-（2）垃圾回收, 对象已死？</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/02/16/New-Year-s-Day/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">New Year&#39;s Day</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+        <p><span>Lincy &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
+                
+                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&title=《JVM系列-（1）Java内存结构》 — Lincy's Blog&source=运行时数据区域
+                
+                    
+                    
+          ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（1）Java内存结构》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-Java内存结构/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3awY6DMAxF0f7/TzPbSqPQ++xQFXOzqkoLOSwsO/brhdfxtlbfv189Fuv96v/Pq2+2LRkyZNyWcZwust1z6uoqv//53mTIkPEcxurBZLvnWyRP4eF4+b0MGTJk4Ft/CIs40ZQhQ4aMDqP2SH4HGTJkyOgUsdcF3K/W4jJkyLghg5+6f//zJf0NGTJk3IpxhKvTzkzTwWBXMmTIGM3gAY4nZHtTw2A/MmTIGM3gZSQ69gobkzyUFw/dZMiQMZRRqxbTYjh9fYgnQ4aMcQzi6yRttfZkHOhlyJAxmpH+LW1tdhLEYjktQ4aMoYza1vujEvz3cZdVhgwZQxnpLdLWJh/gOP/N8l8yZMh4AIOEvDTIbhj5qnViZciQMYhxHhx5Ubr3KI0cBQanhjJkyLg5g6R0vHlAKso0+eMvVIYMGbMZaWHZmekgG+VtSxkyZDyHUUvj0gTxisEONn8hQ4aMezPIUdqug/saL5i9lSFDxlAGCXNpq6BzT/7iPhy3yZAhYygjTRbJi7jioC0oYmXIkDGOwdsDfHNXBN8NqaEMGTJuzni1Fz+8S5/44b8yZMgYyjjCxR+QDlu02gwyZMgYzagFu/Sgv99s4EWvDBkypjJqZWQtIJJAnI69ypAh4zkMHvj4kEQ6UrahlJUhQ4YMHKD5i4iHKtJzPhkyZMgojYXV2qiXB1wZMmT8PIMUsZ3kLx3FIE+UIUPGcxj9vIuPjpFgXWsVyJAhYyjjD+5d2xnb8VPdAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu != 1){
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 1 );
+        }
+    })();
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <script type="text/javascript" alpha="0.2" src="/js/ribbon.min.js"></script>
+    
+    
+</body>
+</html>

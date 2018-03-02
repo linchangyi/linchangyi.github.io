@@ -12,27 +12,30 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="lincy.online/2018/02/16/New-Year-s-Day/">
+    <link rel="canonical" href="lincy.online/2018/03/02/JVM系列-垃圾回收/">
     
     
-    <title>New Year&#39;s Day | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <title>JVM系列-（2）垃圾回收, 对象已死？ | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
-    <meta name="description" content="2018I will be with you againI will begin again">
+    <meta name="keywords" content="JVM">
+    <meta name="description" content="引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="New Year&#39;s Day">
-<meta property="og:url" content="https://lincy.online/2018/02/16/New-Year-s-Day/index.html">
+<meta property="og:title" content="JVM系列-（2）垃圾回收, 对象已死？">
+<meta property="og:url" content="https://lincy.online/2018/03/02/JVM系列-垃圾回收/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="2018I will be with you againI will begin again">
+<meta property="og:description" content="引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-16T06:25:45.952Z">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-垃圾回收/finalize.PNG">
+<meta property="og:updated_time" content="2018-03-02T12:05:11.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="New Year&#39;s Day">
-<meta name="twitter:description" content="2018I will be with you againI will begin again">
+<meta name="twitter:title" content="JVM系列-（2）垃圾回收, 对象已死？">
+<meta name="twitter:description" content="引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。">
+<meta name="twitter:image" content="https://lincy.online/2018/03/02/JVM系列-垃圾回收/finalize.PNG">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -147,7 +150,7 @@
                 </a>
             
         </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">New Year&#39;s Day</span>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">JVM系列-（2）垃圾回收, 对象已死？</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -169,15 +172,15 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">New Year&#39;s Day</h1>
+        <h1 class="title">JVM系列-（2）垃圾回收, 对象已死？</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-02-15T16:35:59.000Z" itemprop="datePublished" class="page-time">
-  2018-02-16
+                <time datetime="2018-03-02T09:06:31.000Z" itemprop="datePublished" class="page-time">
+  2018-03-02
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/生活/">生活</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
 
             
         </h5>
@@ -190,18 +193,26 @@
 
 
 
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#引用计数法"><span class="post-toc-number">1.</span> <span class="post-toc-text">引用计数法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#根搜索算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">根搜索算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#引用"><span class="post-toc-number">3.</span> <span class="post-toc-text">引用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#强引用"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">强引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#软引用"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">软引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#弱引用"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">弱引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚引用"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">虚引用</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生还是死"><span class="post-toc-number">4.</span> <span class="post-toc-text">生还是死</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
 
 <div class="container body-wrap">
-    <article id="post-New-Year-s-Day"
+    <article id="post-JVM系列-垃圾回收"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">New Year's Day</h1>
+        <h1 class="post-card-title">JVM系列-（2）垃圾回收, 对象已死？</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-02-16 00:35:59" datetime="2018-02-15T16:35:59.000Z"  itemprop="datePublished">2018-02-16</time>
+            <time class="post-time" title="2018-03-02 17:06:31" datetime="2018-03-02T09:06:31.000Z"  itemprop="datePublished">2018-03-02</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/生活/">生活</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
 
 
 
@@ -209,9 +220,30 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <embed src="https://www.xiami.com/widget/1722104_2080749/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
-
-<p>2018<br>I will be with you again<br>I will begin again</p>
+            <h1 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h1><p>算法：引用计数为0即为死对象<br>缺陷: 无法解决循环引用的问题，JDK不采用这种方法。</p>
+<a id="more"></a>
+<h1 id="根搜索算法"><a href="#根搜索算法" class="headerlink" title="根搜索算法"></a>根搜索算法</h1><p>根对象——GC Roots：</p>
+<ul>
+<li><strong>虚拟机栈中引用的对象（栈帧中的本地变量表）</strong></li>
+<li><strong>方法去中的静态属性引用的对象</strong></li>
+<li><strong>方法区中常量引用的对象</strong></li>
+<li><strong>本地方法栈中JNI（Native方法）的引用的对象</strong></li>
+</ul>
+<p>不能从GC Roots追溯到的对象，为可回收的对象。</p>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><ul>
+<li><h2 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h2>  类似 “Object obj = new Object()”，只要强引用还在，就不会被回收</li>
+<li><h2 id="软引用"><a href="#软引用" class="headerlink" title="软引用"></a>软引用</h2>  JDK中提供的SoftReference类——还有用，但并非必须的对象。<strong>在内存溢出之前，会把软引用对象列进回收范围，进行二次回收</strong>，如果还是没有足够的内存，才会抛出内存溢出异常。</li>
+<li><h2 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h2>  WeakReference——非必需对象，只能生存到下一次垃圾收集之前。无论当前内存是否足够，都会回收掉弱引用对象。</li>
+<li><h2 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h2>  PhantomReference——完全不会对对象的生存构成影响，也无法通过其获取对象实例，唯一的目的是对象被垃圾回收时收到一个系统通知。</li>
+</ul>
+<h1 id="生还是死"><a href="#生还是死" class="headerlink" title="生还是死"></a>生还是死</h1><p>根搜索算法中不可达的对象，并非“非死不可”，可以通过finalize()方法自救：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/JVM系列-垃圾回收/finalize.PNG" alt="finalize执行流程" title="">
+                </div>
+                <div class="image-caption">finalize执行流程</div>
+            </figure></p>
+<p>不建议使用finalize(), 应使用try-finally, 更好更及时。</p>
 
         </div>
 
@@ -220,12 +252,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-02-16T06:25:45.952Z" itemprop="dateUpdated">2018-02-16 14:25:45</time>
+    最后更新时间：<time datetime="2018-03-02T12:05:11.968Z" itemprop="dateUpdated">2018-03-02 20:05:11</time>
 </span><br>
 
 
         
-        原始链接：<a href="/2018/02/16/New-Year-s-Day/" target="_blank" rel="external">https://lincy.online/2018/02/16/New-Year-s-Day/</a>
+        原始链接：<a href="/2018/03/02/JVM系列-垃圾回收/" target="_blank" rel="external">https://lincy.online/2018/03/02/JVM系列-垃圾回收/</a>
         
     </div>
     
@@ -242,6 +274,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+
 
             
 <div class="page-share-wrap">
@@ -250,7 +284,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/02/16/New-Year-s-Day/&title=《New Year's Day》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/&title=《JVM系列-（2）垃圾回收, 对象已死？》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -260,22 +294,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/02/16/New-Year-s-Day/&title=《New Year's Day》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/&title=《JVM系列-（2）垃圾回收, 对象已死？》 — Lincy's Blog&source=引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/02/16/New-Year-s-Day/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-垃圾回收/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《New Year's Day》 — Lincy's Blog&url=https://lincy.online/2018/02/16/New-Year-s-Day/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（2）垃圾回收, 对象已死？》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/02/16/New-Year-s-Day/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -298,18 +332,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/03/02/JVM系列-Java内存结构/" id="post-prev" class="post-nav-link">
+      <a href="/2018/03/02/JVM系列-（3）GC算法/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">JVM系列-（1）Java内存结构</h4>
+        <h4 class="title">JVM系列-（3）GC算法</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/02/13/责任链模式/" id="post-next" class="post-nav-link">
+      <a href="/2018/03/02/JVM系列-Java内存结构/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">责任链模式</h4>
+        <h4 class="title">JVM系列-（1）Java内存结构</h4>
       </a>
     </div>
   
@@ -379,7 +413,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/02/16/New-Year-s-Day/&title=《New Year's Day》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/&title=《JVM系列-（2）垃圾回收, 对象已死？》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -389,22 +423,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/02/16/New-Year-s-Day/&title=《New Year's Day》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/&title=《JVM系列-（2）垃圾回收, 对象已死？》 — Lincy's Blog&source=引用计数法算法：引用计数为0即为死对象缺陷: 无法解决循环引用的问题，JDK不采用这种方法。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/02/16/New-Year-s-Day/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-垃圾回收/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《New Year's Day》 — Lincy's Blog&url=https://lincy.online/2018/02/16/New-Year-s-Day/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（2）垃圾回收, 对象已死？》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/02/16/New-Year-s-Day/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-垃圾回收/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -415,7 +449,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aQY7jMAwEwPn/p7PXWezE6RY9C1gqnQI7iVU+EBTJr694vb6t5O7rzfp+99/P767ctjAwMB7LeF2u640m1PxX+ev4gYqBgXEA410EW/vO9StY+58Pe8bAwMAIksI8OCaJJgYGBsaEsRYc15JLDAwMjPYQ2wbZtjzXPgsDA+McRl51//+ff6W/gYGB8SjGWuhsGwBJoW2yMDAw9mbkAW4t7ZsMZ9TDHxgYGFszroNmPuzVHlPXQnn06jEwMA5g5JtoWwv5WFjeSMDAwDiHkR9N8+/UgXJpIAMDA2NvRlsym6eJc3A0LYKBgbEpI0/d1jbaJoJRWQ0DA+NIxmTCYT6o0TL+6sRiYGAcwJiU0q6vTLYbXcfAwNiasTbokCR594bpKARjYGBszbi3xTg5oLbDFnULEwMD44GMex+8Vm5ba5T+cIjFwMDYlNG2Ctq2QZt0tunpYscDAwPjgYy1globXvOeY9QMwMDAOIzRNhfbMlmeOE7SRAwMjL0ZeehMwmWbMratyrdPx8DAOJjRthLzLbapYZQUYmBgbM2Yl8/WRi6iLeZjFhgYGNsxXuVqq/RrTYW8zYmBgXECY7KtdgAiD7L54bnGYGBgPJaRBNnk79qj7yTFrBNEDAyMLRh3NTXbclub6n3IczEwMDCWjqltwG0bDxgYGBjzwv1dwxkfnoWBgXEAIznEts2DycBZW7zDwMDYm9EeHfPD53wgY/J0DAyMLRh/AJHTslCslE3OAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOElEQVR42u3aQW7DMAxE0dz/0u62QGD5D2kXNfW1CoIk1stiQJH6fPA6vtbv989ep986e+e2JUOGjNcyjuX6/gz/FvkL+HPXT5EhQ8YOjLMEW4fp+h2SkPz1xZ5lyJAhY7lpUg6irciQIUPGAwz+SLJkyJAhY81If5ofONcw8vfdfBaXIUPGCxm86/73rx+Zb8iQIeNVjCNc/TFnJ15PdyVDhozRjLSJX7tmQaikZLz4pAwZMoYy0hY/b37VGmrr/Zw+V4YMGaMZQSqnP1FqsaUXOGTIkLEDI728xcvEzngyHR7IkCFjB0ZtKJi21Uiw8qCXIUPGPgwSgmnRRg6lnYZdPGWVIUPGUEb/OldaXJLT9kXEy5AhYzQjjeA1j/8pteFl8HkZMmSMYPAH1waZnQMwCd+gepUhQ8ZrGbywS69E8I3WLlugppsMGTKGMmrjgbQDVgtTdGdEhgwZ2zA6xWLt2n1/pCpDhoypjAMsUpx1Rphp+KKQlSFDxiBGrZhLI/KJAjGebMiQIePljFrDq1ZopodSfkiWIUPGDgwetaRMTC+88sL0YngpQ4aMDRi1Bn1tYNAJ8YvAlSFDxiDGEa40XjsNuyB2ZciQMZpxW2aXQpa359KRgwwZMuYxaiPMWntu/ZROq06GDBk7MDrBx8eW6cAyGDnIkCFDRuORaeAWa1gZMmTIaAwM+CCBR/ODgStDhox/zOi0+3lo1sYDKKxlyJAxmtGpu0ghyDdNfrk1yJQhQ8b7GD/kz1WDKHKRfAAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

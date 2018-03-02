@@ -12,23 +12,39 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="lincy.online/">
+    <link rel="canonical" href="lincy.online/2018/03/02/JVM系列-（3）GC算法/">
     
     
-    <title>Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <title>JVM系列-（3）GC算法 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Lincy&#39;s Blog">
-<meta property="og:url" content="https://lincy.online/index.html">
+    <meta name="keywords" content="JVM">
+    <meta name="description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM系列-（3）GC算法">
+<meta property="og:url" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/复制算法.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/标记整理算法.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/垃圾收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/ParNew收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/serial收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/ParallelOld收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/cms收集器.PNG">
+<meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/GC常用参数.PNG">
+<meta property="og:updated_time" content="2018-03-02T15:26:53.453Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lincy&#39;s Blog">
+<meta name="twitter:title" content="JVM系列-（3）GC算法">
+<meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
+<meta name="twitter:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -63,7 +79,7 @@
     <div class="scroll-wrap flex-col">
       <ul class="nav">
         
-            <li class="waves-block waves-effect active">
+            <li class="waves-block waves-effect">
               <a href="/"  >
                 <i class="icon icon-lg icon-home"></i>
                 Home
@@ -143,7 +159,7 @@
                 </a>
             
         </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">Lincy&#39;s Blog</span>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">JVM系列-（3）GC算法</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -162,13 +178,19 @@
         
     </div>
 </header>
-<header class="content-header index-header">
+<header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Lincy&#39;s Blog</h1>
+        <h1 class="title">JVM系列-（3）GC算法</h1>
         <h5 class="subtitle">
             
-                归去来兮，Just Do IT.
+                <time datetime="2018-03-02T13:02:17.000Z" itemprop="datePublished" class="page-time">
+  2018-03-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
             
         </h5>
     </div>
@@ -178,40 +200,36 @@
 
 </header>
 
-<div class="container body-wrap">
 
-    <ul class="post-list">
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#标记清除算法"><span class="post-toc-number">1.</span> <span class="post-toc-text">标记清除算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#复制算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">复制算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#标记-整理算法"><span class="post-toc-number">3.</span> <span class="post-toc-text">标记-整理算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分代收集算法"><span class="post-toc-number">4.</span> <span class="post-toc-text">分代收集算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#垃圾收集器"><span class="post-toc-number">5.</span> <span class="post-toc-text">垃圾收集器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Serial收集器"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Serial收集器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ParNew收集器"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">ParNew收集器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Parallel-Scavenge收集器"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">Parallel Scavenge收集器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Serial-Old收集器"><span class="post-toc-number">5.4.</span> <span class="post-toc-text">Serial Old收集器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Parallel-Old收集器"><span class="post-toc-number">5.5.</span> <span class="post-toc-text">Parallel Old收集器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CMS收集器（Concurrent-Mark-Sweep）"><span class="post-toc-number">5.6.</span> <span class="post-toc-text">CMS收集器（Concurrent Mark Sweep）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#G1收集器"><span class="post-toc-number">5.7.</span> <span class="post-toc-text">G1收集器</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GC常用参数总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">GC常用参数总结</span></a></li></ol>
+        </nav>
+    </aside>
     
-        <li class="post-list-item fade">
-            <article id="post-JVM系列-（3）GC算法"
-  class="article-card article-type-post" itemprop="blogPost">
 
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-02 21:02:17" datetime="2018-03-02T13:02:17.000Z"  itemprop="datePublished">2018-03-02</time>
 
-        
+<div class="container body-wrap">
+    <article id="post-JVM系列-（3）GC算法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JVM系列-（3）GC算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-02 21:02:17" datetime="2018-03-02T13:02:17.000Z"  itemprop="datePublished">2018-03-02</time>
+
+            
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
 
 
 
-    </div>
+            
 
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/JVM系列-（3）GC算法/">JVM系列-（3）GC算法</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="/2018/03/02/JVM系列-（3）GC算法/标记清除算法.PNG" alt="" title="">
@@ -331,228 +349,132 @@
                 <div class="image-caption">CMS收集器</div>
             </figure>
 
-    
+        </div>
 
-        <a href="/2018/03/02/JVM系列-（3）GC算法/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-03-02T15:26:53.453Z" itemprop="dateUpdated">2018-03-02 23:26:53</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/03/02/JVM系列-（3）GC算法/" target="_blank" rel="external">https://lincy.online/2018/03/02/JVM系列-（3）GC算法/</a>
+        
     </div>
     
-    <div class="post-footer">
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
         
+
+
+        <div class="post-footer">
+            
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
 
-    </div>
-    
-</article>
 
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-JVM系列-垃圾回收"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-02 17:06:31" datetime="2018-03-02T09:06:31.000Z"  itemprop="datePublished">2018-03-02</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
+            
+<div class="page-share-wrap">
     
 
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/JVM系列-垃圾回收/">JVM系列-（2）垃圾回收, 对象已死？</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h1 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h1><p>算法：引用计数为0即为死对象<br>缺陷: 无法解决循环引用的问题，JDK不采用这种方法。</p>
-    
-
-        <a href="/2018/03/02/JVM系列-垃圾回收/" class="post-more waves-effect waves-button">
-            阅读全文…
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
         </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-JVM系列-Java内存结构"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-02 15:50:26" datetime="2018-03-02T07:50:26.000Z"  itemprop="datePublished">2018-03-02</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/JVM系列-Java内存结构/">JVM系列-（1）Java内存结构</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/03/02/JVM系列-Java内存结构/内存模型.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-    
-
-        <a href="/2018/03/02/JVM系列-Java内存结构/" class="post-more waves-effect waves-button">
-            阅读全文…
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
         </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-New-Year-s-Day"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-02-16 00:35:59" datetime="2018-02-15T16:35:59.000Z"  itemprop="datePublished">2018-02-16</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/生活/">生活</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/16/New-Year-s-Day/">New Year&#39;s Day</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <embed src="https://www.xiami.com/widget/1722104_2080749/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
-
-<p>2018<br>I will be with you again<br>I will begin again</p>
-
-    
-
-        <a href="/2018/02/16/New-Year-s-Day/" class="post-more waves-effect waves-button">
-            阅读全文…
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
         </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-责任链模式"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-02-13 13:25:29" datetime="2018-02-13T05:25:29.000Z"  itemprop="datePublished">2018-02-13</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/13/责任链模式/">责任链模式</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/02/13/责任链模式/捕获.PNG" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-    
-
-        <a href="/2018/02/13/责任链模式/" class="post-more waves-effect waves-button">
-            阅读全文…
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
         </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（3）GC算法》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
     </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
 
     
-<nav id="page-nav">
-    <div class="inner">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/02/JVM系列-垃圾回收/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JVM系列-（2）垃圾回收, 对象已死？</h4>
+      </a>
     </div>
+  
 </nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
 
 
 </div>
@@ -588,7 +510,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/&title=Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -598,22 +520,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/&title=Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&title=《JVM系列-（3）GC算法》 — Lincy's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Lincy's Blog&url=https://lincy.online/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JVM系列-（3）GC算法》 — Lincy's Blog&url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/03/02/JVM系列-（3）GC算法/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -624,7 +546,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABUklEQVR42u3aQRKEIAwFUe9/aWfrYoT+RBeSZjU1hfiwCg0hx4HbOWzXPnf9jzeaLFkbsdZuSSh344z7yJLVmXW3QlMKH2dikCVLVsgajyZLlqxnWRzBpyFLlqxKsJvuPV+M5WXJ2oLFszr136/kt2TJ+jjrDBu/qnQXWbKasZ5N6Y5D5/H/f0aTJasxC20sw81tGmrLktWZxZcxSRiRT/UkpJYlqzGLh8vpNPj0ZMnqyUqXceVYlNxLlqyeLJ4qIuEyP/icXCtLlqyl8h3+yiDbY1myerLSwh2+4NNpy5LVmUXSRmmFQPr6CDLNsmRtxFosBQjTwWnhgixZ3Vj1urhKEqoEkiVrOxYv/SFLeu0FETwJWbK2ZqUn/pUEE+ovS5YsnGBa27IG566yZMnin1VcGDTuI0uWLB40cxCZ9mPbV1myPs6qBLhkwVcmLEtWA9YP+ZYnNmRb4IwAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACPUlEQVR42u3a0YrjMAwF0P7/T2dgnxY69VxJyTBOjp9KCcTHBVWW9HrF6/i3/v/8/s3785+eOd7Wp3edvDAwMLZlHMv1aRM95Pot+fPfUDEwMB7A+M0gm4fgZG8YGBgYSbrWC9B5wMXAwMDoBdz589XjwMDAwEgusb1r5xqWpI8n38UxMDA2ZPQaA7/z+fL+BgYGxp9nHMW1Ts7mxbXmrjAwMG7NSDaUf98rok2O45WfKwYGxuaMarCrltvytkF1UOyHXwYDA+N2jHnZq7fRXvPgVT1LDAyMbRnVQa4rqnrV4TAMDIynMZLw2ttEL1nME9DCb4KBgbE5o5rM5QGxWm5LGB/fi4GBcWvG/BKbBOhJK7T8l4CBgXE7RjX5SzaXhMVyv2IdfDEwMB7AqDYs56MY+Q07GRrDwMC4N6O3uWqCeG7DsnCJxcDAuBEjf31CnTQGegeKgYHxBMYk5CWXzOq19pKRMgwMjG0Z61CbDz3kCeJZ1+PCPwYGBsbmjLxhOQmj87AbHTEGBsZNGXk5fl7Pu2LkAgMD4zmMZpwO7sd5Wa2XnmJgYDyB0WsAzFsI5S1WxywwMDBuxDiK64pmZC+JLE+3YWBgbMuoBruklNYrxuXtzMmQGQYGxr6M3iZ6m1u/ZdTsxMDAeAAjr1/lIxrnFtR+OFYMDAyM+HM56wxCbfQWDAwMjOXm8kGKXsMgGVnDwMB4AiNvBlRLZuvEsRegR3dxDAyMDRm9C2TS2szTvl6Zb9TfwMDA2IPxBejTS6kDEEKWAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
@@ -676,6 +598,21 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="/js/search.min.js?v=1.7.2" async></script>
 
 
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
 
 
 
