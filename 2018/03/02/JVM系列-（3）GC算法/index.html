@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/ParallelOld收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/cms收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/JVM系列-（3）GC算法/GC常用参数.PNG">
-<meta property="og:updated_time" content="2018-03-02T15:33:19.408Z">
+<meta property="og:updated_time" content="2018-03-02T15:33:46.080Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列-（3）GC算法">
 <meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象                                                                                                          缺点：  效率低 产生大量不连续的内存碎片  复制算法将内存分为大小相等的两块，每次只使用其中的一块。当一块用完了">
@@ -340,7 +340,7 @@
 <li>标记-清除算法，<strong>产生大量空间碎片</strong>，往往出现老年代还有很大的空间剩余，但是无法找到足够大的连续空间，从而触发Full GC。CMS提供了一个<strong>-XX：+UseCMSCompactAtFullCollection</strong>开关参数，用于在Full GC后二外进行一个碎片整理过程，但停顿时间变常了。因此还提供了另一个参数<strong>-XX：CMSFullGCsBeforeComapction</strong>，用于设置执行多少次Full GC后，跟着来一次压缩。</li>
 </ul>
 <h2 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h2><p><strong>基于标记-整理算法</strong>，不会产生空间碎片。可以非常精确控制停顿，可以明确指定在一个长度为M毫秒的时间片段内，消耗在GC的时间不超过N好眠。</p>
-<p>G1收集器，避免了全区域的垃圾收集（前面介绍的都是全区域的垃圾收集），它将整个Java堆划分为多个大小固定的独立区域，并且跟踪这些区域里面的垃圾堆积程度，在后台维护一个优先队列，每次根据允许的收集时间，有限回收垃圾最多的区域（Garbage First<br>）。区域划分有优先级的区域回收，保证了G1收集器在有限的时间内可以获得最高的收集效率。</p>
+<p>G1收集器，避免了全区域的垃圾收集（前面介绍的都是全区域的垃圾收集），它将整个Java堆划分为多个大小固定的独立区域，并且跟踪这些区域里面的垃圾堆积程度，在后台维护一个优先队列，每次根据允许的收集时间，优先回收垃圾最多的区域（Garbage First<br>）。区域划分有优先级的区域回收，保证了G1收集器在有限的时间内可以获得最高的收集效率。</p>
 <h1 id="GC常用参数总结"><a href="#GC常用参数总结" class="headerlink" title="GC常用参数总结"></a>GC常用参数总结</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -356,7 +356,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-02T15:33:19.408Z" itemprop="dateUpdated">2018-03-02 23:33:19</time>
+    最后更新时间：<time datetime="2018-03-02T15:33:46.080Z" itemprop="dateUpdated">2018-03-02 23:33:46</time>
 </span><br>
 
 
