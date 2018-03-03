@@ -248,7 +248,7 @@
         },
         autoHideHeader: function(){
             var headroom = new Headroom(header, {
-                "offset": 205,
+                "offset": 200,
                 "tolerance": 5
               });
             headroom.init();   
