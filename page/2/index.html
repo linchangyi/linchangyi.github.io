@@ -183,11 +183,11 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-SpringBoot启动过程分析"
+            <article id="post-深入理解JVM-（3）GC算法"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-02-09 11:49:43" datetime="2018-02-09T03:49:43.000Z"  itemprop="datePublished">2018-02-09</time>
+        <time class="post-time" title="2018-03-02 21:02:17" datetime="2018-03-02T13:02:17.000Z"  itemprop="datePublished">2018-03-02</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
@@ -201,7 +201,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/09/SpringBoot启动过程分析/">SpringBoot启动过程分析</a>
+      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（3）GC算法/">深入理解JVM-（3）GC算法</a>
     </h3>
   
 
@@ -211,23 +211,23 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><pre><code class="java">@SpringBootApplication
-public class SpringbootstarterApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SpringbootstarterApplication.class, args);
-    }
-}
-</code></pre>
+        <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br></p>
     
 
-        <a href="/2018/02/09/SpringBoot启动过程分析/" class="post-more waves-effect waves-button">
+        <a href="/2018/03/02/深入理解JVM-（3）GC算法/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
 
     </div>
     
@@ -236,11 +236,111 @@ public class SpringbootstarterApplication {
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-行摄/丙州大桥"
+            <article id="post-深入理解JVM-（2）垃圾回收"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-02-06 23:28:38" datetime="2018-02-06T15:28:38.000Z"  itemprop="datePublished">2018-02-06</time>
+        <time class="post-time" title="2018-03-02 17:06:31" datetime="2018-03-02T09:06:31.000Z"  itemprop="datePublished">2018-03-02</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（2）垃圾回收/">深入理解JVM-（2）垃圾回收, 对象已死？</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h1 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h1><p>算法：引用计数为0即为死对象<br>缺陷: 无法解决循环引用的问题，JDK不采用这种方法。</p>
+    
+
+        <a href="/2018/03/02/深入理解JVM-（2）垃圾回收/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-深入理解JVM-（1）Java内存结构"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-03-02 15:50:26" datetime="2018-03-02T07:50:26.000Z"  itemprop="datePublished">2018-03-02</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（1）Java内存结构/">深入理解JVM-（1）Java内存结构</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/02/深入理解JVM-（1）Java内存结构/内存模型.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+    
+
+        <a href="/2018/03/02/深入理解JVM-（1）Java内存结构/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-New-Year-s-Day"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-02-16 00:35:59" datetime="2018-02-15T16:35:59.000Z"  itemprop="datePublished">2018-02-16</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/生活/">生活</a></li></ul>
@@ -254,7 +354,7 @@ public class SpringbootstarterApplication {
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/06/行摄/丙州大桥/">丙州三调</a>
+      <a class="post-title-link" href="/2018/02/16/New-Year-s-Day/">New Year&#39;s Day</a>
     </h3>
   
 
@@ -264,18 +364,15 @@ public class SpringbootstarterApplication {
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <p>丙州大桥，傍晚时分，瞎拍几张<br></p>
+        <embed src="https://www.xiami.com/widget/1722104_2080749/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
+
+<p>2018<br>I will be with you again<br>I will begin again</p>
+
     
 
-        <a href="/2018/02/06/行摄/丙州大桥/" class="post-more waves-effect waves-button">
+        <a href="/2018/02/16/New-Year-s-Day/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/行摄/">行摄</a></li></ul>
-
     </div>
     
 </article>
@@ -283,11 +380,11 @@ public class SpringbootstarterApplication {
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-命令模式"
+            <article id="post-责任链模式"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-02-06 16:19:40" datetime="2018-02-06T08:19:40.000Z"  itemprop="datePublished">2018-02-06</time>
+        <time class="post-time" title="2018-02-13 13:25:29" datetime="2018-02-13T05:25:29.000Z"  itemprop="datePublished">2018-02-13</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
@@ -301,7 +398,7 @@ public class SpringbootstarterApplication {
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/06/命令模式/">命令模式</a>
+      <a class="post-title-link" href="/2018/02/13/责任链模式/">责任链模式</a>
     </h3>
   
 
@@ -314,13 +411,13 @@ public class SpringbootstarterApplication {
         <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/02/06/命令模式/捕获.PNG" alt="命令模式" title="">
+                    <img src="/2018/02/13/责任链模式/捕获.PNG" alt="" title="">
                 </div>
-                <div class="image-caption">命令模式</div>
+                <div class="image-caption"></div>
             </figure>
     
 
-        <a href="/2018/02/06/命令模式/" class="post-more waves-effect waves-button">
+        <a href="/2018/02/13/责任链模式/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
@@ -335,108 +432,12 @@ public class SpringbootstarterApplication {
 
         </li>
     
-        <li class="post-list-item fade">
-            <article id="post-zookeeper学习笔记/zookeeper学习笔记（2）paxos协议"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-01-18 16:50:04" datetime="2018-01-18T08:50:04.000Z"  itemprop="datePublished">2018-01-18</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/">zookeeper学习笔记（2）Paxos Made Simple【翻译】</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <blockquote>
-<p>原文 <a href="https://lamport.azurewebsites.net/pubs/paxos-simple.pdf" target="_blank" rel="noopener">Paxos Made Simple</a><br>摘自 <a href="https://www.jianshu.com/p/6d01a8d2df9f" target="_blank" rel="noopener">Paxos Made Simple论文翻译</a></p>
-</blockquote>
-    
-
-        <a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/">zookeeper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-01-18 11:02:33" datetime="2018-01-18T03:02:33.000Z"  itemprop="datePublished">2018-01-18</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/">zookeeper学习笔记（1）2PC和3PC</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <p><img src="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/书.PNG" width="60%"><br></p>
-    
-
-        <a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/">zookeeper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
     </ul>
 
     
 <nav id="page-nav">
     <div class="inner">
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
     </div>
 </nav>
 

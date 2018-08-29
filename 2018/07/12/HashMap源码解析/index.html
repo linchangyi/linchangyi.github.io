@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="lincy.online/2018/07/12/HashMap源码解析/">
+    
+    
+    <title>HashMap源码解析 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JDK源码">
+    <meta name="description" content="本文基于JDK1.8 HashMap 数据结构在JDK1.8中HashMap进行了优化，桶除了链表，还新增了红黑树的数据结构，加快查找速度                                                                                                           类声明">
+<meta name="keywords" content="JDK源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap源码解析">
+<meta property="og:url" content="https://lincy.online/2018/07/12/HashMap源码解析/index.html">
+<meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="本文基于JDK1.8 HashMap 数据结构在JDK1.8中HashMap进行了优化，桶除了链表，还新增了红黑树的数据结构，加快查找速度                                                                                                           类声明">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/07/12/HashMap源码解析/2018-07-12-20-31-38.png">
+<meta property="og:image" content="https://lincy.online/2018/07/12/HashMap源码解析/2018-07-12-20-16-00.png">
+<meta property="og:updated_time" content="2018-07-17T17:10:27.403Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HashMap源码解析">
+<meta name="twitter:description" content="本文基于JDK1.8 HashMap 数据结构在JDK1.8中HashMap进行了优化，桶除了链表，还新增了红黑树的数据结构，加快查找速度                                                                                                           类声明">
+<meta name="twitter:image" content="https://lincy.online/2018/07/12/HashMap源码解析/2018-07-12-20-31-38.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lincy</h5>
+          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archieves
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/技术"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linchangyi" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-link"></i>
+                about
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+                <i class="icon icon-lg icon-navicon"></i>
+            </a>
+        <div class="top-menu" id="top-menu">
+            
+                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">HashMap源码解析</span>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">HashMap源码解析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-12T12:08:26.000Z" itemprop="datePublished" class="page-time">
+  2018-07-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HashMap-数据结构"><span class="post-toc-number">1.</span> <span class="post-toc-text">HashMap 数据结构</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#类声明"><span class="post-toc-number">2.</span> <span class="post-toc-text">类声明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HashMap-构造函数"><span class="post-toc-number">3.</span> <span class="post-toc-text">HashMap 构造函数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#put方法"><span class="post-toc-number">4.</span> <span class="post-toc-text">put方法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#resize-方法"><span class="post-toc-number">5.</span> <span class="post-toc-text">resize()方法</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+
+<div class="container body-wrap">
+    <article id="post-HashMap源码解析"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">HashMap源码解析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-12 20:08:26" datetime="2018-07-12T12:08:26.000Z"  itemprop="datePublished">2018-07-12</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文基于JDK1.8</p>
+<h1 id="HashMap-数据结构"><a href="#HashMap-数据结构" class="headerlink" title="HashMap 数据结构"></a>HashMap 数据结构</h1><p>在JDK1.8中HashMap进行了优化，桶除了链表，还新增了红黑树的数据结构，加快查找速度<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/12/HashMap源码解析/2018-07-12-20-31-38.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="类声明"><a href="#类声明" class="headerlink" title="类声明"></a>类声明</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/12/HashMap源码解析/2018-07-12-20-16-00.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="HashMap-构造函数"><a href="#HashMap-构造函数" class="headerlink" title="HashMap 构造函数"></a>HashMap 构造函数</h1><ul>
+<li>initialCapacity：初始容量。</li>
+<li>loadFactor（默认值为0.75）：负载因子。负载因子表示哈希表在扩充容量之前可以达到多满的尺度，负载因子越大，填充程度越高。</li>
+</ul>
+<pre><code class="Java">    public HashMap()
+    public HashMap(int initialCapacity)
+    public HashMap(int initialCapacity, float loadFactor)
+</code></pre>
+<p>看一下第三个构造函数：</p>
+<pre><code class="java">    public HashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity &lt; 0)
+            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+                                               initialCapacity);
+        if (initialCapacity &gt; MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+                                               loadFactor);
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+</code></pre>
+<p>shreshold指HashMap容量达到多少时，HashMap会扩容，根据以上描述，可以很简单的认为 shreshold = capacity * loadFactor。 在初始化HashMap时shreshold先被赋值为initial capacity。</p>
+<pre><code class="java">    static final int tableSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n &gt;&gt;&gt; 1;
+        n |= n &gt;&gt;&gt; 2;
+        n |= n &gt;&gt;&gt; 4;
+        n |= n &gt;&gt;&gt; 8;
+        n |= n &gt;&gt;&gt; 16;
+        return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+    }
+</code></pre>
+<h1 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h1><pre><code class="java">    public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+
+    /**
+     * Implements Map.put and related methods
+     *
+     * @param hash hash for key
+     * @param key the key
+     * @param value the value to put
+     * @param onlyIfAbsent if true, don&#39;t change existing value
+     * @param evict if false, the table is in creation mode.
+     * @return previous value, or null if none
+     */
+    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                   boolean evict) {
+        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;
+        if ((tab = table) == null || (n = tab.length) == 0)
+            // 如果HashMap为空，则初始化
+            n = (tab = resize()).length;
+        if ((p = tab[i = (n - 1) &amp; hash]) == null)
+            tab[i] = newNode(hash, key, value, null);
+        else {
+            Node&lt;K,V&gt; e; K k;
+            if (p.hash == hash &amp;&amp;
+                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+                e = p;
+            else if (p instanceof TreeNode)
+                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
+            else {
+                for (int binCount = 0; ; ++binCount) {
+                    if ((e = p.next) == null) {
+                        p.next = newNode(hash, key, value, null);
+                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                            treeifyBin(tab, hash);
+                        break;
+                    }
+                    if (e.hash == hash &amp;&amp;
+                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                        break;
+                    p = e;
+                }
+            }
+            if (e != null) { // existing mapping for key
+                V oldValue = e.value;
+                if (!onlyIfAbsent || oldValue == null)
+                    e.value = value;
+                afterNodeAccess(e);
+                return oldValue;
+            }
+        }
+        ++modCount;
+        if (++size &gt; threshold)
+            resize();
+        afterNodeInsertion(evict);
+        return null;
+    }
+</code></pre>
+<h1 id="resize-方法"><a href="#resize-方法" class="headerlink" title="resize()方法"></a>resize()方法</h1><p>初始化表大小或扩容</p>
+<pre><code class="java">    final Node&lt;K,V&gt;[] resize() {
+        Node&lt;K,V&gt;[] oldTab = table;
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        int oldThr = threshold;
+        int newCap, newThr = 0;
+        // capacity &gt; 0 的情况，对应需要扩容的情景
+        if (oldCap &gt; 0) {
+            if (oldCap &gt;= MAXIMUM_CAPACITY) {
+                // 如果原先容量已经到了最大值，则无法扩容，直接返回
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            }
+            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;
+                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)
+                // shreshold翻倍
+                newThr = oldThr &lt;&lt; 1; 
+        }
+        // capacity==0的情况，HashMap刚刚经过初始化还没有值的情景
+        else if (oldThr &gt; 0) 
+            // 构造函数（2）（3）初始化HashMap时threshold被设定为initialCapacity
+            newCap = oldThr;
+        else {               // zero initial threshold signifies using defaults
+            //threshold==0, 使用默认配置，对应无参构造函数（1）的情景
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+        }
+        if (newThr == 0) {
+            float ft = (float)newCap * loadFactor;
+            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?
+                      (int)ft : Integer.MAX_VALUE);
+        }
+        threshold = newThr;
+        @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
+            Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
+        table = newTab;
+        if (oldTab != null) {
+            for (int j = 0; j &lt; oldCap; ++j) {
+                Node&lt;K,V&gt; e;
+                if ((e = oldTab[j]) != null) {
+                    oldTab[j] = null;
+                    if (e.next == null)
+                        // 桶中只有一个元素
+                        newTab[e.hash &amp; (newCap - 1)] = e;
+                    else if (e instanceof TreeNode)
+                        // 桶为红黑树
+                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);
+                    else { // preserve order
+                        // 桶为数组
+                        Node&lt;K,V&gt; loHead = null, loTail = null;
+                        Node&lt;K,V&gt; hiHead = null, hiTail = null;
+                        Node&lt;K,V&gt; next;
+                        do {
+                            next = e.next;
+                            if ((e.hash &amp; oldCap) == 0) {
+                                if (loTail == null)
+                                    loHead = e;
+                                else
+                                    loTail.next = e;
+                                loTail = e;
+                            }
+                            else {
+                                if (hiTail == null)
+                                    hiHead = e;
+                                else
+                                    hiTail.next = e;
+                                hiTail = e;
+                            }
+                        } while ((e = next) != null);
+                        if (loTail != null) {
+                            loTail.next = null;
+                            newTab[j] = loHead;
+                        }
+                        if (hiTail != null) {
+                            hiTail.next = null;
+                            newTab[j + oldCap] = hiHead;
+                        }
+                    }
+                }
+            }
+        }
+        return newTab;
+    }
+</code></pre>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-07-17T17:10:27.403Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/07/12/HashMap源码解析/" target="_blank" rel="external">https://lincy.online/2018/07/12/HashMap源码解析/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK源码/">JDK源码</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/07/12/HashMap源码解析/&title=《HashMap源码解析》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/07/12/HashMap源码解析/&title=《HashMap源码解析》 — Lincy's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/07/12/HashMap源码解析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HashMap源码解析》 — Lincy's Blog&url=https://lincy.online/2018/07/12/HashMap源码解析/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/07/12/HashMap源码解析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/30/分布式架构概述/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">分布式架构概述</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/03/深入理解JVM-（5）Class文件的结构/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">深入理解JVM-（5）Class文件的结构</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+        <p><span>Lincy &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
+                
+                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/07/12/HashMap源码解析/&title=《HashMap源码解析》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/07/12/HashMap源码解析/&title=《HashMap源码解析》 — Lincy's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/07/12/HashMap源码解析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HashMap源码解析》 — Lincy's Blog&url=https://lincy.online/2018/07/12/HashMap源码解析/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/07/12/HashMap源码解析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aUY6DMAwFwN7/0t0DVKD3HLpSk+ELlRYyrOR1bL9e8fH+OD6vXn3/8ztX51efPHZgYGD8LON9e1wtq33k/R2S596/SgwMjBMYVw++Os+v3sPacHz5OQYGBkZ564Td3gcDAwOjvd19ApcA7n+FgYGBMdvEJgW1+6RwFrgf3otjYGD8ICMvlv3/+Vf6GxgYGD/FeJdH0rZMmgF54I5WhYGBsTUjD3CzAtn995NtcLEeDAyMrRnrQxL55rMtz+XBHQMD4xxGO7zVLqK9c96cwMDAOI2x/pj18JokoxgYGKcxZqlePloxa0nWJTwMDIxNGU8lZ08V14ZlOAwMjK0ZKwX3ZOkzQNuQwMDAOJkxG79IUsz2pTyQ52JgYGzBmLUM24WuFP2LfwkYGBibMpJiWb71zbe4s2GLqL+BgYGxEaNtGc7OVwJuFJQxMDAOYOSDXG3K+NjWNM9qMTAwtmPk4TXZlCaLyxPB/CoGBsaujPfoaBuWKwli9FoxMDCOYcy2kY8NoS5snjEwME5g5CE4KaWtJI7DdBMDA+MARj7y9e0wOvwVBgbGpozZxnV2dT3g1n8HDAyMLRizbmDbaEwSyraZOmx2YmBg/Cyj3bLmTc31EJyX8DAwME5gzAJl29ScjZdFd8bAwMAoU7p2aqsN3MW8GAYGxpGMdvxifWgjImFgYBzAaMv9+QOSQDx7fRgYGOcw1ov7bfrYjoLNklEMDIwtGH+yA/oIXGCwtAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu != 1){
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 1 );
+        }
+    })();
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/">
+    
+    
+    <title>深入理解JVM-（5）Class文件的结构 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JVM,笔记">
+    <meta name="description" content="Class文件结构">
+<meta name="keywords" content="JVM,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解JVM-（5）Class文件的结构">
+<meta property="og:url" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/index.html">
+<meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="Class文件结构">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-20-01.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-24-44.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-22-42.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-21.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-57-49.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-52.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-35-45.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-43-33.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-45-40.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-58-26.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-24.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-37.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-51-36.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-23-36.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-25-54.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-15-00-46.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-14.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-56.png">
+<meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-08-16-06-17.png">
+<meta property="og:updated_time" content="2018-07-17T17:10:27.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解JVM-（5）Class文件的结构">
+<meta name="twitter:description" content="Class文件结构">
+<meta name="twitter:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-20-01.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lincy</h5>
+          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archieves
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/技术"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linchangyi" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-link"></i>
+                about
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+                <i class="icon icon-lg icon-navicon"></i>
+            </a>
+        <div class="top-menu" id="top-menu">
+            
+                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">深入理解JVM-（5）Class文件的结构</span>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">深入理解JVM-（5）Class文件的结构</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-03T08:18:40.000Z" itemprop="datePublished" class="page-time">
+  2018-04-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#magic"><span class="post-toc-number">1.</span> <span class="post-toc-text">magic</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#版本号"><span class="post-toc-number">2.</span> <span class="post-toc-text">版本号</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常量池"><span class="post-toc-number">3.</span> <span class="post-toc-text">常量池</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#constant-pool-count，u2"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">constant_pool_count，u2</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#constant-pool"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">constant_pool</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#访问标志"><span class="post-toc-number">4.</span> <span class="post-toc-text">访问标志</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类索引、父类索引与接口索引集合"><span class="post-toc-number">5.</span> <span class="post-toc-text">类索引、父类索引与接口索引集合</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#字段表集合"><span class="post-toc-number">6.</span> <span class="post-toc-text">字段表集合</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方法表集合"><span class="post-toc-number">7.</span> <span class="post-toc-text">方法表集合</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#属性表集合"><span class="post-toc-number">8.</span> <span class="post-toc-text">属性表集合</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+
+<div class="container body-wrap">
+    <article id="post-深入理解JVM-（5）Class文件的结构"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">深入理解JVM-（5）Class文件的结构</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-03 16:18:40" datetime="2018-04-03T08:18:40.000Z"  itemprop="datePublished">2018-04-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-20-01.png" alt="Class文件结构" title="">
+                </div>
+                <div class="image-caption">Class文件结构</div>
+            </figure>
+<a id="more"></a>
+<h2 id="magic"><a href="#magic" class="headerlink" title="magic"></a>magic</h2><p>魔数，4个字节，表明这是一个Class文件，0xCAFEBABE<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-24-44.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><p>minor_version，major_version各两个字节<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-22-42.png" alt="Class文件版本号" title="">
+                </div>
+                <div class="image-caption">Class文件版本号</div>
+            </figure></p>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><h3 id="constant-pool-count，u2"><a href="#constant-pool-count，u2" class="headerlink" title="constant_pool_count，u2"></a>constant_pool_count，u2</h3><p>常量池容量计数（从1开始），第0项表达“<strong>不引用任何一个常量池项目</strong>”。如:0x0016(十进制的22)标识有21常量，索引值范围为1~21.<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-21.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h3 id="constant-pool"><a href="#constant-pool" class="headerlink" title="constant_pool"></a>constant_pool</h3><ul>
+<li>字面量(Literal)<ul>
+<li>接近于Java语言的常量概念，如文本字符串、final的常量值</li>
+</ul>
+</li>
+<li>符号引用<ul>
+<li>类和接口的全限定名</li>
+<li>字段的名称和描述符</li>
+<li>方法的名称和描述符</li>
+</ul>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-57-49.png" alt="常量池的项目类型" title="">
+                </div>
+                <div class="image-caption">常量池的项目类型</div>
+            </figure>
+<p>例子（下图）：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-52.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>0x07从上图可知为：CONSTANT_Class_info类型常量。而COMSTANT_Class_info的结构如下图，tag就是0x07，name_index（代表这个类或接口的全限定名）（0x0002）指向常量池的第二项。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-35-45.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>看第二项的tag标识0x01，从上面的常量池的类型图可以看出，此项为CONSTANT_UTF8_info。CONSTANT_Utf8_info的结构如下：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-43-33.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>所以第二项的内容三部分如下:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-45-40.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>第三部分的utf编码转换为字符串为<code>org/fenixsoft/clazz/TestClass</code>，就是第一个常量（CONSTANT_Class_info）的值。</p>
+<p>以此类推，可以得到所有的常量的值。</p>
+<p>可以使用javap工具输出TestClass.class的文件字节码内容（省略了常量池意外的信息）：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-58-26.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p><strong>常量池的14种常量的结构：</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-24.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-37.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h2><p>在常量池结束后，紧接着<strong>2个字节</strong>代表访问标志，用于识别<strong>类或接口层次的访问信息</strong>。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-51-36.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>access_flags一共有16个标志位可用，当前只定义了其中8个。</p>
+<h2 id="类索引、父类索引与接口索引集合"><a href="#类索引、父类索引与接口索引集合" class="headerlink" title="类索引、父类索引与接口索引集合"></a>类索引、父类索引与接口索引集合</h2><ul>
+<li>类索引、父类索引是一个u2类型的数据（只能继承一个父类），<strong>指向一个Constant_class_info常量</strong>，通过constant_class_info常量中的索引值找到定义在constant_utf8_info中的全限定名字符串。</li>
+<li>接口索引集合是一组u2类型的数据（可以实现多个接口）。入口的第一项——一个u2类型的数据标识接口索引的数量。如果没有实现任何接口，则计数器为0。</li>
+</ul>
+<h2 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h2><p>在所有字段表之前有一个u2类型的数据fields_count为字段计数器，表示这个类有多少字段。</p>
+<p>字段表（field_info），描述接口或者类中声明的变量。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-23-36.png" alt="字段表结构" title="">
+                </div>
+                <div class="image-caption">字段表结构</div>
+            </figure></p>
+<p>access_flags: 标志位，如下图<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-25-54.png" alt="字段访问标志" title="">
+                </div>
+                <div class="image-caption">字段访问标志</div>
+            </figure></p>
+<p>name_index（简单名称）和descriptor_index（描述符）都是对常量池的引用。<code>inc()</code>方法和<code>m</code>字段的简单名称分别是<code>inc</code>和<code>m</code>。描述符比较复杂，用来描述字段的数据类型、方法的参数列表（包括数量、类型、顺序）和返回值。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-15-00-46.png" alt="描述符标识字符含义" title="">
+                </div>
+                <div class="image-caption">描述符标识字符含义</div>
+            </figure>
+<p>举几个例子：</p>
+<ul>
+<li><code>int[]</code>的描述符为<code>[I</code>。（<code>[</code>表示数组）</li>
+<li><code>java.lang.String[][]</code>的描述符为：<code>[[Ljava/lang/String;</code></li>
+<li>方法<code>void inc()</code>的描述符为<code>()V</code></li>
+<li>方法<code>java.lang.String toString()</code>的描述符为<code>()Ljava/lang/String;</code></li>
+<li>方法<code>int indexOf(char[]source,int sourceOffset,int sourceCount,char[]target,int targetOffset,int targetCount,int fromIndex)</code>的描述符为<code>([CII[CIII)I</code></li>
+</ul>
+<p><strong>还有一部分是属性表集合，attribute_info</strong>，将在下面介绍。</p>
+<h2 id="方法表集合"><a href="#方法表集合" class="headerlink" title="方法表集合"></a>方法表集合</h2><p>基本上同字段表结合一样。在字段表集合里已经有涉及。 </p>
+<h2 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h2><p>虚拟机规范预定义的属性（Java SE 7）</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-14.png" alt="虚拟机预定义的属性类型(1)" title="">
+                </div>
+                <div class="image-caption">虚拟机预定义的属性类型(1)</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-56.png" alt="虚拟机预定义的属性类型(2)" title="">
+                </div>
+                <div class="image-caption">虚拟机预定义的属性类型(2)</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-08-16-06-17.png" alt="属性表结构" title="">
+                </div>
+                <div class="image-caption">属性表结构</div>
+            </figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-07-17T17:10:27.415Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/04/03/深入理解JVM-（5）Class文件的结构/" target="_blank" rel="external">https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/&title=《深入理解JVM-（5）Class文件的结构》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/&title=《深入理解JVM-（5）Class文件的结构》 — Lincy's Blog&source=
+                
+                    
+                    
+                
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入理解JVM-（5）Class文件的结构》 — Lincy's Blog&url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/07/12/HashMap源码解析/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">HashMap源码解析</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">深入理解JVM-（4）内存分配与回收策略</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+        <p><span>Lincy &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
+                
+                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/&title=《深入理解JVM-（5）Class文件的结构》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/&title=《深入理解JVM-（5）Class文件的结构》 — Lincy's Blog&source=
+                
+                    
+                    
+                
+..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入理解JVM-（5）Class文件的结构》 — Lincy's Blog&url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3aQW7jMBAEwPz/09nrAoHl7hlyYyxKJyOwJBYDkOMefn3F1/df18+///z86q7vH9ere5PnH7vw8PDwFkN/fv3zd54HNJug528m48HDw8O7x8sX5XYK2rc8Pzl/Gh4eHt7n8PJSO1no3yzreHh4eP8R75mUlM7J1DxvTnh4eHi/y2sL4nxBn0UJ7QQdyFrw8PDwYl7eRfqcz1f6e3h4eHjrrnoeqm4aWnnpXI8WDw8P7wIvX3BnhW/eGEsC3HaceHh4eDd4bYtrEzrcm6yX48HDw8O7xsuPPe2H2E7W7AlvThzg4eHhHeW1B6qSoWyOYc3aaXh4eHj3eMn2sGlQzULYfIqjicPDw8O7wJv9+J8t4rOOf/4DICqy8fDw8Ba8vJiexRNt42ozQS+LaTw8PLyjvPxo1L4ltn9OG0bj4eHh3eBt2l3tXe3GMyujX6bUeHh4eEd5swV9swG0h71mIQUeHh7eDV4+iLz4breQNhpuYw48PDy8s7x22d0szXnc0B4LiBpgeHh4eId4s7J4dsQqPxzQTsHwf4iHh4e34O2jhLZ9tS/N86gCDw8P7yxvllvkJXVedrdvjwprPDw8vAu89rYkhJ09M8lg8wMKeHh4eP+S17as8uCgDYiTMrrYVPDw8PCO8vLItT101YYXm4L+5fPx8PDwrvFmMeuN77dhxJspw8PDw7vMmy3ls6giKayjiPZ5nHh4eHiXebPSNi+UkzDi1Njw8PDwbvBOHW9qF+s8/si3h+hkBB4eHt6at9kG9lFvuzHMomQ8PDy8G7x8M9gcNZhhZhvDMO3Aw8PDK3l5ONvelfylaGiVb8TDw8P7HF4+oDyibWOOaJx4eHh4H8PLSTNeXvTXZ8rw8PDwDvHyplc+lHab2YQUbzYGPDw8vKO8+pTWqIyexbKzEh8PDw/vGu8PcTeSl8F+WNsAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu != 1){
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 1 );
+        }
+    })();
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
+    
+    
+</body>
+</html>

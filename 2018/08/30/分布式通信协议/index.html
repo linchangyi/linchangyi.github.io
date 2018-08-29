@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="lincy.online/2018/08/30/分布式通信协议/">
+    
+    
+    <title>分布式通信协议 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="分布式">
+    <meta name="description" content="网络协议tcp/ip TCP五层模型 OSI七层 OSI模型多了表达层、会话层    tcp三次握手                                                                                                            第一次握手：Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包">
+<meta name="keywords" content="分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式通信协议">
+<meta property="og:url" content="https://lincy.online/2018/08/30/分布式通信协议/index.html">
+<meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="网络协议tcp/ip TCP五层模型 OSI七层 OSI模型多了表达层、会话层    tcp三次握手                                                                                                            第一次握手：Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-32-52.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-37-26.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-42-03.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-47-14.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-54-54.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-49-52.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-50-01.png">
+<meta property="og:updated_time" content="2018-08-29T19:15:28.285Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式通信协议">
+<meta name="twitter:description" content="网络协议tcp/ip TCP五层模型 OSI七层 OSI模型多了表达层、会话层    tcp三次握手                                                                                                            第一次握手：Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包">
+<meta name="twitter:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lincy</h5>
+          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archieves
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/技术"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linchangyi" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-link"></i>
+                about
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+                <i class="icon icon-lg icon-navicon"></i>
+            </a>
+        <div class="top-menu" id="top-menu">
+            
+                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">分布式通信协议</span>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">分布式通信协议</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-29T18:26:33.000Z" itemprop="datePublished" class="page-time">
+  2018-08-30
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#网络协议"><span class="post-toc-number">1.</span> <span class="post-toc-text">网络协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#tcp-ip"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">tcp/ip</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tcp三次握手"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">tcp三次握手</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四次挥手协议"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">四次挥手协议</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#udp协议"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">udp协议</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tcp通信原理"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">tcp通信原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#滑动窗口协议"><span class="post-toc-number">1.1.4.1.</span> <span class="post-toc-text">滑动窗口协议</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Multicst-组播"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">Multicst(组播)</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+
+<div class="container body-wrap">
+    <article id="post-分布式通信协议"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">分布式通信协议</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-30 02:26:33" datetime="2018-08-29T18:26:33.000Z"  itemprop="datePublished">2018-08-30</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="网络协议"><a href="#网络协议" class="headerlink" title="网络协议"></a>网络协议</h1><h2 id="tcp-ip"><a href="#tcp-ip" class="headerlink" title="tcp/ip"></a>tcp/ip</h2><ul>
+<li>TCP五层模型<br><img src="/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png" alt=""></li>
+<li>OSI七层<ul>
+<li>OSI模型多了表达层、会话层</li>
+</ul>
+</li>
+</ul>
+<h3 id="tcp三次握手"><a href="#tcp三次握手" class="headerlink" title="tcp三次握手"></a>tcp三次握手</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-32-52.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<ul>
+<li>第一次握手：Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给Server，Client进入SYN_SENT状态，等待Server确认。</li>
+<li>第二次握手：Server收到数据包后由标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。</li>
+<li>第三次握手：Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了。</li>
+</ul>
+<h3 id="四次挥手协议"><a href="#四次挥手协议" class="headerlink" title="四次挥手协议"></a>四次挥手协议</h3><p>三次握手耳熟能详，四次挥手估计就听得比较少了，所谓四次挥手（Four-Way Wavehand）即终止TCP连接，就是指断开一个TCP连接时，需要客户端和服务端总共发送4个包以确认连接的断开。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-37-26.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="udp协议"><a href="#udp协议" class="headerlink" title="udp协议"></a>udp协议</h3><h3 id="tcp通信原理"><a href="#tcp通信原理" class="headerlink" title="tcp通信原理"></a>tcp通信原理</h3><p>首先，对于TCP通信来说，每个TCP Socket的内核中都有一个发送缓冲区和一个接收缓冲区，TCP的全双工的工作模式及TCP的<strong>滑动窗口</strong>就是依赖于这两个独立的Buffer和该Buffer的填充状态。 </p>
+<p>接收缓冲区把数据缓存到内核，若应用进程一直没有调用Socket的read方法进行读取，那么该数据会一直被缓存在接收缓冲区内。不管进程是否读取Socket，对端发来的数据都会经过内核接收并缓存到Socket的内核接收缓冲区。<br>read索要做的工作，就是把内核接收缓冲区中的数据复制到应用层用户的Buffer里。</p>
+<p>进程调用Socket的send发送数据的时候，一般情况下是讲数据从应用层用户的Buffer里复制到Socket的内核发送缓冲区，然后send就会在上层返回。换句话说，send返回时，数据不一定会被发送到对端。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-42-03.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h4><p>发送方和接收方都会维护一个数据帧的序列，这个序列被称作窗口。发送方的窗口大小由接收方确认，目的是控制发送速度，以免接收方的缓存不够大导致溢出，同时控制流量也可以避免网络拥塞。<br>下面图中的4,5,6号数据帧已经被发送出去，但是未收到关联的ACK，7,8,9帧则是等待发送。可以看出发送端的窗口大小为6，这是由接受端告知的（事实上必须考虑拥塞窗口cwnd，这里暂且考虑cwnd&gt;rwnd）。此时如果发送端收到4号ACK，则窗口的左边缘向右收缩，窗口的右边缘则向右扩展，此时窗口就向前“滑动了”，即数据帧10也可以被发送<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-47-14.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>明白了Socket读写数据的底层原理，我们就很容易理解“阻塞模式”：对于读取Socket数据的过程而言，如果接收缓冲区为空，则调用Socket的read方法的线程会阻塞，知道有数据进入接收缓冲区；而对于写数据到Socket中的线程来说，如果待发送的数据长度大于发送缓冲区空余长度，则会阻塞在write方法上，等待发送缓冲区的报文被发送到网络上，然后继续发送下一段数据，循环上述过程直到数据都被写入到发送缓冲区为止</p>
+<p><strong>从前面分析的过程来看，传统的Socket阻塞模式直接导致每个Socket都必须绑定一个线程来操作数据，参与通信的任意一方如果处理数据的速度较慢，会直接拖累到另一方，导致另一方的线程不得不浪费大量的时间在I/O等待上，所以这就是Socket阻塞模式的“缺陷”。</strong> 但是这种模式在少量的TCP连接通信的情况下，双方都可以快速的传输数据，这个时候的性能是最高的。</p>
+<p>BIO（同步阻塞）<br>NIO（同步非阻塞）<br>AIO（异步非阻塞）<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-54-54.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h3 id="Multicst-组播"><a href="#Multicst-组播" class="headerlink" title="Multicst(组播)"></a>Multicst(组播)</h3><ul>
+<li>单播</li>
+<li>广播</li>
+<li>组播</li>
+</ul>
+<p><img src="/2018/08/30/分布式通信协议/2018-08-30-02-49-52.png" alt="tcp/ip协议分层"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-50-01.png" alt="java api socket操作" title="">
+                </div>
+                <div class="image-caption">java api socket操作</div>
+            </figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-08-29T19:15:28.285Z" itemprop="dateUpdated">2018-08-30 03:15:28</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/08/30/分布式通信协议/" target="_blank" rel="external">https://lincy.online/2018/08/30/分布式通信协议/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式通信协议/&title=《分布式通信协议》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式通信协议/&title=《分布式通信协议》 — Lincy's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式通信协议/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式通信协议》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式通信协议/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式通信协议/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/30/分布式架构概述/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">分布式架构概述</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+        <p><span>Lincy &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
+                
+                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式通信协议/&title=《分布式通信协议》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式通信协议/&title=《分布式通信协议》 — Lincy's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式通信协议/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式通信协议》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式通信协议/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式通信协议/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3ay47CMAwFUP7/p5ntSCjttV0WJKcrhEqbEyTLj7xe8fX+d31+s7pWd66e//n54QsDA+NnGflSrp+QfLN6Zr4Fy+3AwMA4gJEHwYSU3J9sWbI2DAwMjGoAnSd5GBgYGBNGnrqtYNXvMTAwMKpFbPKa67ZatST+Si2OgYHxg4xJuvbtz1+Zb2BgYPwU4128JgPO5FfNVWFgYGzNmI8wJ2393uBzeT8GBsamjGpATMYAhQZZnOMV/gcMDIxNGXmbLH99zu4NRDEwMM5hVMeQvWX1Gvp5gMbAwDiBkWPyBK63iMkbMTAwzmH0WmnVNK6XkkZ3YmBgbMfIl5KExaSs7S39ZjswMDC2ZvRemRy86BW6owMcGBgYWzOqA4DJ8Yh8a/ISFwMDY29GXqA+VazmIfV6UzAwMDB6bbJ5yVoNx8taHAMDYzvG9U29INsrNZuHMzAwMI5k9I5i9Bpnk0MYGBgYJzDyMWQvWM9baYV0EwMD4xhGnpblxWovsCbpJgYGxmmM3rLexStfXLl5h4GBsTXjqTIyH0lOGnMYGBinMXrhMgmI1dCZ/CpKCjEwMLZj9IaLeZHZe33vgBoGBsbejGqQTRpk+eGJ3nGNm1ocAwNjU0YS+PKA20sfq6G/MInFwMA4ktEbJyRHMZplKgYGBkbM6A0PknL3BoaBgXEA46lhQLV9Vj2IdpMaYmBgbMqY5F2911S347FBJgYGxu8x/gA6ZZhOYgMN5QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu != 1){
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 1 );
+        }
+    })();
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
+    
+    
+</body>
+</html>

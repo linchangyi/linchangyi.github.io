@@ -183,15 +183,13 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-深入理解JVM-（3）GC算法"
+            <article id="post-分布式通信协议"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-03-02 21:02:17" datetime="2018-03-02T13:02:17.000Z"  itemprop="datePublished">2018-03-02</time>
+        <time class="post-time" title="2018-08-30 02:26:33" datetime="2018-08-29T18:26:33.000Z"  itemprop="datePublished">2018-08-30</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
 
 
     </div>
@@ -201,7 +199,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（3）GC算法/">深入理解JVM-（3）GC算法</a>
+      <a class="post-title-link" href="/2018/08/30/分布式通信协议/">分布式通信协议</a>
     </h3>
   
 
@@ -211,123 +209,211 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
+        <h1 id="网络协议"><a href="#网络协议" class="headerlink" title="网络协议"></a>网络协议</h1><h2 id="tcp-ip"><a href="#tcp-ip" class="headerlink" title="tcp/ip"></a>tcp/ip</h2><ul>
+<li>TCP五层模型<br><img src="/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png" alt=""></li>
+<li>OSI七层<ul>
+<li>OSI模型多了表达层、会话层</li>
+</ul>
+</li>
+</ul>
+<h3 id="tcp三次握手"><a href="#tcp三次握手" class="headerlink" title="tcp三次握手"></a>tcp三次握手</h3><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-32-52.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure><br></p>
-    
-
-        <a href="/2018/03/02/深入理解JVM-（3）GC算法/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-深入理解JVM-（2）垃圾回收"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-02 17:06:31" datetime="2018-03-02T09:06:31.000Z"  itemprop="datePublished">2018-03-02</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（2）垃圾回收/">深入理解JVM-（2）垃圾回收, 对象已死？</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h1 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h1><p>算法：引用计数为0即为死对象<br>缺陷: 无法解决循环引用的问题，JDK不采用这种方法。</p>
-    
-
-        <a href="/2018/03/02/深入理解JVM-（2）垃圾回收/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-深入理解JVM-（1）Java内存结构"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-03-02 15:50:26" datetime="2018-03-02T07:50:26.000Z"  itemprop="datePublished">2018-03-02</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/03/02/深入理解JVM-（1）Java内存结构/">深入理解JVM-（1）Java内存结构</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><figure class="image-bubble">
+            </figure>
+<ul>
+<li>第一次握手：Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给Server，Client进入SYN_SENT状态，等待Server确认。</li>
+<li>第二次握手：Server收到数据包后由标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。</li>
+<li>第三次握手：Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了。</li>
+</ul>
+<h3 id="四次挥手协议"><a href="#四次挥手协议" class="headerlink" title="四次挥手协议"></a>四次挥手协议</h3><p>三次握手耳熟能详，四次挥手估计就听得比较少了，所谓四次挥手（Four-Way Wavehand）即终止TCP连接，就是指断开一个TCP连接时，需要客户端和服务端总共发送4个包以确认连接的断开。</p>
+<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（1）Java内存结构/内存模型.PNG" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-37-26.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="udp协议"><a href="#udp协议" class="headerlink" title="udp协议"></a>udp协议</h3><h3 id="tcp通信原理"><a href="#tcp通信原理" class="headerlink" title="tcp通信原理"></a>tcp通信原理</h3><p>首先，对于TCP通信来说，每个TCP Socket的内核中都有一个发送缓冲区和一个接收缓冲区，TCP的全双工的工作模式及TCP的<strong>滑动窗口</strong>就是依赖于这两个独立的Buffer和该Buffer的填充状态。 </p>
+<p>接收缓冲区把数据缓存到内核，若应用进程一直没有调用Socket的read方法进行读取，那么该数据会一直被缓存在接收缓冲区内。不管进程是否读取Socket，对端发来的数据都会经过内核接收并缓存到Socket的内核接收缓冲区。<br>read索要做的工作，就是把内核接收缓冲区中的数据复制到应用层用户的Buffer里。</p>
+<p>进程调用Socket的send发送数据的时候，一般情况下是讲数据从应用层用户的Buffer里复制到Socket的内核发送缓冲区，然后send就会在上层返回。换句话说，send返回时，数据不一定会被发送到对端。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-42-03.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h4><p>发送方和接收方都会维护一个数据帧的序列，这个序列被称作窗口。发送方的窗口大小由接收方确认，目的是控制发送速度，以免接收方的缓存不够大导致溢出，同时控制流量也可以避免网络拥塞。<br>下面图中的4,5,6号数据帧已经被发送出去，但是未收到关联的ACK，7,8,9帧则是等待发送。可以看出发送端的窗口大小为6，这是由接受端告知的（事实上必须考虑拥塞窗口cwnd，这里暂且考虑cwnd&gt;rwnd）。此时如果发送端收到4号ACK，则窗口的左边缘向右收缩，窗口的右边缘则向右扩展，此时窗口就向前“滑动了”，即数据帧10也可以被发送<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-47-14.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>明白了Socket读写数据的底层原理，我们就很容易理解“阻塞模式”：对于读取Socket数据的过程而言，如果接收缓冲区为空，则调用Socket的read方法的线程会阻塞，知道有数据进入接收缓冲区；而对于写数据到Socket中的线程来说，如果待发送的数据长度大于发送缓冲区空余长度，则会阻塞在write方法上，等待发送缓冲区的报文被发送到网络上，然后继续发送下一段数据，循环上述过程直到数据都被写入到发送缓冲区为止</p>
+<p><strong>从前面分析的过程来看，传统的Socket阻塞模式直接导致每个Socket都必须绑定一个线程来操作数据，参与通信的任意一方如果处理数据的速度较慢，会直接拖累到另一方，导致另一方的线程不得不浪费大量的时间在I/O等待上，所以这就是Socket阻塞模式的“缺陷”。</strong> 但是这种模式在少量的TCP连接通信的情况下，双方都可以快速的传输数据，这个时候的性能是最高的。</p>
+<p>BIO（同步阻塞）<br>NIO（同步非阻塞）<br>AIO（异步非阻塞）<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-54-54.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h3 id="Multicst-组播"><a href="#Multicst-组播" class="headerlink" title="Multicst(组播)"></a>Multicst(组播)</h3><ul>
+<li>单播</li>
+<li>广播</li>
+<li>组播</li>
+</ul>
+<p><img src="/2018/08/30/分布式通信协议/2018-08-30-02-49-52.png" alt="tcp/ip协议分层"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-50-01.png" alt="java api socket操作" title="">
+                </div>
+                <div class="image-caption">java api socket操作</div>
+            </figure>
+
+    
+
+        <a href="/2018/08/30/分布式通信协议/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-分布式架构概述"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-08-30 01:00:40" datetime="2018-08-29T17:00:40.000Z"  itemprop="datePublished">2018-08-30</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/08/30/分布式架构概述/">分布式架构概述</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h1 id="特点：高并发、海量数据"><a href="#特点：高并发、海量数据" class="headerlink" title="特点：高并发、海量数据"></a>特点：高并发、海量数据</h1><h1 id="什么是分布式"><a href="#什么是分布式" class="headerlink" title="什么是分布式"></a>什么是分布式</h1><ul>
+<li>任务分解</li>
+<li>节点通信</li>
+</ul>
+<h1 id="分布式架构发展"><a href="#分布式架构发展" class="headerlink" title="分布式架构发展"></a>分布式架构发展</h1><h2 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-19-59.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>单机负载越来越高，数据库和应用服务器分离<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-28-45.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="第三版"><a href="#第三版" class="headerlink" title="第三版"></a>第三版</h2><p>应用服务器做集群<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-29-21.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>引入问题:</p>
+<ul>
+<li>session共享<ul>
+<li>session sticky</li>
+<li>session replication</li>
+<li>session 集中存储（db、缓存）</li>
+<li>cookie (保存在cookie，不保存在服务端)<ul>
+<li>access_token(userid/token/timestamp) </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>请求转发<h2 id="第四版"><a href="#第四版" class="headerlink" title="第四版"></a>第四版</h2>数据库高性能操作<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-47-22.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+引入问题：</li>
+<li>数据库读写分离</li>
+<li>数据库的数据同步</li>
+<li>数据库路由（mycat）</li>
+</ul>
+<h2 id="第五版"><a href="#第五版" class="headerlink" title="第五版"></a>第五版</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-49-51.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>引入问题：</p>
+<ul>
+<li>搜索引擎的索引数据同步？实时增量同步？定时全量同步?</li>
+</ul>
+<h2 id="第六版"><a href="#第六版" class="headerlink" title="第六版"></a>第六版</h2><p>用户无上限，解决方式：</p>
+<ul>
+<li>缓存</li>
+<li>限流</li>
+<li>降级</li>
+</ul>
+<p><img src="/2018/08/30/分布式架构概述/2018-08-30-01-53-42.png" alt=""></p>
+<h2 id="第七版"><a href="#第七版" class="headerlink" title="第七版"></a>第七版</h2><p>数据库的水平/垂直拆分<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-56-59.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="第八版"><a href="#第八版" class="headerlink" title="第八版"></a>第八版</h2><p><strong>应用拆分</strong></p>
+<ul>
+<li>SOA</li>
+<li>微服务</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式架构概述/2018-08-30-02-05-42.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>
     
 
-        <a href="/2018/03/02/深入理解JVM-（1）Java内存结构/" class="post-more waves-effect waves-button">
+        <a href="/2018/08/30/分布式架构概述/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
 
     </div>
     
@@ -336,15 +422,13 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-New-Year-s-Day"
+            <article id="post-HashMap源码解析"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-02-16 00:35:59" datetime="2018-02-15T16:35:59.000Z"  itemprop="datePublished">2018-02-16</time>
+        <time class="post-time" title="2018-07-12 20:08:26" datetime="2018-07-12T12:08:26.000Z"  itemprop="datePublished">2018-07-12</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/生活/">生活</a></li></ul>
-
 
 
     </div>
@@ -354,7 +438,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/16/New-Year-s-Day/">New Year&#39;s Day</a>
+      <a class="post-title-link" href="/2018/07/12/HashMap源码解析/">HashMap源码解析</a>
     </h3>
   
 
@@ -364,15 +448,208 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <embed src="https://www.xiami.com/widget/1722104_2080749/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
+        <p>本文基于JDK1.8</p>
+<h1 id="HashMap-数据结构"><a href="#HashMap-数据结构" class="headerlink" title="HashMap 数据结构"></a>HashMap 数据结构</h1><p>在JDK1.8中HashMap进行了优化，桶除了链表，还新增了红黑树的数据结构，加快查找速度<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/12/HashMap源码解析/2018-07-12-20-31-38.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="类声明"><a href="#类声明" class="headerlink" title="类声明"></a>类声明</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/12/HashMap源码解析/2018-07-12-20-16-00.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="HashMap-构造函数"><a href="#HashMap-构造函数" class="headerlink" title="HashMap 构造函数"></a>HashMap 构造函数</h1><ul>
+<li>initialCapacity：初始容量。</li>
+<li>loadFactor（默认值为0.75）：负载因子。负载因子表示哈希表在扩充容量之前可以达到多满的尺度，负载因子越大，填充程度越高。</li>
+</ul>
+<pre><code class="Java">    public HashMap()
+    public HashMap(int initialCapacity)
+    public HashMap(int initialCapacity, float loadFactor)
+</code></pre>
+<p>看一下第三个构造函数：</p>
+<pre><code class="java">    public HashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity &lt; 0)
+            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+                                               initialCapacity);
+        if (initialCapacity &gt; MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+                                               loadFactor);
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+</code></pre>
+<p>shreshold指HashMap容量达到多少时，HashMap会扩容，根据以上描述，可以很简单的认为 shreshold = capacity * loadFactor。 在初始化HashMap时shreshold先被赋值为initial capacity。</p>
+<pre><code class="java">    static final int tableSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n &gt;&gt;&gt; 1;
+        n |= n &gt;&gt;&gt; 2;
+        n |= n &gt;&gt;&gt; 4;
+        n |= n &gt;&gt;&gt; 8;
+        n |= n &gt;&gt;&gt; 16;
+        return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+    }
+</code></pre>
+<h1 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h1><pre><code class="java">    public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
 
-<p>2018<br>I will be with you again<br>I will begin again</p>
+    /**
+     * Implements Map.put and related methods
+     *
+     * @param hash hash for key
+     * @param key the key
+     * @param value the value to put
+     * @param onlyIfAbsent if true, don&#39;t change existing value
+     * @param evict if false, the table is in creation mode.
+     * @return previous value, or null if none
+     */
+    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                   boolean evict) {
+        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;
+        if ((tab = table) == null || (n = tab.length) == 0)
+            // 如果HashMap为空，则初始化
+            n = (tab = resize()).length;
+        if ((p = tab[i = (n - 1) &amp; hash]) == null)
+            tab[i] = newNode(hash, key, value, null);
+        else {
+            Node&lt;K,V&gt; e; K k;
+            if (p.hash == hash &amp;&amp;
+                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+                e = p;
+            else if (p instanceof TreeNode)
+                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
+            else {
+                for (int binCount = 0; ; ++binCount) {
+                    if ((e = p.next) == null) {
+                        p.next = newNode(hash, key, value, null);
+                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                            treeifyBin(tab, hash);
+                        break;
+                    }
+                    if (e.hash == hash &amp;&amp;
+                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                        break;
+                    p = e;
+                }
+            }
+            if (e != null) { // existing mapping for key
+                V oldValue = e.value;
+                if (!onlyIfAbsent || oldValue == null)
+                    e.value = value;
+                afterNodeAccess(e);
+                return oldValue;
+            }
+        }
+        ++modCount;
+        if (++size &gt; threshold)
+            resize();
+        afterNodeInsertion(evict);
+        return null;
+    }
+</code></pre>
+<h1 id="resize-方法"><a href="#resize-方法" class="headerlink" title="resize()方法"></a>resize()方法</h1><p>初始化表大小或扩容</p>
+<pre><code class="java">    final Node&lt;K,V&gt;[] resize() {
+        Node&lt;K,V&gt;[] oldTab = table;
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        int oldThr = threshold;
+        int newCap, newThr = 0;
+        // capacity &gt; 0 的情况，对应需要扩容的情景
+        if (oldCap &gt; 0) {
+            if (oldCap &gt;= MAXIMUM_CAPACITY) {
+                // 如果原先容量已经到了最大值，则无法扩容，直接返回
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            }
+            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;
+                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)
+                // shreshold翻倍
+                newThr = oldThr &lt;&lt; 1; 
+        }
+        // capacity==0的情况，HashMap刚刚经过初始化还没有值的情景
+        else if (oldThr &gt; 0) 
+            // 构造函数（2）（3）初始化HashMap时threshold被设定为initialCapacity
+            newCap = oldThr;
+        else {               // zero initial threshold signifies using defaults
+            //threshold==0, 使用默认配置，对应无参构造函数（1）的情景
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+        }
+        if (newThr == 0) {
+            float ft = (float)newCap * loadFactor;
+            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?
+                      (int)ft : Integer.MAX_VALUE);
+        }
+        threshold = newThr;
+        @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
+            Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
+        table = newTab;
+        if (oldTab != null) {
+            for (int j = 0; j &lt; oldCap; ++j) {
+                Node&lt;K,V&gt; e;
+                if ((e = oldTab[j]) != null) {
+                    oldTab[j] = null;
+                    if (e.next == null)
+                        // 桶中只有一个元素
+                        newTab[e.hash &amp; (newCap - 1)] = e;
+                    else if (e instanceof TreeNode)
+                        // 桶为红黑树
+                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);
+                    else { // preserve order
+                        // 桶为数组
+                        Node&lt;K,V&gt; loHead = null, loTail = null;
+                        Node&lt;K,V&gt; hiHead = null, hiTail = null;
+                        Node&lt;K,V&gt; next;
+                        do {
+                            next = e.next;
+                            if ((e.hash &amp; oldCap) == 0) {
+                                if (loTail == null)
+                                    loHead = e;
+                                else
+                                    loTail.next = e;
+                                loTail = e;
+                            }
+                            else {
+                                if (hiTail == null)
+                                    hiHead = e;
+                                else
+                                    hiTail.next = e;
+                                hiTail = e;
+                            }
+                        } while ((e = next) != null);
+                        if (loTail != null) {
+                            loTail.next = null;
+                            newTab[j] = loHead;
+                        }
+                        if (hiTail != null) {
+                            hiTail.next = null;
+                            newTab[j + oldCap] = hiHead;
+                        }
+                    }
+                }
+            }
+        }
+        return newTab;
+    }
+</code></pre>
 
     
 
-        <a href="/2018/02/16/New-Year-s-Day/" class="post-more waves-effect waves-button">
+        <a href="/2018/07/12/HashMap源码解析/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK源码/">JDK源码</a></li></ul>
+
     </div>
     
 </article>
@@ -380,11 +657,11 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-责任链模式"
+            <article id="post-深入理解JVM-（5）Class文件的结构"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2018-02-13 13:25:29" datetime="2018-02-13T05:25:29.000Z"  itemprop="datePublished">2018-02-13</time>
+        <time class="post-time" title="2018-04-03 16:18:40" datetime="2018-04-03T08:18:40.000Z"  itemprop="datePublished">2018-04-03</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
@@ -398,7 +675,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/02/13/责任链模式/">责任链模式</a>
+      <a class="post-title-link" href="/2018/04/03/深入理解JVM-（5）Class文件的结构/">深入理解JVM-（5）Class文件的结构</a>
     </h3>
   
 
@@ -411,20 +688,67 @@
         <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/02/13/责任链模式/捕获.PNG" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-20-01.png" alt="Class文件结构" title="">
                 </div>
-                <div class="image-caption"></div>
+                <div class="image-caption">Class文件结构</div>
             </figure>
     
 
-        <a href="/2018/02/13/责任链模式/" class="post-more waves-effect waves-button">
+        <a href="/2018/04/03/深入理解JVM-（5）Class文件的结构/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-深入理解JVM-（4）内存分配与回收策略"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-03-15 17:13:09" datetime="2018-03-15T09:13:09.000Z"  itemprop="datePublished">2018-03-15</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/">深入理解JVM-（4）内存分配与回收策略</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h1 id="对象优先分配在Eden"><a href="#对象优先分配在Eden" class="headerlink" title="对象优先分配在Eden"></a>对象优先分配在Eden</h1>
+    
+
+        <a href="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
 
     </div>
     
@@ -437,7 +761,7 @@
     
 <nav id="page-nav">
     <div class="inner">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
     </div>
 </nav>
 

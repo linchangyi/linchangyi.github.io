@@ -21,9 +21,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="JVM">
+    <meta name="keywords" content="JVM,笔记">
     <meta name="description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象">
-<meta name="keywords" content="JVM">
+<meta name="keywords" content="JVM,笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解JVM-（3）GC算法">
 <meta property="og:url" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/index.html">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG">
-<meta property="og:updated_time" content="2018-03-02T15:56:41.372Z">
+<meta property="og:updated_time" content="2018-07-17T17:10:27.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM-（3）GC算法">
 <meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象">
@@ -336,7 +336,7 @@
 <p>CMS收集器仍然有三个显著的缺点：</p>
 <ul>
 <li><strong>对cpu资源非常敏感</strong><br>  默认回收线程数=（cpu数量+3）/4，当cpu数量&gt;=4时，收集线程占用的cpu资源&lt;25%；但是当cpu资源不足4时，比如2，那么回收线程将占用50%的cpu资源，导致用户线程速度降低50%。</li>
-<li><strong>无法处理浮动垃圾</strong>（Floating Garbage，并发清理阶段，用户线程产生的新垃圾），可能出现“concurrent mode failure”而导致另一次Full GC的产生。<strong>由于垃圾收集阶段用户线程仍然在运行，所以需要预留空间提供程序运作使用。因此默认设置下，CMS在老年代使用了68%的空间后就会被激活（-XX:CMSInitiatingOccuPancyFraction参数可以用来设置这个比例值）</strong>。如果应用老年代增长不是很快，可以提高出发百分比，以便降低内存回收次数获得更好性能。要是CMS运行期间预留的内存空间无法满足程序需求，就会出现一次“Concurrent Mode Failure”，这时候虚拟机会临时启用Serial Old收集器来重新进行老年代的收集，这样停顿时间就更长了。因此-XX：CMSInitiatingOccupancyFraction设置得太高将会很容易导致大量“Concurrent Mode Failure”，降低性能。</li>
+<li><strong>无法处理浮动垃圾</strong>（Floating Garbage，并发清理阶段，用户线程产生的新垃圾），可能出现“concurrent mode failure”而导致另一次Full GC的产生。<strong>由于垃圾收集阶段用户线程仍然在运行，所以需要预留空间提供程序运作使用。因此默认设置下，CMS在老年代使用了68%的空间后就会被激活（-XX:CMSInitiatingOccuPancyFraction参数可以用来设置这个比例值）</strong>。如果应用老年代增长不是很快，可以提高出发百分比，以便降低内存回收次数获得更好性能。要是CMS运行期间预留的内存空间无法满足程序需求，就会出现一次“Concurrent Mode Failure”，这时候虚拟机会临时启用<strong>Serial Old收集器</strong>来重新进行老年代的收集，这样停顿时间就更长了。因此-XX：CMSInitiatingOccupancyFraction设置得太高将会很容易导致大量“Concurrent Mode Failure”，降低性能。</li>
 <li>标记-清除算法，<strong>产生大量空间碎片</strong>，往往出现老年代还有很大的空间剩余，但是无法找到足够大的连续空间，从而触发Full GC。CMS提供了一个<strong>-XX：+UseCMSCompactAtFullCollection</strong>开关参数，用于在Full GC后二外进行一个碎片整理过程，但停顿时间变常了。因此还提供了另一个参数<strong>-XX：CMSFullGCsBeforeComapction</strong>，用于设置执行多少次Full GC后，跟着来一次压缩。</li>
 </ul>
 <h2 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h2><p><strong>基于标记-整理算法</strong>，不会产生空间碎片。可以非常精确控制停顿，可以明确指定在一个长度为M毫秒的时间片段内，消耗在GC的时间不超过N好眠。</p>
@@ -356,7 +356,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-02T15:56:41.372Z" itemprop="dateUpdated">2018-03-02 23:56:41</time>
+    最后更新时间：<time datetime="2018-07-17T17:10:27.413Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
 </span><br>
 
 
@@ -378,7 +378,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
 
 
             
@@ -436,7 +436,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">深入理解JVM-（4）内存分配与回收策略</h4>
+      </a>
+    </div>
   
 
   

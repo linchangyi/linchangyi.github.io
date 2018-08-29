@@ -32,7 +32,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2018/02/09/SpringBoot启动过程分析/1.PNG">
 <meta property="og:image" content="https://lincy.online/2018/02/09/SpringBoot启动过程分析/springfactories.PNG">
-<meta property="og:updated_time" content="2018-03-01T15:26:05.475Z">
+<meta property="og:updated_time" content="2018-03-10T09:15:46.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot启动过程分析">
 <meta name="twitter:description" content="入口@SpringBootApplication public class SpringbootstarterApplication {     public static void main(String[] args) {         SpringApplication.run(SpringbootstarterApplication.class, args);     } }">
@@ -197,7 +197,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#入口"><span class="post-toc-number">1.</span> <span class="post-toc-text">入口</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#初始化"><span class="post-toc-number">2.</span> <span class="post-toc-text">初始化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化器和监听器的创建："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">初始化器和监听器的创建：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行"><span class="post-toc-number">3.</span> <span class="post-toc-text">运行</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#入口"><span class="post-toc-number">1.</span> <span class="post-toc-text">入口</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#初始化"><span class="post-toc-number">2.</span> <span class="post-toc-text">初始化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化器和监听器是如何创建的？"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">初始化器和监听器是如何创建的？</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行"><span class="post-toc-number">3.</span> <span class="post-toc-text">运行</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#…未完待续"><span class="post-toc-number">4.</span> <span class="post-toc-text">…未完待续</span></a></li></ol>
         </nav>
     </aside>
     
@@ -236,10 +236,10 @@ public class SpringbootstarterApplication {
     }
     //是否web应用
     this.webEnvironment = deduceWebEnvironment();
-    //设置初始化器
+    //应用上下文初始化器
     setInitializers((Collection) getSpringFactoriesInstances(
             ApplicationContextInitializer.class));
-    //设置监听器
+    //应用监听器监听器，使用观察者模式实现
     setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
     this.mainApplicationClass = deduceMainApplicationClass();
 }
@@ -251,7 +251,7 @@ public class SpringbootstarterApplication {
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
-<h2 id="初始化器和监听器的创建："><a href="#初始化器和监听器的创建：" class="headerlink" title="初始化器和监听器的创建："></a>初始化器和监听器的创建：</h2><p>可以看到初始化器和监听器的创建都是通过 getSpringFactoriesInstances 这个方法：</p>
+<h2 id="初始化器和监听器是如何创建的？"><a href="#初始化器和监听器是如何创建的？" class="headerlink" title="初始化器和监听器是如何创建的？"></a>初始化器和监听器是如何创建的？</h2><p>可以看到初始化器和监听器的创建都是通过 getSpringFactoriesInstances 这个方法：</p>
 <pre><code class="java">private &lt;T&gt; Collection&lt;? extends T&gt; getSpringFactoriesInstances(Class&lt;T&gt; type,
         Class&lt;?&gt;[] parameterTypes, Object... args) {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -265,20 +265,21 @@ public class SpringbootstarterApplication {
     return instances;
 }
 </code></pre>
-<p>springboot jar包底下的\META-INF\spring.factories配置的初始化器和监听器:<br><figure class="image-bubble">
+<p>springboot的一个jar包底下的\META-INF\spring.factories配置的初始化器和监听器:<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="/2018/02/09/SpringBoot启动过程分析/springfactories.PNG" alt="spring.factories一部分配置" title="">
                 </div>
                 <div class="image-caption">spring.factories一部分配置</div>
             </figure></p>
-<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><pre><code class="java">public ConfigurableApplicationContext run(String... args) {
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>SpringApplition.java</p>
+<pre><code class="java">public ConfigurableApplicationContext run(String... args) {
     StopWatch stopWatch = new StopWatch();
     stopWatch.start();
-    ConfigurableApplicationContext context = null;
     FailureAnalyzers analyzers = null;
     configureHeadlessProperty();
-    //SpringApplicationRunListener监听事件：
+    //SpringApplicationRunListener，也是通getSpringFactoriesInstances方式加载。
+    //是SpringApplicationRunListener的集合，监测应用上下文环境的事件：
     //starting, environmentPrepared, contextPrepared, contextLoaded, finished 
     SpringApplicationRunListeners listeners = getRunListeners(args);
     listeners.starting();
@@ -309,7 +310,7 @@ public class SpringbootstarterApplication {
     }
 }
 </code></pre>
-
+<h1 id="…未完待续"><a href="#…未完待续" class="headerlink" title="…未完待续"></a>…未完待续</h1>
         </div>
 
         <blockquote class="post-copyright">
@@ -317,7 +318,7 @@ public class SpringbootstarterApplication {
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-01T15:26:05.475Z" itemprop="dateUpdated">2018-03-01 23:26:05</time>
+    最后更新时间：<time datetime="2018-03-10T09:15:46.521Z" itemprop="dateUpdated">2018-03-10 17:15:46</time>
 </span><br>
 
 
