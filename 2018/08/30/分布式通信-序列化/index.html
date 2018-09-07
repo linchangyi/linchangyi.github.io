@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="lincy.online/2018/08/30/分布式通信-序列化/">
+    
+    
+    <title>分布式通信-序列化 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Java序列化机制 —— Serialize接口 数据结果大、传输效率低 不能跨语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式通信-序列化">
+<meta property="og:url" content="https://lincy.online/2018/08/30/分布式通信-序列化/index.html">
+<meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="Java序列化机制 —— Serialize接口 数据结果大、传输效率低 不能跨语言">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信-序列化/2018-08-30-23-21-02.png">
+<meta property="og:updated_time" content="2018-08-30T15:34:00.853Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式通信-序列化">
+<meta name="twitter:description" content="Java序列化机制 —— Serialize接口 数据结果大、传输效率低 不能跨语言">
+<meta name="twitter:image" content="https://lincy.online/2018/08/30/分布式通信-序列化/2018-08-30-23-21-02.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lincy</h5>
+          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archieves
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/技术"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linchangyi" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-link"></i>
+                about
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+                <i class="icon icon-lg icon-navicon"></i>
+            </a>
+        <div class="top-menu" id="top-menu">
+            
+                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">分布式通信-序列化</span>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">分布式通信-序列化</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-30T14:06:59.000Z" itemprop="datePublished" class="page-time">
+  2018-08-30
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java序列化机制-——-Serialize接口"><span class="post-toc-number">1.</span> <span class="post-toc-text">Java序列化机制 —— Serialize接口</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何实现Java序列化操作："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">如何实现Java序列化操作：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#父子类问题"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">父子类问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#序列化的存储规则"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">序列化的存储规则</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#XML对象序列化"><span class="post-toc-number">2.</span> <span class="post-toc-text">XML对象序列化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基于JSON的HTTP-REST接口"><span class="post-toc-number">3.</span> <span class="post-toc-text">基于JSON的HTTP REST接口</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主流的序列化技术"><span class="post-toc-number">4.</span> <span class="post-toc-text">主流的序列化技术</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+
+<div class="container body-wrap">
+    <article id="post-分布式通信-序列化"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">分布式通信-序列化</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-30 22:06:59" datetime="2018-08-30T14:06:59.000Z"  itemprop="datePublished">2018-08-30</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Java序列化机制-——-Serialize接口"><a href="#Java序列化机制-——-Serialize接口" class="headerlink" title="Java序列化机制 —— Serialize接口"></a>Java序列化机制 —— Serialize接口</h2><ul>
+<li>数据结果大、传输效率低</li>
+<li>不能跨语言<a id="more"></a>
+<h3 id="如何实现Java序列化操作："><a href="#如何实现Java序列化操作：" class="headerlink" title="如何实现Java序列化操作："></a>如何实现Java序列化操作：</h3></li>
+<li>实现Serializable接口</li>
+<li>ObjectInputStream： 读取字节数据转换成对象</li>
+<li>ObjectOuputStream： 将对象转换成直接数据</li>
+<li>serialVersionUID的作用：保证序列化的对象和反序列化后的对象是同一个，对类的签名。</li>
+<li>transient 关键字：不参与序列化。<h3 id="父子类问题"><a href="#父子类问题" class="headerlink" title="父子类问题"></a>父子类问题</h3>如果父类没有实现序列化，而子类实现列序列化。那么父类中的成员没办法做序列化操作</li>
+</ul>
+<h3 id="序列化的存储规则"><a href="#序列化的存储规则" class="headerlink" title="序列化的存储规则"></a>序列化的存储规则</h3><p>对同一个对象进行多次写入，打印出的第一次存储结果和第二次存储结果，只多了5个字节的引用关系, 并不会导致文件累加。</p>
+<h2 id="XML对象序列化"><a href="#XML对象序列化" class="headerlink" title="XML对象序列化"></a>XML对象序列化</h2><ul>
+<li>跨语言，容易理解</li>
+<li>基于XML的SOAP协议和对应的WebService框架在很长一段时间成为主流的技术。</li>
+</ul>
+<h2 id="基于JSON的HTTP-REST接口"><a href="#基于JSON的HTTP-REST接口" class="headerlink" title="基于JSON的HTTP REST接口"></a>基于JSON的HTTP REST接口</h2><ul>
+<li>相比XML更简单易用，基本上取代了复杂的Web Service接口，成为分布式框架中远程通信的首要选择。</li>
+<li>仍然存在占用空间大、性能低的问题。</li>
+</ul>
+<h2 id="主流的序列化技术"><a href="#主流的序列化技术" class="headerlink" title="主流的序列化技术"></a>主流的序列化技术</h2><ul>
+<li>JSON</li>
+<li>XML</li>
+<li>Protobuf<ul>
+<li>字节数小</li>
+<li>速度快</li>
+</ul>
+</li>
+<li>Hessian<ul>
+<li>序列化速度比protobuf更快，但是字节数更大</li>
+</ul>
+</li>
+<li>ProtoStuff</li>
+<li>MsgPack</li>
+<li>thrift</li>
+<li>FST</li>
+<li>Avro</li>
+</ul>
+<p><img src="/2018/08/30/分布式通信-序列化/2018-08-30-23-21-02.png" alt=""></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-08-30T15:34:00.853Z" itemprop="dateUpdated">2018-08-30 23:34:00</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/08/30/分布式通信-序列化/" target="_blank" rel="external">https://lincy.online/2018/08/30/分布式通信-序列化/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式通信-序列化/&title=《分布式通信-序列化》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式通信-序列化/&title=《分布式通信-序列化》 — Lincy's Blog&source=Java序列化机制 —— Serialize接口
+数据结果大、传输效率低
+不能跨语言" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式通信-序列化/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式通信-序列化》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式通信-序列化/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式通信-序列化/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/30/分布式通信协议-HTTP/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">分布式通信协议-HTTP</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/30/分布式通信协议/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">分布式通信协议</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+        <p><span>Lincy &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
+                
+                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式通信-序列化/&title=《分布式通信-序列化》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式通信-序列化/&title=《分布式通信-序列化》 — Lincy's Blog&source=Java序列化机制 —— Serialize接口
+数据结果大、传输效率低
+不能跨语言" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式通信-序列化/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式通信-序列化》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式通信-序列化/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式通信-序列化/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aQW7DMAwFUd3/0i7QVReJMp90ClgcrQLDcfy0YCiSa+F1/a70/r/fIp9rv7VkyJAxgHFtF3mJ/ZX9r+y3jLybDBky5jDSx+1fkYDTJ3x4ZxkyZMgI7yHJ335TZMiQIeOugEuud7ZMhgwZMtJDLLnegaXPlyFDxhxG2hj4z89f7G/IkCHjIYwrXJ3S//W1JUOGjLMZ6bhDJ3WrDVvwVoEMGTJOZdSKX/tQWwu+aZHuxf+GDBkyDmV0xrbSMhkZuaidWGXIkDGBwQ+laD/CkhnHy5AhYyaDn3T5MfWuclvQopAhQ8YARm2Qi6eJ32tkypAhYwKDNwbSMMpPz53mqAwZMuYw0tStMzqGQmc49yVDhoyzGbXCfe0VaxgUvmXIkDGAUSvQ14JpPxC//a+QIUPGMAZvNKYtyc74xdt7ZMiQMYbBX6J/9CXjFGT7XqSGMmTIGMPoD4ql25GmnqizIUOGjCMYtYIaegQYxegkizJkyJjDSEfBaglcekgmoR91HmTIkHEQgz8uPeiSgJveKUOGjGmM9As8sPIxr4VXPNcmQ4aMIxhXuNIdImniDSU/GTJkHM1Ig12tiEa2gB+V08EyGTJknMHgxfo0LNZOmsUtkCFDxgBGLciSIhpJB2tBf/GdkyFDxhjGaq9aqEWjGDJkyJDRaHaSLUgTzVZqKEOGjMcyamMTZICD/wp5zofUUIYMGYcyOo2BftsybXB2xjVkyJDxQMYPg2GJh/AvQcwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu != 1){
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 1 );
+        }
+    })();
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
+    
+    
+        <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    
+</body>
+</html>

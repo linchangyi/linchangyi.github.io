@@ -12,37 +12,38 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="lincy.online/2018/08/30/分布式架构概述/">
+    <link rel="canonical" href="lincy.online/2018/08/30/分布式通信协议-HTTP/">
     
     
-    <title>分布式架构概述 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <title>分布式通信协议-HTTP | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="分布式">
-    <meta name="description" content="特点：高并发、海量数据什么是分布式 任务分解 节点通信">
-<meta name="keywords" content="分布式">
+    <meta name="keywords" content="">
+    <meta name="description" content="HTTP协议概述 客户端和服务端 资源html/文本、word、avi等等 媒体类型MIME类型。text/html、image/jpeg、application/json等等 URI和URLURI：服务器资源的名字。index.htmlURL:网络资源描述  https://pan.baidu.com/disk/home?#/all?path=%2F&amp;amp;vmode=list    sche">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分布式架构概述">
-<meta property="og:url" content="https://lincy.online/2018/08/30/分布式架构概述/index.html">
+<meta property="og:title" content="分布式通信协议-HTTP">
+<meta property="og:url" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="特点：高并发、海量数据什么是分布式 任务分解 节点通信">
+<meta property="og:description" content="HTTP协议概述 客户端和服务端 资源html/文本、word、avi等等 媒体类型MIME类型。text/html、image/jpeg、application/json等等 URI和URLURI：服务器资源的名字。index.htmlURL:网络资源描述  https://pan.baidu.com/disk/home?#/all?path=%2F&amp;amp;vmode=list    sche">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-19-59.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-28-45.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-29-21.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-47-22.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-49-51.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-53-42.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-56-59.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-02-05-42.png">
-<meta property="og:updated_time" content="2018-08-30T15:04:38.554Z">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-53-32.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-54-25.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-42.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-59.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-03-36.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-18-51.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-23-35.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-26-41.png">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-27-51.png">
+<meta property="og:updated_time" content="2018-09-01T04:11:57.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式架构概述">
-<meta name="twitter:description" content="特点：高并发、海量数据什么是分布式 任务分解 节点通信">
-<meta name="twitter:image" content="https://lincy.online/2018/08/30/分布式架构概述/2018-08-30-01-19-59.png">
+<meta name="twitter:title" content="分布式通信协议-HTTP">
+<meta name="twitter:description" content="HTTP协议概述 客户端和服务端 资源html/文本、word、avi等等 媒体类型MIME类型。text/html、image/jpeg、application/json等等 URI和URLURI：服务器资源的名字。index.htmlURL:网络资源描述  https://pan.baidu.com/disk/home?#/all?path=%2F&amp;amp;vmode=list    sche">
+<meta name="twitter:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -157,7 +158,7 @@
                 </a>
             
         </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">分布式架构概述</span>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">分布式通信协议-HTTP</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -179,10 +180,10 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">分布式架构概述</h1>
+        <h1 class="title">分布式通信协议-HTTP</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-08-29T17:00:40.000Z" itemprop="datePublished" class="page-time">
+                <time datetime="2018-08-30T15:34:31.000Z" itemprop="datePublished" class="page-time">
   2018-08-30
 </time>
 
@@ -201,20 +202,20 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#特点：高并发、海量数据"><span class="post-toc-number">1.</span> <span class="post-toc-text">特点：高并发、海量数据</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么是分布式"><span class="post-toc-number">2.</span> <span class="post-toc-text">什么是分布式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分布式架构发展"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式架构发展</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第一版"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">第一版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第二版"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">第二版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第三版"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">第三版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第四版"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">第四版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第五版"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">第五版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第六版"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">第六版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第七版"><span class="post-toc-number">3.7.</span> <span class="post-toc-text">第七版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第八版"><span class="post-toc-number">3.8.</span> <span class="post-toc-text">第八版</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP协议概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">HTTP协议概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTPS"><span class="post-toc-number">2.</span> <span class="post-toc-text">HTTPS</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#https工作原理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">https工作原理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RESTful"><span class="post-toc-number">3.</span> <span class="post-toc-text">RESTful</span></a></li></ol>
         </nav>
     </aside>
     
 
 
 <div class="container body-wrap">
-    <article id="post-分布式架构概述"
+    <article id="post-分布式通信协议-HTTP"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">分布式架构概述</h1>
+        <h1 class="post-card-title">分布式通信协议-HTTP</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-08-30 01:00:40" datetime="2018-08-29T17:00:40.000Z"  itemprop="datePublished">2018-08-30</time>
+            <time class="post-time" title="2018-08-30 23:34:31" datetime="2018-08-30T15:34:31.000Z"  itemprop="datePublished">2018-08-30</time>
 
             
 
@@ -223,92 +224,105 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="特点：高并发、海量数据"><a href="#特点：高并发、海量数据" class="headerlink" title="特点：高并发、海量数据"></a>特点：高并发、海量数据</h1><h1 id="什么是分布式"><a href="#什么是分布式" class="headerlink" title="什么是分布式"></a>什么是分布式</h1><ul>
-<li>任务分解</li>
-<li>节点通信</li>
-</ul>
-<a id="more"></a>
-<h1 id="分布式架构发展"><a href="#分布式架构发展" class="headerlink" title="分布式架构发展"></a>分布式架构发展</h1><h2 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-19-59.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>单机负载越来越高，数据库和应用服务器分离<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-28-45.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<h2 id="第三版"><a href="#第三版" class="headerlink" title="第三版"></a>第三版</h2><p>应用服务器做集群<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-29-21.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>引入问题:</p>
-<ul>
-<li>session共享<ul>
-<li>session sticky</li>
-<li>session replication</li>
-<li>session 集中存储（db、缓存）</li>
-<li>cookie (保存在cookie，不保存在服务端)<ul>
-<li>access_token(userid/token/timestamp) </li>
-</ul>
+            <h2 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h2><ul>
+<li>客户端和服务端<br><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png" alt=""></li>
+<li>资源<br>html/文本、word、avi等等</li>
+<li>媒体类型<br>MIME类型。text/html、image/jpeg、application/json等等</li>
+<li><p>URI和URL<br>URI：服务器资源的名字。index.html<br>URL:网络资源描述</p>
+<blockquote>
+<p><a href="https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list" target="_blank" rel="noopener">https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list</a></p>
+</blockquote>
+<p>  schema: http/https/ftp<br>  host: web服务器的IP地址或域名。<br>  path: 资源访问路径。<br>  query-string: 查询参数。</p>
 </li>
-</ul>
+<li><p>method，方法<br>get/put/delete/post/patch/head</p>
 </li>
-<li>请求转发<h2 id="第四版"><a href="#第四版" class="headerlink" title="第四版"></a>第四版</h2>数据库高性能操作<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-47-22.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-引入问题：</li>
-<li>数据库读写分离</li>
-<li>数据库的数据同步</li>
-<li>数据库路由（mycat）</li>
-</ul>
-<h2 id="第五版"><a href="#第五版" class="headerlink" title="第五版"></a>第五版</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-49-51.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>引入问题：</p>
-<ul>
-<li>搜索引擎的索引数据同步？实时增量同步？定时全量同步?</li>
-</ul>
-<h2 id="第六版"><a href="#第六版" class="headerlink" title="第六版"></a>第六版</h2><p>用户无上限，解决方式：</p>
-<ul>
+<li><p>报文</p>
+</li>
+<li>状态码<br>  1XX    提示信息<br>  2XX    成功<br>  3XX    重定向<br>  4XX    客户端错误<br>  5XX    服务器端的错误</li>
 <li>缓存</li>
-<li>限流</li>
-<li>降级</li>
 </ul>
-<p><img src="/2018/08/30/分布式架构概述/2018-08-30-01-53-42.png" alt=""></p>
-<h2 id="第七版"><a href="#第七版" class="headerlink" title="第七版"></a>第七版</h2><p>数据库的水平/垂直拆分<br><figure class="image-bubble">
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="https工作原理"><a href="#https工作原理" class="headerlink" title="https工作原理"></a>https工作原理</h3><p><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-53-32.png" alt=""></p>
+<p>第一步，使用对称加解密<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-01-56-59.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-54-25.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
-<h2 id="第八版"><a href="#第八版" class="headerlink" title="第八版"></a>第八版</h2><p><strong>应用拆分</strong></p>
-<ul>
-<li>SOA</li>
-<li>微服务</li>
-</ul>
-<figure class="image-bubble">
+<p>第二步，密钥是公开的，所有的客户端都可以拿到<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式架构概述/2018-08-30-02-05-42.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-42.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure>
+            </figure></p>
+<p>第三步 针对不同的客户端使用不同的密钥<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-59.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>问题：协商过程是没有加密的，所以还会出现被截断的问题</p>
+<p>第四步：使用非对称加密（公钥、私钥）<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-03-36.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>客户端如何拿到公钥：</p>
+<ol>
+<li>服务器端把公钥发送给每一个客户端</li>
+<li>服务器端把公钥放到远程服务器，客户端可以请求到</li>
+<li>让浏览器保存所有的公钥（不现实）</li>
+</ol>
+<p>第五步 <strong>公钥被调包的问题按照上面的方案，永远存在。</strong><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-18-51.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>第六步：使用第三方机构来解决</p>
+<p>通过第三方机构，使用第三方机构的私钥对我们【需要传输的公钥】进行加密<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-23-35.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-26-41.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>问题：数字证书有可能颁发给了窃密者</p>
+<p>第七步：<br>数字证里面包含的内容：<br> 公司信息、网站信息、数字证书的算法、公钥<br> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-27-51.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>https握手过程：</p>
+<ol>
+<li>客户端发起一个https请求<br>a)    客户端支持的加密方式<br>b)    客户端生成的随机数（第一个随机数）<ol>
+<li>服务端收到请求后，拿到随机数，返回<br>a)    证书（颁发机构（CA）、证书内容本身的数字签名（使用第三方机构的私钥加密）、证书持有者的公钥、证书签名用到的hash算法）<br>b)    生成一个随机数，返回给客户端（第二个随机数）</li>
+<li>客户端拿到证书以后做验证<br>a)    根据颁发机构找到本地的跟证书<br>b)    根据CA得到根证书的公钥，通过公钥对数字签名解密，得到证书的内容摘要 A<br>c)    用证书提供的算法对证书内容进行摘要，得到摘要 B<br>d)    通过A和B的对比，也就是验证数字签名</li>
+<li>验证通过以后，生成一个随机数（第三个随机数），通过证书内的公钥对这个随机数加密，发送给服务器端</li>
+<li>（随机数1+2+3）通过对称加密得到一个密钥。（会话密钥）</li>
+<li>通过会话密钥对内容进行对称加密传输</li>
+</ol>
+</li>
+</ol>
+<h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><ol>
+<li>在REST中，一切的内容都被认为是一种资源</li>
+<li>每个资源都由URI唯一标识</li>
+<li>使用统一的接口处理资源请求（POST/GET/PUT/DELETE/HEAD）</li>
+<li>无状态</li>
+</ol>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -316,12 +330,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-08-30T15:04:38.554Z" itemprop="dateUpdated">2018-08-30 23:04:38</time>
+    最后更新时间：<time datetime="2018-09-01T04:11:57.240Z" itemprop="dateUpdated">2018-09-01 12:11:57</time>
 </span><br>
 
 
         
-        原始链接：<a href="/2018/08/30/分布式架构概述/" target="_blank" rel="external">https://lincy.online/2018/08/30/分布式架构概述/</a>
+        原始链接：<a href="/2018/08/30/分布式通信协议-HTTP/" target="_blank" rel="external">https://lincy.online/2018/08/30/分布式通信协议-HTTP/</a>
         
     </div>
     
@@ -338,8 +352,6 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
-
 
             
 <div class="page-share-wrap">
@@ -348,7 +360,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式架构概述/&title=《分布式架构概述》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/&title=《分布式通信协议-HTTP》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -358,25 +370,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式架构概述/&title=《分布式架构概述》 — Lincy's Blog&source=特点：高并发、海量数据什么是分布式
-任务分解
-节点通信
-" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/&title=《分布式通信协议-HTTP》 — Lincy's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式架构概述/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式通信协议-HTTP/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式架构概述》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式架构概述/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式通信协议-HTTP》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式架构概述/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -396,21 +405,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/08/30/分布式通信协议/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">分布式通信协议</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/07/12/HashMap源码解析/" id="post-next" class="post-nav-link">
+      <a href="/2018/08/30/分布式通信-序列化/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">HashMap源码解析</h4>
+        <h4 class="title">分布式通信-序列化</h4>
       </a>
     </div>
   
@@ -480,7 +482,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式架构概述/&title=《分布式架构概述》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/&title=《分布式通信协议-HTTP》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -490,25 +492,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式架构概述/&title=《分布式架构概述》 — Lincy's Blog&source=特点：高并发、海量数据什么是分布式
-任务分解
-节点通信
-" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/&title=《分布式通信协议-HTTP》 — Lincy's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式架构概述/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/08/30/分布式通信协议-HTTP/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式架构概述》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式架构概述/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式通信协议-HTTP》 — Lincy's Blog&url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式架构概述/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/08/30/分布式通信协议-HTTP/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -519,7 +518,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aQXLCMAwF0N7/0nTbGYr5kkyncV5WDITYj4WQLH19xdfjx/X8zqtr/YTnT59fb74wMDAuy0i2sn70q03nW1yvm/xMGBgYd2DkQTAJnfOt53vDwMDAWDN6YXqeJmJgYGAkW1+T1tvN38fAwMCoFrHr5ZNgmp+bfbAWx8DAuCCj9+i/ef2R/gYGBsalGI/iNSl0d7VFf3kyBgbG0YxPtDB7x23zEQ0MDIw7MCYBsbxkMcfbcGqIgYFxcUaezPXaBsmhf/KjRH8AGBgYt2RUWwLVA/15gMbAwDibMUnFJongrkG0DRklBgbGv2dUm5dJ8Zmkcb2G5bYxCwwMjEsxqgvk6V2SDvZK5ZepIQYGxqGMPMnbe4g2P4B7U4VjYGAcx9ibXSZ35vfME0oMDIyrM5Kyc9JWrCaa1XExDAyMOzN6x2q7Wgj5Kr/U4hgYGEcz1odlvc3Nx8uiTBYDA+NoxiRpy9uc1YSvWYVjYGAczai2J6tbydPHpGyOBi8wMDCOY1TDa5LSTcraJFWNhi0wMDCOYzS/HJS++djEqHjGwMA4mjEZdOg1IHthFwMD456MR/GajEqsn5CH4ze5LQYGxnGMXpjLk8U8WM+DOwYGxtmMatlZPZKrDk8k97/pbGBgYBzKmBz991oFvfGvl9/CwMDAaLUH5m2GcvaKgYGBEZej+ebmz8TAwLgPYzIeMYmEeYL45n4MDIyjGZO8q7pM8um8tYCBgXEQ4xsnuDGn2C1zZAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aQY7DMAgF0N7/0pkDdGJ9IF3EfllVlZv6eYEA8/nEz/X1JCvz336v//ziwcDAeC3jWj53r7775m6763eu/3e9NwwMjHMY1SC4/iYJoMmRJXvDwMDASMLrs5kpBgYGxoQxL1DvjqB6NBgYGGcykiK2GpoLm4iP74FaHAMD44WMSbr2688/ud/AwMB4FeMqPklil4fXJEGMdoWBgbE1o3eFmbfheoBk5T/rMTAwtmYkBWS1AVctXNcHWn4bBgbGRow8+esVmdUg3twDBgbGAYw8XcvXzxv6eYDGwMA4jbEuJqtFbFKgVo/sttGGgYGxKaMXWJMm2vov8zGOvPWGgYFxMiNvouWNturWC7vCwMDYjpE3uarl6+RqIXnbbdcQAwNjU0be5JqPiOXpZl7iYmBg7M3oXTT2Bi8mAbqQ22JgYGzH6I1h5X/We/Jw/E8Ri4GBsR2jd0mQt9J6Axa932JgYOzNqKZovdCcB+hy+YqBgXEMYx34JilatbnWu4TAwMA4h5GEwsn6PLCWjxUDA+MAxlNjqZP1+RDGp3dmGBgYr2X0Wmm97/PtVluBGBgYuzKu4lNtgT0bcKOkEAMDYztGbwAiHyPrBdbqIBoGBsYJjHxzk+RvMq6R1KoYGBgnMHpjE3NMr4iNbmIxMDAw4tGK6gBHs0zFwMDAGBSx1dBcHcXAwMA4h5EXsc9utPfmB9ptGBgYr2LM865qelcd+XrsIhMDA+N9jD9oRZhO+xTLbgAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
