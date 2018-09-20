@@ -183,6 +183,49 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-分布式协调服务zookeeper"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-09-17 23:58:44" datetime="2018-09-17T15:58:44.000Z"  itemprop="datePublished">2018-09-17</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/09/17/分布式协调服务zookeeper/">分布式协调服务zookeeper</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h3 id="分布式环境的特点"><a href="#分布式环境的特点" class="headerlink" title="分布式环境的特点"></a>分布式环境的特点</h3><ul>
+<li>分布式</li>
+<li>并发性<br>程序运行过程中，并发性操作是很常见的。比如同一个分布式系统中的多个节点，同时访问一个共享资源。数据库、分布式存储。</li>
+<li>无序性<br>进程间的消息通信，会出现顺序不一致的情况。</li>
+</ul>
+    
+
+        <a href="/2018/09/17/分布式协调服务zookeeper/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-分布式通信协议-HTTP"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -211,103 +254,7 @@
     
         <h2 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h2><ul>
 <li>客户端和服务端<br><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png" alt=""></li>
-<li>资源<br>html/文本、word、avi等等</li>
-<li>媒体类型<br>MIME类型。text/html、image/jpeg、application/json等等</li>
-<li><p>URI和URL<br>URI：服务器资源的名字。index.html<br>URL:网络资源描述</p>
-<blockquote>
-<p><a href="https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list" target="_blank" rel="noopener">https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list</a></p>
-</blockquote>
-<p>  schema: http/https/ftp<br>  host: web服务器的IP地址或域名。<br>  path: 资源访问路径。<br>  query-string: 查询参数。</p>
-</li>
-<li><p>method，方法<br>get/put/delete/post/patch/head</p>
-</li>
-<li><p>报文</p>
-</li>
-<li>状态码<br>  1XX    提示信息<br>  2XX    成功<br>  3XX    重定向<br>  4XX    客户端错误<br>  5XX    服务器端的错误</li>
-<li>缓存</li>
 </ul>
-<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="https工作原理"><a href="#https工作原理" class="headerlink" title="https工作原理"></a>https工作原理</h3><p><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-53-32.png" alt=""></p>
-<p>第一步，使用对称加解密<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-54-25.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>第二步，密钥是公开的，所有的客户端都可以拿到<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-42.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>第三步 针对不同的客户端使用不同的密钥<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-59.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>问题：协商过程是没有加密的，所以还会出现被截断的问题</p>
-<p>第四步：使用非对称加密（公钥、私钥）<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-03-36.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>客户端如何拿到公钥：</p>
-<ol>
-<li>服务器端把公钥发送给每一个客户端</li>
-<li>服务器端把公钥放到远程服务器，客户端可以请求到</li>
-<li>让浏览器保存所有的公钥（不现实）</li>
-</ol>
-<p>第五步 <strong>公钥被调包的问题按照上面的方案，永远存在。</strong><br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-18-51.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>第六步：使用第三方机构来解决</p>
-<p>通过第三方机构，使用第三方机构的私钥对我们【需要传输的公钥】进行加密<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-23-35.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-26-41.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>问题：数字证书有可能颁发给了窃密者</p>
-<p>第七步：<br>数字证里面包含的内容：<br> 公司信息、网站信息、数字证书的算法、公钥<br> <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-27-51.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>https握手过程：</p>
-<ol>
-<li>客户端发起一个https请求<br>a)    客户端支持的加密方式<br>b)    客户端生成的随机数（第一个随机数）<ol>
-<li>服务端收到请求后，拿到随机数，返回<br>a)    证书（颁发机构（CA）、证书内容本身的数字签名（使用第三方机构的私钥加密）、证书持有者的公钥、证书签名用到的hash算法）<br>b)    生成一个随机数，返回给客户端（第二个随机数）</li>
-<li>客户端拿到证书以后做验证<br>a)    根据颁发机构找到本地的跟证书<br>b)    根据CA得到根证书的公钥，通过公钥对数字签名解密，得到证书的内容摘要 A<br>c)    用证书提供的算法对证书内容进行摘要，得到摘要 B<br>d)    通过A和B的对比，也就是验证数字签名</li>
-<li>验证通过以后，生成一个随机数（第三个随机数），通过证书内的公钥对这个随机数加密，发送给服务器端</li>
-<li>（随机数1+2+3）通过对称加密得到一个密钥。（会话密钥）</li>
-<li>通过会话密钥对内容进行对称加密传输</li>
-</ol>
-</li>
-</ol>
-<h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><ol>
-<li>在REST中，一切的内容都被认为是一种资源</li>
-<li>每个资源都由URI唯一标识</li>
-<li>使用统一的接口处理资源请求（POST/GET/PUT/DELETE/HEAD）</li>
-<li>无状态</li>
-</ol>
-
     
 
         <a href="/2018/08/30/分布式通信协议-HTTP/" class="post-more waves-effect waves-button">
@@ -452,241 +399,6 @@
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-HashMap源码解析"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-07-12 20:08:26" datetime="2018-07-12T12:08:26.000Z"  itemprop="datePublished">2018-07-12</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/07/12/HashMap源码解析/">HashMap源码解析</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <p>本文基于JDK1.8</p>
-<h1 id="HashMap-数据结构"><a href="#HashMap-数据结构" class="headerlink" title="HashMap 数据结构"></a>HashMap 数据结构</h1><p>在JDK1.8中HashMap进行了优化，桶除了链表，还新增了红黑树的数据结构，加快查找速度<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/07/12/HashMap源码解析/2018-07-12-20-31-38.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<h1 id="类声明"><a href="#类声明" class="headerlink" title="类声明"></a>类声明</h1><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/07/12/HashMap源码解析/2018-07-12-20-16-00.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<h1 id="HashMap-构造函数"><a href="#HashMap-构造函数" class="headerlink" title="HashMap 构造函数"></a>HashMap 构造函数</h1><ul>
-<li>initialCapacity：初始容量。</li>
-<li>loadFactor（默认值为0.75）：负载因子。负载因子表示哈希表在扩充容量之前可以达到多满的尺度，负载因子越大，填充程度越高。</li>
-</ul>
-<pre><code class="Java">    public HashMap()
-    public HashMap(int initialCapacity)
-    public HashMap(int initialCapacity, float loadFactor)
-</code></pre>
-<p>看一下第三个构造函数：</p>
-<pre><code class="java">    public HashMap(int initialCapacity, float loadFactor) {
-        if (initialCapacity &lt; 0)
-            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
-                                               initialCapacity);
-        if (initialCapacity &gt; MAXIMUM_CAPACITY)
-            initialCapacity = MAXIMUM_CAPACITY;
-        if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
-            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
-                                               loadFactor);
-        this.loadFactor = loadFactor;
-        this.threshold = tableSizeFor(initialCapacity);
-    }
-</code></pre>
-<p>shreshold指HashMap容量达到多少时，HashMap会扩容，根据以上描述，可以很简单的认为 shreshold = capacity * loadFactor。 在初始化HashMap时shreshold先被赋值为initial capacity。</p>
-<pre><code class="java">    static final int tableSizeFor(int cap) {
-        int n = cap - 1;
-        n |= n &gt;&gt;&gt; 1;
-        n |= n &gt;&gt;&gt; 2;
-        n |= n &gt;&gt;&gt; 4;
-        n |= n &gt;&gt;&gt; 8;
-        n |= n &gt;&gt;&gt; 16;
-        return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
-    }
-</code></pre>
-<h1 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h1><pre><code class="java">    public V put(K key, V value) {
-        return putVal(hash(key), key, value, false, true);
-    }
-
-    /**
-     * Implements Map.put and related methods
-     *
-     * @param hash hash for key
-     * @param key the key
-     * @param value the value to put
-     * @param onlyIfAbsent if true, don&#39;t change existing value
-     * @param evict if false, the table is in creation mode.
-     * @return previous value, or null if none
-     */
-    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
-                   boolean evict) {
-        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;
-        if ((tab = table) == null || (n = tab.length) == 0)
-            // 如果HashMap为空，则初始化
-            n = (tab = resize()).length;
-        if ((p = tab[i = (n - 1) &amp; hash]) == null)
-            tab[i] = newNode(hash, key, value, null);
-        else {
-            Node&lt;K,V&gt; e; K k;
-            if (p.hash == hash &amp;&amp;
-                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
-                e = p;
-            else if (p instanceof TreeNode)
-                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
-            else {
-                for (int binCount = 0; ; ++binCount) {
-                    if ((e = p.next) == null) {
-                        p.next = newNode(hash, key, value, null);
-                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st
-                            treeifyBin(tab, hash);
-                        break;
-                    }
-                    if (e.hash == hash &amp;&amp;
-                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
-                        break;
-                    p = e;
-                }
-            }
-            if (e != null) { // existing mapping for key
-                V oldValue = e.value;
-                if (!onlyIfAbsent || oldValue == null)
-                    e.value = value;
-                afterNodeAccess(e);
-                return oldValue;
-            }
-        }
-        ++modCount;
-        if (++size &gt; threshold)
-            resize();
-        afterNodeInsertion(evict);
-        return null;
-    }
-</code></pre>
-<h1 id="resize-方法"><a href="#resize-方法" class="headerlink" title="resize()方法"></a>resize()方法</h1><p>初始化表大小或扩容</p>
-<pre><code class="java">    final Node&lt;K,V&gt;[] resize() {
-        Node&lt;K,V&gt;[] oldTab = table;
-        int oldCap = (oldTab == null) ? 0 : oldTab.length;
-        int oldThr = threshold;
-        int newCap, newThr = 0;
-        // capacity &gt; 0 的情况，对应需要扩容的情景
-        if (oldCap &gt; 0) {
-            if (oldCap &gt;= MAXIMUM_CAPACITY) {
-                // 如果原先容量已经到了最大值，则无法扩容，直接返回
-                threshold = Integer.MAX_VALUE;
-                return oldTab;
-            }
-            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;
-                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)
-                // shreshold翻倍
-                newThr = oldThr &lt;&lt; 1; 
-        }
-        // capacity==0的情况，HashMap刚刚经过初始化还没有值的情景
-        else if (oldThr &gt; 0) 
-            // 构造函数（2）（3）初始化HashMap时threshold被设定为initialCapacity
-            newCap = oldThr;
-        else {               // zero initial threshold signifies using defaults
-            //threshold==0, 使用默认配置，对应无参构造函数（1）的情景
-            newCap = DEFAULT_INITIAL_CAPACITY;
-            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
-        }
-        if (newThr == 0) {
-            float ft = (float)newCap * loadFactor;
-            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?
-                      (int)ft : Integer.MAX_VALUE);
-        }
-        threshold = newThr;
-        @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
-            Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
-        table = newTab;
-        if (oldTab != null) {
-            for (int j = 0; j &lt; oldCap; ++j) {
-                Node&lt;K,V&gt; e;
-                if ((e = oldTab[j]) != null) {
-                    oldTab[j] = null;
-                    if (e.next == null)
-                        // 桶中只有一个元素
-                        newTab[e.hash &amp; (newCap - 1)] = e;
-                    else if (e instanceof TreeNode)
-                        // 桶为红黑树
-                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);
-                    else { // preserve order
-                        // 桶为数组
-                        Node&lt;K,V&gt; loHead = null, loTail = null;
-                        Node&lt;K,V&gt; hiHead = null, hiTail = null;
-                        Node&lt;K,V&gt; next;
-                        do {
-                            next = e.next;
-                            if ((e.hash &amp; oldCap) == 0) {
-                                if (loTail == null)
-                                    loHead = e;
-                                else
-                                    loTail.next = e;
-                                loTail = e;
-                            }
-                            else {
-                                if (hiTail == null)
-                                    hiHead = e;
-                                else
-                                    hiTail.next = e;
-                                hiTail = e;
-                            }
-                        } while ((e = next) != null);
-                        if (loTail != null) {
-                            loTail.next = null;
-                            newTab[j] = loHead;
-                        }
-                        if (hiTail != null) {
-                            hiTail.next = null;
-                            newTab[j + oldCap] = hiHead;
-                        }
-                    }
-                }
-            }
-        }
-        return newTab;
-    }
-</code></pre>
-
-    
-
-        <a href="/2018/07/12/HashMap源码解析/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK源码/">JDK源码</a></li></ul>
 
     </div>
     
