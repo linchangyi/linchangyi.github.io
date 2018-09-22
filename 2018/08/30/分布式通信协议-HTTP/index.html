@@ -38,8 +38,8 @@
 <meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-18-51.png">
 <meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-23-35.png">
 <meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-26-41.png">
-<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-27-51.png">
-<meta property="og:updated_time" content="2018-09-18T12:54:35.406Z">
+<meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议-HTTP/2018-09-22-10-53-25.png">
+<meta property="og:updated_time" content="2018-09-22T02:55:36.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式通信协议-HTTP">
 <meta name="twitter:description" content="HTTP协议概述 客户端和服务端">
@@ -233,7 +233,7 @@
 <li>媒体类型<br>MIME类型。text/html、image/jpeg、application/json等等</li>
 <li><p>URI和URL<br>URI：服务器资源的名字。index.html<br>URL:网络资源描述</p>
 <blockquote>
-<p><a href="https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list" target="_blank" rel="noopener">https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list</a></p>
+<p><a href="http://lincy.online/2018/08/30/分布式通信协议-HTTP">http://lincy.online/2018/08/30/分布式通信协议-HTTP</a></p>
 </blockquote>
 <p>  schema: http/https/ftp<br>  host: web服务器的IP地址或域名。<br>  path: 资源访问路径。<br>  query-string: 查询参数。</p>
 </li>
@@ -301,22 +301,31 @@
                 <div class="image-caption"></div>
             </figure></p>
 <p>问题：数字证书有可能颁发给了窃密者</p>
-<p>第七步：<br>数字证里面包含的内容：<br> 公司信息、网站信息、数字证书的算法、公钥<br> <figure class="image-bubble">
+<p>第七步：<br>数字证里面包含的内容：<br> 公司信息、网站信息、数字证书的算法、公钥</p>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html</a></p>
+</blockquote>
+<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-27-51.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-09-22-10-53-25.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
-            </figure></p>
+            </figure>
 <p>https握手过程：</p>
 <ol>
-<li>客户端发起一个https请求<br>a)    客户端支持的加密方式<br>b)    客户端生成的随机数（第一个随机数）<ol>
-<li>服务端收到请求后，拿到随机数，返回<br>a)    证书（颁发机构（CA）、证书内容本身的数字签名（使用第三方机构的私钥加密）、证书持有者的公钥、证书签名用到的hash算法）<br>b)    生成一个随机数，返回给客户端（第二个随机数）</li>
-<li>客户端拿到证书以后做验证<br>a)    根据颁发机构找到本地的跟证书<br>b)    根据CA得到根证书的公钥，通过公钥对数字签名解密，得到证书的内容摘要 A<br>c)    用证书提供的算法对证书内容进行摘要，得到摘要 B<br>d)    通过A和B的对比，也就是验证数字签名</li>
-<li>验证通过以后，生成一个随机数（第三个随机数），通过证书内的公钥对这个随机数加密，发送给服务器端</li>
-<li>（随机数1+2+3）通过对称加密得到一个密钥。（会话密钥）</li>
-<li>通过会话密钥对内容进行对称加密传输</li>
+<li>客户端发起一个https请求<br>a)    客户端支持的加密方式<br>b)    客户端生成的随机数（第一个随机数）<br>c)  协议版本号</li>
 </ol>
+<ol>
+<li><p>服务端收到请求后，拿到随机数，返回<br>a)    证书（颁发机构（CA）、证书内容本身的数字签名（使用第三方机构的私钥加密）、证书持有者的公钥、证书签名用到的hash算法）<br>b)    生成一个随机数，返回给客户端（第二个随机数）</p>
+</li>
+<li><p>客户端拿到证书以后做验证<br>a)    根据颁发机构找到本地的跟证书<br>b)    根据CA得到根证书的公钥，通过公钥对数字签名解密，得到证书的内容摘要 A<br>c)    用证书提供的算法对证书内容进行摘要，得到摘要 B<br>d)    通过A和B的对比，也就是验证数字签名</p>
+</li>
+<li><p>验证通过以后，生成一个随机数（第三个随机数），通过证书内的公钥对这个随机数加密，发送给服务器端</p>
+</li>
+<li><p>（随机数1+2+3）通过对称加密得到一个密钥。（会话密钥）</p>
+</li>
+<li><p>通过会话密钥对内容进行对称加密传输</p>
 </li>
 </ol>
 <h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><ol>
@@ -333,7 +342,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-09-18T12:54:35.406Z" itemprop="dateUpdated">2018-09-18 20:54:35</time>
+    最后更新时间：<time datetime="2018-09-22T02:55:36.746Z" itemprop="dateUpdated">2018-09-22 10:55:36</time>
 </span><br>
 
 

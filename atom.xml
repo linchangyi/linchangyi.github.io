@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lincy.online/"/>
-  <updated>2018-09-20T16:04:38.091Z</updated>
+  <updated>2018-09-22T04:55:16.817Z</updated>
   <id>https://lincy.online/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>zookeeper几个原理分析</title>
+    <link href="https://lincy.online/2018/09/22/zookeeper%E5%87%A0%E4%B8%AA%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90/"/>
+    <id>https://lincy.online/2018/09/22/zookeeper几个原理分析/</id>
+    <published>2018-09-22T03:06:05.000Z</published>
+    <updated>2018-09-22T04:55:16.817Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="zookeeper-集群角色"><a href="#zookeeper-集群角色" class="headerlink" title="zookeeper 集群角色"></a>zookeeper 集群角色</h2><ul><li><p>leader</p><ol><li>事务请求的唯一调度者和处理者，保证集群事务处理的顺序性</li><li>集群内部各个服务器的调度者</li></ol></li><li><p>follower</p><ol><li>处理客户端非事务请求，以及转发事务请求给leader服务器</li><li>参与事务请求提议（proposal）的投票（客户端的一个事务请求，需要半数服务器投票通过以后才能通知leader commit； leader会发起一个提案，要求follower投票）</li><li>参与leader选举的投票</li></ol></li><li><p>observer<br>观察zookeeper集群中最新状态的变化并将这些状态同步到observer服务器上。增加observer不影响集群中事务处理能力，同时还能提升集群的非事务处理能力</p></li></ul><a id="more"></a><h2 id="zookeeper-集群组成"><a href="#zookeeper-集群组成" class="headerlink" title="zookeeper 集群组成"></a>zookeeper 集群组成</h2><p><strong>一般由2n+1太服务器组成</strong></p><h2 id="leader选举"><a href="#leader选举" class="headerlink" title="leader选举"></a>leader选举</h2><p>三种算法：</p><ul><li>leaderElection</li><li>AuthFastLeaderElection </li><li>FastLeaderElection（默认）</li></ul><h3 id="FastLeaderElection-选举流程"><a href="#FastLeaderElection-选举流程" class="headerlink" title="FastLeaderElection 选举流程"></a>FastLeaderElection 选举流程</h3><p>几个概念:</p><ul><li>serverid : 在配置server集群的时候，给定服务器的标识id（myid）</li><li>zxid  : 服务器在运行时产生的数据ID， zxid的值越大，表示数据越新</li><li>Epoch: 选举的轮数</li><li>server的状态：Looking、 Following、Observering、Leading</li></ul><p>选举流程，第一次初始化启动的时候服务器状态为Looking</p><ul><li>所有在集群中的server都会 <strong>推荐自己为leader</strong>，然后 <strong>把（myid、zxid、epoch）作为广播信息</strong>，广播给集群中的其他server, 然后 <strong>等待其他服务器返回</strong></li><li>每个服务器都会 <strong>接收来自集群中的其他服务器的投票</strong>。集群中的每个服务器在接受到投票后，开始判断投票的有效性<ul><li>判断逻辑时钟(Epoch) ，<strong>如果Epoch大于自己当前的Epoch，说明自己保存的Epoch是过期</strong>。更新Epoch，同时clear其他服务器发送过来的选举数据。判断是否需要更新当前自己的选举情况</li><li>如果Epoch小于目前的Epoch，说明对方的epoch过期了，也就意味着对方服务器的选举轮数是过期的。这个时候，只需要讲自己的信息发送给对方</li><li>如果epoch等于目前的epoch，根据规则来判断是否有资格获得leader<ul><li>接收来自其他服务器的投票后，针对每一个投票，都需要将别人的投票和自己的投票进行PK zxid，zxid最大的服务器优先</li></ul></li></ul></li></ul><p><img src="/2018/09/22/zookeeper几个原理分析/2018-09-22-11-33-01.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;zookeeper-集群角色&quot;&gt;&lt;a href=&quot;#zookeeper-集群角色&quot; class=&quot;headerlink&quot; title=&quot;zookeeper 集群角色&quot;&gt;&lt;/a&gt;zookeeper 集群角色&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;leader&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;事务请求的唯一调度者和处理者，保证集群事务处理的顺序性&lt;/li&gt;
+&lt;li&gt;集群内部各个服务器的调度者&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;follower&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;处理客户端非事务请求，以及转发事务请求给leader服务器&lt;/li&gt;
+&lt;li&gt;参与事务请求提议（proposal）的投票（客户端的一个事务请求，需要半数服务器投票通过以后才能通知leader commit； leader会发起一个提案，要求follower投票）&lt;/li&gt;
+&lt;li&gt;参与leader选举的投票&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;observer&lt;br&gt;观察zookeeper集群中最新状态的变化并将这些状态同步到observer服务器上。增加observer不影响集群中事务处理能力，同时还能提升集群的非事务处理能力&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>分布式服务zookeeper应用场景</title>
+    <link href="https://lincy.online/2018/09/22/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1zookeeper%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/"/>
+    <id>https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/</id>
+    <published>2018-09-21T16:01:26.000Z</published>
+    <updated>2018-09-21T17:24:30.766Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="数据发布订阅-配置中心"><a href="#数据发布订阅-配置中心" class="headerlink" title="数据发布订阅/配置中心"></a>数据发布订阅/配置中心</h2><p>实现配置信息的集中式管理和数据的动态更新</p><p>实现配置中心有两种模式：push 、pull。</p><p>zookeeper采用的是推拉相结合的方式。 <strong>客户端向服务器端注册自己需要关注的节点</strong>。<strong>一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知</strong>。客户端收到通知后，主动到服务器端获取更新后的数据。</p><p>配置中心数据要求：</p><ol><li>数据量比较小</li><li>数据内容在运行时会发生动态变更</li><li>集群中的各个机器共享配置</li></ol><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png" alt="配置中心实现原理" title="">                </div>                <div class="image-caption">配置中心实现原理</div>            </figure><h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>把ZooKeeper作为一个服务的注册中心，在其中登记每个服务，每台服务器知道自己是属于哪个服务，在服务器启动时，自己向所属服务进行登记，这样，一个树形的服务结构就呈现出来了<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br>服务的调用者到注册中心里面查找：能提供所需服务的服务器列表，然后自己根据负载均衡算法，从中选取一台服务器进行连接</p><p>调用者取到服务器列表后，就可以缓存到自己内部，省得下次再取，当服务器列表发生变化，例如某台服务器宕机下线，或者新加了服务器，ZooKeeper会自动通知调用者重新获取服务器列表</p><p>由于ZooKeeper并没有内置负载均衡策略，需要调用者自己实现，这个方案只是利用了ZooKeeper的树形数据结构、watcher机制等特性，把ZooKeeper作为服务的注册和变更通知中心，解决了Nginx负载均衡方案带来的问题:<br>（1）配置维护的成本变高，因为节点太多<br>（2）单点故障的风险增加了，因为热点服务的访问量很高，如果这个服务集群内的负载均衡服务出现问题，这个服务将失效</p><h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>通常实现分布式锁有几种方式:</p><ol><li>redis。 setNX 存在则会返回0， 不存在</li><li>数据方式去实现, 2种方式<ul><li>创建一个表， 通过索引唯一的方式<br>create table (id , methodname …)   methodname增加唯一索引<br>insert 一条数据XXX   delete 语句删除这条记录</li><li>mysql innodb select for update</li></ul></li></ol><p>zookeeper实现：</p><ul><li>排他锁<br>客户端写入临时节点，利用节点名称不能相同的特性<figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></li><li>共享锁<br>  <strong>利用有序节点特性</strong>。<br>  分布式进程在读写一个共享数据时，可以先在某个公共目录下创建一个有序子目录，然后判断该目录id是否最小。<br>  目录id最小则获得锁并消费共享数据，然后删除该目录。否则则等待，直到自己的目录id成为最小后，才获得锁。<br>  zookeeper所有目录操作事件都可以注册监听器，所以分布式进程不必循环查询子目录判断自己的目录id是否最小，可以注册一个监听器在前一个目录上，监听前一个目录是否被删除。<br><img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png" alt=""></li></ul><h2 id="命名服务"><a href="#命名服务" class="headerlink" title="命名服务"></a>命名服务</h2><h2 id="master-选举"><a href="#master-选举" class="headerlink" title="master 选举"></a>master 选举</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;数据发布订阅-配置中心&quot;&gt;&lt;a href=&quot;#数据发布订阅-配置中心&quot; class=&quot;headerlink&quot; title=&quot;数据发布订阅/配置中心&quot;&gt;&lt;/a&gt;数据发布订阅/配置中心&lt;/h2&gt;&lt;p&gt;实现配置信息的集中式管理和数据的动态更新&lt;/p&gt;
+&lt;p&gt;实现配置中心
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>分布式协调服务zookeeper</title>
@@ -43,9 +99,9 @@
     <link href="https://lincy.online/2018/08/30/%E5%88%86%E5%B8%83%E5%BC%8F%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE-HTTP/"/>
     <id>https://lincy.online/2018/08/30/分布式通信协议-HTTP/</id>
     <published>2018-08-30T15:34:31.000Z</published>
-    <updated>2018-09-18T12:54:35.406Z</updated>
+    <updated>2018-09-22T02:55:36.746Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h2><ul><li>客户端和服务端<br><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png" alt=""></li></ul><a id="more"></a><ul><li>资源<br>html/文本、word、avi等等</li><li>媒体类型<br>MIME类型。text/html、image/jpeg、application/json等等</li><li><p>URI和URL<br>URI：服务器资源的名字。index.html<br>URL:网络资源描述</p><blockquote><p><a href="https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list" target="_blank" rel="noopener">https://pan.baidu.com/disk/home?#/all?path=%2F&amp;vmode=list</a></p></blockquote><p>  schema: http/https/ftp<br>  host: web服务器的IP地址或域名。<br>  path: 资源访问路径。<br>  query-string: 查询参数。</p></li><li><p>method，方法<br>get/put/delete/post/patch/head</p></li><li><p>报文</p></li><li>状态码<br>  1XX    提示信息<br>  2XX    成功<br>  3XX    重定向<br>  4XX    客户端错误<br>  5XX    服务器端的错误</li><li>缓存</li></ul><h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="https工作原理"><a href="#https工作原理" class="headerlink" title="https工作原理"></a>https工作原理</h3><p><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-53-32.png" alt=""></p><p>第一步，使用对称加解密<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-54-25.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>第二步，密钥是公开的，所有的客户端都可以拿到<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-42.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>第三步 针对不同的客户端使用不同的密钥<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-59.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br>问题：协商过程是没有加密的，所以还会出现被截断的问题</p><p>第四步：使用非对称加密（公钥、私钥）<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-03-36.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>客户端如何拿到公钥：</p><ol><li>服务器端把公钥发送给每一个客户端</li><li>服务器端把公钥放到远程服务器，客户端可以请求到</li><li>让浏览器保存所有的公钥（不现实）</li></ol><p>第五步 <strong>公钥被调包的问题按照上面的方案，永远存在。</strong><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-18-51.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>第六步：使用第三方机构来解决</p><p>通过第三方机构，使用第三方机构的私钥对我们【需要传输的公钥】进行加密<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-23-35.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-26-41.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>问题：数字证书有可能颁发给了窃密者</p><p>第七步：<br>数字证里面包含的内容：<br> 公司信息、网站信息、数字证书的算法、公钥<br> <figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-27-51.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>https握手过程：</p><ol><li>客户端发起一个https请求<br>a)    客户端支持的加密方式<br>b)    客户端生成的随机数（第一个随机数）<ol><li>服务端收到请求后，拿到随机数，返回<br>a)    证书（颁发机构（CA）、证书内容本身的数字签名（使用第三方机构的私钥加密）、证书持有者的公钥、证书签名用到的hash算法）<br>b)    生成一个随机数，返回给客户端（第二个随机数）</li><li>客户端拿到证书以后做验证<br>a)    根据颁发机构找到本地的跟证书<br>b)    根据CA得到根证书的公钥，通过公钥对数字签名解密，得到证书的内容摘要 A<br>c)    用证书提供的算法对证书内容进行摘要，得到摘要 B<br>d)    通过A和B的对比，也就是验证数字签名</li><li>验证通过以后，生成一个随机数（第三个随机数），通过证书内的公钥对这个随机数加密，发送给服务器端</li><li>（随机数1+2+3）通过对称加密得到一个密钥。（会话密钥）</li><li>通过会话密钥对内容进行对称加密传输</li></ol></li></ol><h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><ol><li>在REST中，一切的内容都被认为是一种资源</li><li>每个资源都由URI唯一标识</li><li>使用统一的接口处理资源请求（POST/GET/PUT/DELETE/HEAD）</li><li>无状态</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h2><ul><li>客户端和服务端<br><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png" alt=""></li></ul><a id="more"></a><ul><li>资源<br>html/文本、word、avi等等</li><li>媒体类型<br>MIME类型。text/html、image/jpeg、application/json等等</li><li><p>URI和URL<br>URI：服务器资源的名字。index.html<br>URL:网络资源描述</p><blockquote><p><a href="http://lincy.online/2018/08/30/分布式通信协议-HTTP">http://lincy.online/2018/08/30/分布式通信协议-HTTP</a></p></blockquote><p>  schema: http/https/ftp<br>  host: web服务器的IP地址或域名。<br>  path: 资源访问路径。<br>  query-string: 查询参数。</p></li><li><p>method，方法<br>get/put/delete/post/patch/head</p></li><li><p>报文</p></li><li>状态码<br>  1XX    提示信息<br>  2XX    成功<br>  3XX    重定向<br>  4XX    客户端错误<br>  5XX    服务器端的错误</li><li>缓存</li></ul><h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="https工作原理"><a href="#https工作原理" class="headerlink" title="https工作原理"></a>https工作原理</h3><p><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-53-32.png" alt=""></p><p>第一步，使用对称加解密<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-54-25.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>第二步，密钥是公开的，所有的客户端都可以拿到<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-42.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>第三步 针对不同的客户端使用不同的密钥<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-55-59.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br>问题：协商过程是没有加密的，所以还会出现被截断的问题</p><p>第四步：使用非对称加密（公钥、私钥）<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-03-36.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>客户端如何拿到公钥：</p><ol><li>服务器端把公钥发送给每一个客户端</li><li>服务器端把公钥放到远程服务器，客户端可以请求到</li><li>让浏览器保存所有的公钥（不现实）</li></ol><p>第五步 <strong>公钥被调包的问题按照上面的方案，永远存在。</strong><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-18-51.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>第六步：使用第三方机构来解决</p><p>通过第三方机构，使用第三方机构的私钥对我们【需要传输的公钥】进行加密<br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-23-35.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-08-31-00-26-41.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure></p><p>问题：数字证书有可能颁发给了窃密者</p><p>第七步：<br>数字证里面包含的内容：<br> 公司信息、网站信息、数字证书的算法、公钥</p><blockquote><p><a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html</a></p></blockquote><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2018/08/30/分布式通信协议-HTTP/2018-09-22-10-53-25.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>https握手过程：</p><ol><li>客户端发起一个https请求<br>a)    客户端支持的加密方式<br>b)    客户端生成的随机数（第一个随机数）<br>c)  协议版本号</li></ol><ol><li><p>服务端收到请求后，拿到随机数，返回<br>a)    证书（颁发机构（CA）、证书内容本身的数字签名（使用第三方机构的私钥加密）、证书持有者的公钥、证书签名用到的hash算法）<br>b)    生成一个随机数，返回给客户端（第二个随机数）</p></li><li><p>客户端拿到证书以后做验证<br>a)    根据颁发机构找到本地的跟证书<br>b)    根据CA得到根证书的公钥，通过公钥对数字签名解密，得到证书的内容摘要 A<br>c)    用证书提供的算法对证书内容进行摘要，得到摘要 B<br>d)    通过A和B的对比，也就是验证数字签名</p></li><li><p>验证通过以后，生成一个随机数（第三个随机数），通过证书内的公钥对这个随机数加密，发送给服务器端</p></li><li><p>（随机数1+2+3）通过对称加密得到一个密钥。（会话密钥）</p></li><li><p>通过会话密钥对内容进行对称加密传输</p></li></ol><h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><ol><li>在REST中，一切的内容都被认为是一种资源</li><li>每个资源都由URI唯一标识</li><li>使用统一的接口处理资源请求（POST/GET/PUT/DELETE/HEAD）</li><li>无状态</li></ol>]]></content>
     
     <summary type="html">
     
@@ -465,64 +521,6 @@ public class SpringbootstarterApplication {
       <category term="笔记" scheme="https://lincy.online/tags/%E7%AC%94%E8%AE%B0/"/>
     
       <category term="zookeeper" scheme="https://lincy.online/tags/zookeeper/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>服务器性能指标</title>
-    <link href="https://lincy.online/2018/01/17/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/"/>
-    <id>https://lincy.online/2018/01/17/性能指标/</id>
-    <published>2018-01-17T08:24:50.000Z</published>
-    <updated>2018-02-13T15:13:08.050Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li><p>吞吐率（throughout）</p><p>  web服务器单位时间内处理的请求数，单位req/s</p></li><li><p>吞吐量</p><p>  一次性能测试过程中网络传输的数据量的总和</p></li><li><p>事务，tps（Transaction per second）</p><p>  就是用户某一步或几步操作的集合。不过，我们要保证它有一个完整意义。比如用户对某一个页面的一次请求，用户对某系统的一次登录，淘宝用户对商品的一次确认支付过程。这些我们都可以看作一个事务。那么如何衡量服务器对事务的处理能力。又引出一个概念—-TPS 每秒钟系统能够处理事务或交易的数量，它是衡量系统处理能力的重要指标。 <strong>点击率是tps的一种特定情况</strong>，一次鼠标点击，客户端可能向服务器发送多个请求。</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;吞吐率（throughout）&lt;/p&gt;
-&lt;p&gt;  web服务器单位时间内处理的请求数，单位req/s&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;吞吐量&lt;/p&gt;
-&lt;p&gt;  一次性能测试过程中网络传输的数据量的总和&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;事务，tps（Tr
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>vim正则替换技巧</title>
-    <link href="https://lincy.online/2017/05/09/vim%E6%AD%A3%E5%88%99%E6%9B%BF%E6%8D%A2%E6%8A%80%E5%B7%A7/"/>
-    <id>https://lincy.online/2017/05/09/vim正则替换技巧/</id>
-    <published>2017-05-09T06:51:34.000Z</published>
-    <updated>2018-03-10T09:15:46.525Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2017/05/09/vim正则替换技巧/2018-03-09-14-53-36.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>通过以下命令：<br><code>:.,+6s/ r&#39;\(.*\)&#39;/ re.compile(&#39;\1&#39;)/</code><br>将就可以批量将python中 <code>r&#39;...&#39;</code>的 字符串批量替换成 <code>re.compile(&#39;...&#39;)</code></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2017/05/09/vim正则替换技巧/2018-03-09-15-00-25.png" alt="" title="">                </div>                <div class="image-caption"></div>            </figure><p>其中使用<code>\(</code>和<code>\)</code>包含起来，后面可以使用<code>\1</code>,<code>\2</code>指代</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;figure class=&quot;image-bubble&quot;&gt;
-                &lt;div class=&quot;img-lightbox&quot;&gt;
-                    &lt;div class=&quot;overlay&quot;&gt;&lt;/div&gt;
-                   
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://lincy.online/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="vim" scheme="https://lincy.online/tags/vim/"/>
     
   </entry>
   

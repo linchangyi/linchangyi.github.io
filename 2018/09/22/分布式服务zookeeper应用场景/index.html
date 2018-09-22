@@ -12,23 +12,32 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="lincy.online/">
+    <link rel="canonical" href="lincy.online/2018/09/22/分布式服务zookeeper应用场景/">
     
     
-    <title>Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <title>分布式服务zookeeper应用场景 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Lincy&#39;s Blog">
-<meta property="og:url" content="https://lincy.online/index.html">
+    <meta name="description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式服务zookeeper应用场景">
+<meta property="og:url" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png">
+<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png">
+<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png">
+<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png">
+<meta property="og:updated_time" content="2018-09-21T17:24:30.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lincy&#39;s Blog">
+<meta name="twitter:title" content="分布式服务zookeeper应用场景">
+<meta name="twitter:description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
+<meta name="twitter:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -63,7 +72,7 @@
     <div class="scroll-wrap flex-col">
       <ul class="nav">
         
-            <li class="waves-block waves-effect active">
+            <li class="waves-block waves-effect">
               <a href="/"  >
                 <i class="icon icon-lg icon-home"></i>
                 Home
@@ -143,7 +152,7 @@
                 </a>
             
         </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">Lincy&#39;s Blog</span>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">分布式服务zookeeper应用场景</span>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -162,13 +171,17 @@
         
     </div>
 </header>
-<header class="content-header index-header">
+<header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Lincy&#39;s Blog</h1>
+        <h1 class="title">分布式服务zookeeper应用场景</h1>
         <h5 class="subtitle">
             
-                归去来兮，Just Do IT.
+                <time datetime="2018-09-21T16:01:26.000Z" itemprop="datePublished" class="page-time">
+  2018-09-22
+</time>
+
+
             
         </h5>
     </div>
@@ -178,93 +191,34 @@
 
 </header>
 
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据发布订阅-配置中心"><span class="post-toc-number">1.</span> <span class="post-toc-text">数据发布订阅/配置中心</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#负载均衡"><span class="post-toc-number">2.</span> <span class="post-toc-text">负载均衡</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式锁"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式锁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命名服务"><span class="post-toc-number">4.</span> <span class="post-toc-text">命名服务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#master-选举"><span class="post-toc-number">5.</span> <span class="post-toc-text">master 选举</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+
 <div class="container body-wrap">
+    <article id="post-分布式服务zookeeper应用场景"
+  class="post-article article-type-post fade" itemprop="blogPost">
 
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-zookeeper几个原理分析"
-  class="article-card article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">分布式服务zookeeper应用场景</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-09-22 00:01:26" datetime="2018-09-21T16:01:26.000Z"  itemprop="datePublished">2018-09-22</time>
 
-    <div class="post-meta">
-        <time class="post-time" title="2018-09-22 11:06:05" datetime="2018-09-22T03:06:05.000Z"  itemprop="datePublished">2018-09-22</time>
-
-        
+            
 
 
-    </div>
+            
 
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/09/22/zookeeper几个原理分析/">zookeeper几个原理分析</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h2 id="zookeeper-集群角色"><a href="#zookeeper-集群角色" class="headerlink" title="zookeeper 集群角色"></a>zookeeper 集群角色</h2><ul>
-<li><p>leader</p>
-<ol>
-<li>事务请求的唯一调度者和处理者，保证集群事务处理的顺序性</li>
-<li>集群内部各个服务器的调度者</li>
-</ol>
-</li>
-<li><p>follower</p>
-<ol>
-<li>处理客户端非事务请求，以及转发事务请求给leader服务器</li>
-<li>参与事务请求提议（proposal）的投票（客户端的一个事务请求，需要半数服务器投票通过以后才能通知leader commit； leader会发起一个提案，要求follower投票）</li>
-<li>参与leader选举的投票</li>
-</ol>
-</li>
-<li><p>observer<br>观察zookeeper集群中最新状态的变化并将这些状态同步到observer服务器上。增加observer不影响集群中事务处理能力，同时还能提升集群的非事务处理能力</p>
-</li>
-</ul>
-    
-
-        <a href="/2018/09/22/zookeeper几个原理分析/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-分布式服务zookeeper应用场景"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-09-22 00:01:26" datetime="2018-09-21T16:01:26.000Z"  itemprop="datePublished">2018-09-22</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/09/22/分布式服务zookeeper应用场景/">分布式服务zookeeper应用场景</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h2 id="数据发布订阅-配置中心"><a href="#数据发布订阅-配置中心" class="headerlink" title="数据发布订阅/配置中心"></a>数据发布订阅/配置中心</h2><p>实现配置信息的集中式管理和数据的动态更新</p>
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="数据发布订阅-配置中心"><a href="#数据发布订阅-配置中心" class="headerlink" title="数据发布订阅/配置中心"></a>数据发布订阅/配置中心</h2><p>实现配置信息的集中式管理和数据的动态更新</p>
 <p>实现配置中心有两种模式：push 、pull。</p>
 <p>zookeeper采用的是推拉相结合的方式。 <strong>客户端向服务器端注册自己需要关注的节点</strong>。<strong>一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知</strong>。客户端收到通知后，主动到服务器端获取更新后的数据。</p>
 <p>配置中心数据要求：</p>
@@ -310,150 +264,137 @@
 <li>共享锁<br>  <strong>利用有序节点特性</strong>。<br>  分布式进程在读写一个共享数据时，可以先在某个公共目录下创建一个有序子目录，然后判断该目录id是否最小。<br>  目录id最小则获得锁并消费共享数据，然后删除该目录。否则则等待，直到自己的目录id成为最小后，才获得锁。<br>  zookeeper所有目录操作事件都可以注册监听器，所以分布式进程不必循环查询子目录判断自己的目录id是否最小，可以注册一个监听器在前一个目录上，监听前一个目录是否被删除。<br><img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png" alt=""></li>
 </ul>
 <h2 id="命名服务"><a href="#命名服务" class="headerlink" title="命名服务"></a>命名服务</h2><h2 id="master-选举"><a href="#master-选举" class="headerlink" title="master 选举"></a>master 选举</h2>
-    
+        </div>
 
-        <a href="/2018/09/22/分布式服务zookeeper应用场景/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-09-21T17:24:30.766Z" itemprop="dateUpdated">2018-09-22 01:24:30</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2018/09/22/分布式服务zookeeper应用场景/" target="_blank" rel="external">https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/</a>
+        
     </div>
     
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-分布式协调服务zookeeper"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-09-17 23:58:44" datetime="2018-09-17T15:58:44.000Z"  itemprop="datePublished">2018-09-17</time>
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
 
         
 
 
-    </div>
+        <div class="post-footer">
+            
 
+            
+<div class="page-share-wrap">
     
 
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/09/17/分布式协调服务zookeeper/">分布式协调服务zookeeper</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h3 id="分布式环境的特点"><a href="#分布式环境的特点" class="headerlink" title="分布式环境的特点"></a>分布式环境的特点</h3><ul>
-<li>分布式</li>
-<li>并发性<br>程序运行过程中，并发性操作是很常见的。比如同一个分布式系统中的多个节点，同时访问一个共享资源。数据库、分布式存储。</li>
-<li>无序性<br>进程间的消息通信，会出现顺序不一致的情况。</li>
-</ul>
-    
-
-        <a href="/2018/09/17/分布式协调服务zookeeper/" class="post-more waves-effect waves-button">
-            阅读全文…
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
         </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-分布式通信协议-HTTP"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-30 23:34:31" datetime="2018-08-30T15:34:31.000Z"  itemprop="datePublished">2018-08-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/30/分布式通信协议-HTTP/">分布式通信协议-HTTP</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h2 id="HTTP协议概述"><a href="#HTTP协议概述" class="headerlink" title="HTTP协议概述"></a>HTTP协议概述</h2><ul>
-<li>客户端和服务端<br><img src="/2018/08/30/分布式通信协议-HTTP/2018-08-30-23-36-33.png" alt=""></li>
-</ul>
-    
-
-        <a href="/2018/08/30/分布式通信协议-HTTP/" class="post-more waves-effect waves-button">
-            阅读全文…
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
         </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-分布式通信-序列化"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-30 22:06:59" datetime="2018-08-30T14:06:59.000Z"  itemprop="datePublished">2018-08-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/30/分布式通信-序列化/">分布式通信-序列化</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h2 id="Java序列化机制-——-Serialize接口"><a href="#Java序列化机制-——-Serialize接口" class="headerlink" title="Java序列化机制 —— Serialize接口"></a>Java序列化机制 —— Serialize接口</h2><ul>
-<li>数据结果大、传输效率低</li>
-<li>不能跨语言</li></ul>
-    
-
-        <a href="/2018/08/30/分布式通信-序列化/" class="post-more waves-effect waves-button">
-            阅读全文…
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
         </a>
-    </div>
-    
-</article>
-
-        </li>
-    
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式服务zookeeper应用场景》 — Lincy's Blog&url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
     </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
 
     
-<nav id="page-nav">
-    <div class="inner">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/22/zookeeper几个原理分析/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">zookeeper几个原理分析</h4>
+      </a>
     </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/09/17/分布式协调服务zookeeper/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">分布式协调服务zookeeper</h4>
+      </a>
+    </div>
+  
 </nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
 
 
 </div>
@@ -489,7 +430,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/&title=Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -499,22 +440,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/&title=Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Lincy's Blog&url=https://lincy.online/&via=https://lincy.online" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式服务zookeeper应用场景》 — Lincy's Blog&url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&via=https://lincy.online" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -525,7 +466,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABUklEQVR42u3aQRKEIAwFUe9/aWfrYoT+RBeSZjU1hfiwCg0hx4HbOWzXPnf9jzeaLFkbsdZuSSh344z7yJLVmXW3QlMKH2dikCVLVsgajyZLlqxnWRzBpyFLlqxKsJvuPV+M5WXJ2oLFszr136/kt2TJ+jjrDBu/qnQXWbKasZ5N6Y5D5/H/f0aTJasxC20sw81tGmrLktWZxZcxSRiRT/UkpJYlqzGLh8vpNPj0ZMnqyUqXceVYlNxLlqyeLJ4qIuEyP/icXCtLlqyl8h3+yiDbY1myerLSwh2+4NNpy5LVmUXSRmmFQPr6CDLNsmRtxFosBQjTwWnhgixZ3Vj1urhKEqoEkiVrOxYv/SFLeu0FETwJWbK2ZqUn/pUEE+ovS5YsnGBa27IG566yZMnin1VcGDTuI0uWLB40cxCZ9mPbV1myPs6qBLhkwVcmLEtWA9YP+ZYnNmRb4IwAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3awU4kMQwEUP7/p1mJ065W9FTZCcPh9QkB050XpLYp5+Mjvj6/rr+//u56/uz/d3i+//N9jl14eHh4o6U/Lzd//PNvJj/N7xNtMR4eHt41XlIMNu/e/Fn51iT3wcPDw3svL39xP38/b9zb7cbDw8P7bbz2hZ4sMS8AeHh4eL+Nl7/6z8as+3jiWNaCh4eH102phs3uu76+Pt/Dw8PDG8WvbTg7G1+17XKxQjw8PLwLvE3Y2h41aGPi2da8WC4eHh7empcECs/4PCDI77P/M/xT9/Dw8PAu8GYDsFnsmxeStkjUzTQeHh7eiJf/858fC5gtaBZ/RAUDDw8P7wKvheVl4/nxSbGZZQt4eHh4P8lLFpp/dh8Zt/i6BuLh4eGNeJvDAbN2PAkd8kNgL36Kh4eHd5TXBrWnGtxZ3FCXIjw8PLzLvNs9e77Edhj2bfnBw8PDu8bbj6zaoVo7xMoPGeDh4eH9DG82TGpb6v12FCWhndHh4eHhxbz9xzYHtmbFYBgB4+Hh4R3itcHBLPCdxRkHDhbg4eHhXea1L/G8HW9LSz42e7ESPDw8vAu8dtqev7L3BwJmYUf0fwMeHh7egvdZXvde30l7XbfaeHh4eJd5eazQwjYHCNpjXsXJCDw8PLwRL2lhZ4OrtpC0bX0SneDh4eHd420G9jda4TYULu6Ph4eHd4iXF4BkobPBWDuKKzYODw8P7zLvBuPeVkZDNTw8PLyjvM0ArI132w1NGno8PDy8n+fNAoK88d1vUMI4dsgADw8PL+a1De6pIpEUjLwwRPM9PDw8vKO8OsMYPTiPKtqiFR0XwMPDw3sTr3255+34Jpj4FomHh4f3Vl4erW7u327Qi2fh4eHhXeNtDj+1MWtbJPKjCVG/j4eHh7fmtQOwNg5oR2JtCLIJMvDw8PBK3h8vUMU6iqfdGAAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
@@ -577,6 +518,21 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="/js/search.min.js?v=1.7.2" async></script>
 
 
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
 
 
 
