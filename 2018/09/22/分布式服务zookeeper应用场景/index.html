@@ -1,224 +1,257 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    
+  <link rel="stylesheet" href="/style/style.css">
+<script>
+  var nlviconfig = {
+    title: "Lincy's Blog",
+    author: "Lincy",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      lazy: false
+    }
+  }
+</script>
 
-    
-
-    
 
 
 
-    <meta charset="utf-8">
-    
-    
-    <link rel="canonical" href="lincy.online/2018/09/22/分布式服务zookeeper应用场景/">
-    
-    
-    <title>分布式服务zookeeper应用场景 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="">
-    <meta name="description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
-<meta property="og:type" content="article">
-<meta property="og:title" content="分布式服务zookeeper应用场景">
-<meta property="og:url" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/index.html">
-<meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png">
-<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png">
-<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png">
-<meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png">
-<meta property="og:updated_time" content="2018-09-22T14:22:30.450Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式服务zookeeper应用场景">
-<meta name="twitter:description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
-<meta name="twitter:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png">
-    
-        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/favicon.png">
-    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
-    <script>window.lazyScripts=[]</script>
+    <link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
 
-    <!-- custom head -->
-    
-    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lincy's Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+  <meta name="subtitle" content="归去来兮，Just Do IT.">
+
+
+
+
+  <title> 分布式服务zookeeper应用场景 · Lincy's Blog </title>
 </head>
-
 <body>
-    <div id="loading" class="active"></div>
+  <div class="progress">
+  <div class="progress-inner"></div>
+</div>
 
-    <aside id="menu" class="hide">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">Lincy</h5>
-          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
+  
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-inner">
+    <a href="/tags/JDK源码/" style="font-size: 14px;">JDK源码</a> <a href="/tags/JVM/" style="font-size: 14px;">JVM</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/springboot/" style="font-size: 14px;">springboot</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zookeeper/" style="font-size: 14px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 14px;">分布式</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/行摄/" style="font-size: 14px;">行摄</a> <a href="/tags/设计模式/" style="font-size: 14px;">设计模式</a>
+  </div>
+</div>
+  
+
+  <div class="container" style="display:none;">
+
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn">
+    <span><a href="/">Lincy's Blog</a></span>
+    
+      <span id="subtitle">归去来兮，Just Do IT.</span>
+    
+  </div>
+</div>
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search">
+        <span>搜索</span>
         
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                Home
+          <span class="menu-item-label">search</span>
+        
+      </a>
+    </li>
+  
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">文章</span>
+        
+          <span class="menu-item-label">article</span>
+        
+      </a>
+    </li>
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">归档</span>
+        
+          <span class="menu-item-label">archives</span>
+        
+      </a>
+    </li>
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">标签</span>
+        
+          <span class="menu-item-label">tags</span>
+        
+      </a>
+    </li>
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">关于</span>
+        
+          <span class="menu-item-label">about</span>
+        
+      </a>
+    </li>
+  
+  </ul>
+  
+</nav>
+
+    
+    
+  </div>
+</header>
+<div class="mobile-header">
+  <div class="mobile-header-body">
+    <div class="mobile-header-list">
+      
+        
+            <div class="mobile-nav-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </div>
+        
+      
+        
+            <div class="mobile-nav-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </div>
+        
+      
+        
+          <div class="mobile-nav-item inner-cloud">
+            <div class="mobile-nav-tag">
+              <a href="javascript:;" id="mobile-tags">
+                <span>标签</span>
+                
+                    <span class="menu-item-label">tags</span>
+                
               </a>
-            </li>
+            </div>
+            <div class="mobile-nav-tagcloud">
+              <div class="mobile-tagcloud-inner">
+                <a href="/tags/JDK源码/" style="font-size: 14px;">JDK源码</a> <a href="/tags/JVM/" style="font-size: 14px;">JVM</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/springboot/" style="font-size: 14px;">springboot</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zookeeper/" style="font-size: 14px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 14px;">分布式</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/行摄/" style="font-size: 14px;">行摄</a> <a href="/tags/设计模式/" style="font-size: 14px;">设计模式</a>
+              </div>
+            </div>
+          </div>
         
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archieves
-              </a>
-            </li>
+      
         
-            <li class="waves-block waves-effect">
-              <a href="/categories/技术"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
+            <div class="mobile-nav-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </div>
         
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/linchangyi" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/about"  >
-                <i class="icon icon-lg icon-link"></i>
-                about
-              </a>
-            </li>
-        
-      </ul>
+      
     </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-                <i class="icon icon-lg icon-navicon"></i>
-            </a>
-        <div class="top-menu" id="top-menu">
-            
-                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-home"></i>
-                </a>
-            
-                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-archives"></i>
-                </a>
-            
-                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-th-list"></i>
-                </a>
-            
-                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-tags"></i>
-                </a>
-            
-                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-github"></i>
-                </a>
-            
-                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-link"></i>
-                </a>
-            
-        </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">分布式服务zookeeper应用场景</span>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <span class="header-menu-line"></span>
+      </div>
     </div>
-</header>
-<header class="content-header post-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">分布式服务zookeeper应用场景</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2018-09-21T16:01:26.000Z" itemprop="datePublished" class="page-time">
-  2018-09-22
-</time>
-
-
-            
-        </h5>
-    </div>
-
+    <h1 class="mobile-header-title">
+      <a href="/">Lincy's Blog</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+</div>
+    <div class="container-inner">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
     
-
-
-</header>
-
-
-
-    <aside class="post-widget">
-        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据发布订阅-配置中心"><span class="post-toc-number">1.</span> <span class="post-toc-text">数据发布订阅/配置中心</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#负载均衡"><span class="post-toc-number">2.</span> <span class="post-toc-text">负载均衡</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式锁"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式锁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命名服务"><span class="post-toc-number">4.</span> <span class="post-toc-text">命名服务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#master-选举"><span class="post-toc-number">5.</span> <span class="post-toc-text">master 选举</span></a></li></ol>
-        </nav>
-    </aside>
-    
-
-
-<div class="container body-wrap">
-    <article id="post-分布式服务zookeeper应用场景"
-  class="post-article article-type-post fade" itemprop="blogPost">
-
-    <div class="post-card">
-        <h1 class="post-card-title">分布式服务zookeeper应用场景</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2018-09-22 00:01:26" datetime="2018-09-21T16:01:26.000Z"  itemprop="datePublished">2018-09-22</time>
-
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInUpShort back-1">
+        <div class="post-time-wrapper">
+          <span>2018-09-22</span>
+          
+          
             
-
-
-            
-
+          
         </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <h2 id="数据发布订阅-配置中心"><a href="#数据发布订阅-配置中心" class="headerlink" title="数据发布订阅/配置中心"></a>数据发布订阅/配置中心</h2><p>实现配置信息的集中式管理和数据的动态更新</p>
+      </div>
+      <h1 class="post-title syuanpi fadeInUpShort back-2">
+        
+          分布式服务zookeeper应用场景
+        
+      </h1>
+    </header>
+    <div class="post-content syuanpi fadeInUpShort back-3">
+      
+        <h2 id="数据发布订阅-配置中心"><a href="#数据发布订阅-配置中心" class="headerlink" title="数据发布订阅/配置中心"></a>数据发布订阅/配置中心</h2><p>实现配置信息的集中式管理和数据的动态更新</p>
 <p>实现配置中心有两种模式：push 、pull。</p>
 <p>zookeeper采用的是推拉相结合的方式。 <strong>客户端向服务器端注册自己需要关注的节点</strong>。<strong>一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知</strong>。客户端收到通知后，主动到服务器端获取更新后的数据。</p>
 <p>配置中心数据要求：</p>
@@ -265,290 +298,228 @@
 <li>共享锁<br>  <strong>利用有序节点特性</strong>。<br>  分布式进程在读写一个共享数据时，可以先在某个公共目录下创建一个有序子目录，然后判断该目录id是否最小。<br>  目录id最小则获得锁并消费共享数据，然后删除该目录。否则则等待，直到自己的目录id成为最小后，才获得锁。<br>  zookeeper所有目录操作事件都可以注册监听器，所以分布式进程不必循环查询子目录判断自己的目录id是否最小，可以注册一个监听器在前一个目录上，监听前一个目录是否被删除。<br><img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png" alt=""></li>
 </ul>
 <h2 id="命名服务"><a href="#命名服务" class="headerlink" title="命名服务"></a>命名服务</h2><h2 id="master-选举"><a href="#master-选举" class="headerlink" title="master 选举"></a>master 选举</h2>
-        </div>
-
-        <blockquote class="post-copyright">
+      
     
-    <div class="content">
-        
-<span class="post-time">
-    最后更新时间：<time datetime="2018-09-22T14:22:30.450Z" itemprop="dateUpdated">2018-09-22 22:22:30</time>
-</span><br>
-
-
-        
-        原始链接：<a href="/2018/09/22/分布式服务zookeeper应用场景/" target="_blank" rel="external">https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/</a>
-        
     </div>
     
-    <footer>
-        <a href="https://lincy.online">
-            <img src="/img/avatar.jpg" alt="Lincy">
-            Lincy
-        </a>
-    </footer>
-</blockquote>
+      
 
-        
-
-
-        <div class="post-footer">
-            
-
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&source=数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新
-实现配置中心有两种模式：push 、pull。
-zookeeper采用的是推拉相结合的方式..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式服务zookeeper应用场景》 — Lincy's Blog&url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&via=https://lincy.online" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-
-
-        </div>
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>作者 :</span>
+      <span>Lincy</span>
     </div>
+    <div class="copy-url">
+      <span>地址 :</span>
+      <a href="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/">https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/</a>
+    </div>
+    <div class="copy-origin">
+      <span>来源 :</span>
+      <a href="https://lincy.online">https://lincy.online</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  </article>
   
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2018/09/17/分布式协调服务zookeeper/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">分布式协调服务zookeeper</h4>
+    
+  <nav class="article-page">
+    
+    
+      <a href="/2018/09/17/分布式协调服务zookeeper/" id="art-right" class="art-right">
+        <span class="prev-title"> 
+          分布式协调服务zookeeper<i class="iconfont icon-right"></i>  
+        </span>
       </a>
-    </div>
+    
+  </nav>
+
+    
+  <i id="com-switch" class="iconfont icon-more jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+    
+    
+
+    
+
+  </div>
+
+
+
   
-</nav>
-
-
-
+  
     
-
-
-
-
-
-<section class="comments" id="comments">
-    <div id="disqus_thread" align="center">
-        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+  
+  <aside class="post-toc">
+    <span class="title" id="toc-switch"><span>文章导航</span></span>
+    <div class="toc-inner syuanpi back-1" style="display:none;">
+      <li class="title-link"><a href="javascript:;" class="toTop">分布式服务zookeeper应用场景</a></li>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据发布订阅-配置中心"><span class="toc-text">数据发布订阅/配置中心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#负载均衡"><span class="toc-text">负载均衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式锁"><span class="toc-text">分布式锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名服务"><span class="toc-text">命名服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#master-选举"><span class="toc-text">master 选举</span></a></li></ol>
     </div>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</section>
+  </aside>
 
 
 
+  
 
 
-
-
-
-
-
-
-
-
-</article>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="bottom">
-        
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
-            
-            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
-            <span>
-                
-                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
-                
-                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
-                
-            </span>
-        </p>
-    </div>
-</footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&title=《分布式服务zookeeper应用场景》 — Lincy's Blog&source=数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新
-实现配置中心有两种模式：push 、pull。
-zookeeper采用的是推拉相结合的方式..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式服务zookeeper应用场景》 — Lincy's Blog&url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/&via=https://lincy.online" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3awU4kMQwEUP7/p1mJ065W9FTZCcPh9QkB050XpLYp5+Mjvj6/rr+//u56/uz/d3i+//N9jl14eHh4o6U/Lzd//PNvJj/N7xNtMR4eHt41XlIMNu/e/Fn51iT3wcPDw3svL39xP38/b9zb7cbDw8P7bbz2hZ4sMS8AeHh4eL+Nl7/6z8as+3jiWNaCh4eH102phs3uu76+Pt/Dw8PDG8WvbTg7G1+17XKxQjw8PLwLvE3Y2h41aGPi2da8WC4eHh7empcECs/4PCDI77P/M/xT9/Dw8PAu8GYDsFnsmxeStkjUzTQeHh7eiJf/858fC5gtaBZ/RAUDDw8P7wKvheVl4/nxSbGZZQt4eHh4P8lLFpp/dh8Zt/i6BuLh4eGNeJvDAbN2PAkd8kNgL36Kh4eHd5TXBrWnGtxZ3FCXIjw8PLzLvNs9e77Edhj2bfnBw8PDu8bbj6zaoVo7xMoPGeDh4eH9DG82TGpb6v12FCWhndHh4eHhxbz9xzYHtmbFYBgB4+Hh4R3itcHBLPCdxRkHDhbg4eHhXea1L/G8HW9LSz42e7ESPDw8vAu8dtqev7L3BwJmYUf0fwMeHh7egvdZXvde30l7XbfaeHh4eJd5eazQwjYHCNpjXsXJCDw8PLwRL2lhZ4OrtpC0bX0SneDh4eHd420G9jda4TYULu6Ph4eHd4iXF4BkobPBWDuKKzYODw8P7zLvBuPeVkZDNTw8PLyjvM0ArI132w1NGno8PDy8n+fNAoK88d1vUMI4dsgADw8PL+a1De6pIpEUjLwwRPM9PDw8vKO8OsMYPTiPKtqiFR0XwMPDw3sTr3255+34Jpj4FomHh4f3Vl4erW7u327Qi2fh4eHhXeNtDj+1MWtbJPKjCVG/j4eHh7fmtQOwNg5oR2JtCLIJMvDw8PBK3h8vUMU6iqfdGAAAAABJRU5ErkJggg==" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script type="text/javascript">
-    (function(){
-        var storage = window.localStorage;
-        if(storage.getItem('hide_menu')){
-            var hide_menu = storage.getItem('hide_menu');
-            if(hide_menu != 1){
-                document.getElementById('top-menu').classList.add('disable');
-                document.getElementById('menu').classList.remove('hide');
-            }
-        } else {
-            storage.setItem('hide_menu', 1 );
-        }
-    })();
-</script>
-<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script src="/plugins/headroom.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="/js/main.min.js?v=1.7.2"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
         </div>
-    </a>
-</li>
-</template>
+      </main>
 
-<script src="/js/search.min.js?v=1.7.2" async></script>
-
-
-
-    <script type="text/javascript">
-        var disqus_shortname = 'linchangyi';
-    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
-        $.ajax({
-            url: '//' + disqus_shortname + '.disqus.com/embed.js',
-            dataType: "script",
-            timeout: 3000,
-            success: function(){
-                
-                $('#comments').addClass('post-comments-card');
-                
-            }
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-<script src="/plugins/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-    
-        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
     
     
-        <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
     
+    
+    
+    
+    
+    
+        
+        
+        
+        
+        
+            <a href="https://www.facebook.com/1" class="iconfont icon-facebook" title="facebook"></a>
+        
+        
+        
+    
+        
+        
+        
+            <a href="https://twitter.com/2" class="iconfont icon-twitter" title="twitter"></a>
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+            <a href="https://www.instagram.com/3" class="iconfont icon-ins" title="instagram"></a>
+        
+    
+        
+        
+            <a href="https://weibo.com/4" class="iconfont icon-weibo" title="weibo"></a>
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+            <a href="https://www.zhihu.com/people/5" class="iconfont icon-zhihu" title="zhihu"></a>
+        
+        
+        
+        
+    
+        
+            <a href="https://github.com/6" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+            <a href="https://www.linkedin.com/in/7" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+        
+    
+</div>
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2016 ~ 2018</span>
+        <span>❤</span>
+        <span>Lincy</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+  </div>
+  <script src="/script/lib/jquery/jquery-3.2.1.min.js"></script>
+
+
+  <script src="/script/lib/lightbox/js/lightbox.min.js"></script>
+
+
+
+
+
+
+
+
+<script src="/script/src/nlvi.js"></script>
+
+  <script src="/script/scheme/banderole.js"></script>
+
+<script src="/script/bootstarp.js"></script>
+
+
+<div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+
+  <div class="search" id="search">
+    <div class="mask" id="mask"></div>
+    <div class="search-wrapper syuanpi">
+      <h2 id="search-header" class="syuanpi">搜索一下？</h2>
+      <div class="input">
+        <input type="text" id="local-search-input" results="0" name="">
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+
+
 </body>
 </html>

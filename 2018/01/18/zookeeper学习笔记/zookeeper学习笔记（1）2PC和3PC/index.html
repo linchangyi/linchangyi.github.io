@@ -1,223 +1,271 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    
+  <link rel="stylesheet" href="/style/style.css">
+<script>
+  var nlviconfig = {
+    title: "Lincy's Blog",
+    author: "Lincy",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      lazy: false
+    }
+  }
+</script>
 
-    
-
-    
 
 
 
-    <meta charset="utf-8">
-    
-    
-    <link rel="canonical" href="lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/">
-    
-    
-    <title>zookeeper学习笔记（1）2PC和3PC | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="笔记,zookeeper">
-    <meta name="keywords" content="笔记,zookeeper">
-<meta property="og:type" content="article">
-<meta property="og:title" content="zookeeper学习笔记（1）2PC和3PC">
-<meta property="og:url" content="https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/index.html">
-<meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/书.PNG">
-<meta property="og:updated_time" content="2018-02-12T11:23:30.374Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zookeeper学习笔记（1）2PC和3PC">
-<meta name="twitter:image" content="https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/书.PNG">
-    
-        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/favicon.png">
-    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
-    <script>window.lazyScripts=[]</script>
+    <link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
 
-    <!-- custom head -->
-    
-    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lincy's Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+  <meta name="subtitle" content="归去来兮，Just Do IT.">
+
+
+
+
+  <meta name="keywords" content="笔记, zookeeper, Nlvi" />
+
+  <title> zookeeper学习笔记（1）2PC和3PC · Lincy's Blog </title>
 </head>
-
 <body>
-    <div id="loading" class="active"></div>
+  <div class="progress">
+  <div class="progress-inner"></div>
+</div>
 
-    <aside id="menu" class="hide">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">Lincy</h5>
-          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
+  
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-inner">
+    <a href="/tags/JDK源码/" style="font-size: 14px;">JDK源码</a> <a href="/tags/JVM/" style="font-size: 14px;">JVM</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/springboot/" style="font-size: 14px;">springboot</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zookeeper/" style="font-size: 14px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 14px;">分布式</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/行摄/" style="font-size: 14px;">行摄</a> <a href="/tags/设计模式/" style="font-size: 14px;">设计模式</a>
+  </div>
+</div>
+  
+
+  <div class="container" style="display:none;">
+
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn">
+    <span><a href="/">Lincy's Blog</a></span>
+    
+      <span id="subtitle">归去来兮，Just Do IT.</span>
+    
+  </div>
+</div>
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search">
+        <span>搜索</span>
         
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                Home
+          <span class="menu-item-label">search</span>
+        
+      </a>
+    </li>
+  
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">文章</span>
+        
+          <span class="menu-item-label">article</span>
+        
+      </a>
+    </li>
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">归档</span>
+        
+          <span class="menu-item-label">archives</span>
+        
+      </a>
+    </li>
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">标签</span>
+        
+          <span class="menu-item-label">tags</span>
+        
+      </a>
+    </li>
+  
+    
+      
+    
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">关于</span>
+        
+          <span class="menu-item-label">about</span>
+        
+      </a>
+    </li>
+  
+  </ul>
+  
+</nav>
+
+    
+    
+  </div>
+</header>
+<div class="mobile-header">
+  <div class="mobile-header-body">
+    <div class="mobile-header-list">
+      
+        
+            <div class="mobile-nav-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </div>
+        
+      
+        
+            <div class="mobile-nav-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </div>
+        
+      
+        
+          <div class="mobile-nav-item inner-cloud">
+            <div class="mobile-nav-tag">
+              <a href="javascript:;" id="mobile-tags">
+                <span>标签</span>
+                
+                    <span class="menu-item-label">tags</span>
+                
               </a>
-            </li>
+            </div>
+            <div class="mobile-nav-tagcloud">
+              <div class="mobile-tagcloud-inner">
+                <a href="/tags/JDK源码/" style="font-size: 14px;">JDK源码</a> <a href="/tags/JVM/" style="font-size: 14px;">JVM</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/springboot/" style="font-size: 14px;">springboot</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/zookeeper/" style="font-size: 14px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 14px;">分布式</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/行摄/" style="font-size: 14px;">行摄</a> <a href="/tags/设计模式/" style="font-size: 14px;">设计模式</a>
+              </div>
+            </div>
+          </div>
         
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archieves
-              </a>
-            </li>
+      
         
-            <li class="waves-block waves-effect">
-              <a href="/categories/技术"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
+            <div class="mobile-nav-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </div>
         
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/linchangyi" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/about"  >
-                <i class="icon icon-lg icon-link"></i>
-                about
-              </a>
-            </li>
-        
-      </ul>
+      
     </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-                <i class="icon icon-lg icon-navicon"></i>
-            </a>
-        <div class="top-menu" id="top-menu">
-            
-                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-home"></i>
-                </a>
-            
-                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-archives"></i>
-                </a>
-            
-                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-th-list"></i>
-                </a>
-            
-                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-tags"></i>
-                </a>
-            
-                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-github"></i>
-                </a>
-            
-                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
-                    <i class="icon icon-lg icon-link"></i>
-                </a>
-            
-        </div>
-        <span class="flex-col header-title ellipsis hidden" id="header-title">zookeeper学习笔记（1）2PC和3PC</span>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <span class="header-menu-line"></span>
+      </div>
     </div>
-</header>
-<header class="content-header post-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">zookeeper学习笔记（1）2PC和3PC</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2018-01-18T03:02:33.000Z" itemprop="datePublished" class="page-time">
-  2018-01-18
-</time>
-
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-            
-        </h5>
-    </div>
-
+    <h1 class="mobile-header-title">
+      <a href="/">Lincy's Blog</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+</div>
+    <div class="container-inner">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
     
-
-
-</header>
-
-
-
-    <aside class="post-widget">
-        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分布式系统的挑战"><span class="post-toc-number">1.</span> <span class="post-toc-text">分布式系统的挑战</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事务ACID"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">事务ACID</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CAP理论"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">CAP理论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BASE理论"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">BASE理论</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一致性协议"><span class="post-toc-number">2.</span> <span class="post-toc-text">一致性协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2PC与3PC"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2PC与3PC</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2PC"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">2PC</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#优点"><span class="post-toc-number">2.1.1.1.</span> <span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缺点"><span class="post-toc-number">2.1.1.2.</span> <span class="post-toc-text">缺点</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3PC"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">3PC</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#优点-1"><span class="post-toc-number">2.1.2.1.</span> <span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缺点-1"><span class="post-toc-number">2.1.2.2.</span> <span class="post-toc-text">缺点</span></a></li></ol></li></ol></li></ol></li></ol>
-        </nav>
-    </aside>
-    
-
-
-<div class="container body-wrap">
-    <article id="post-zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC"
-  class="post-article article-type-post fade" itemprop="blogPost">
-
-    <div class="post-card">
-        <h1 class="post-card-title">zookeeper学习笔记（1）2PC和3PC</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2018-01-18 11:02:33" datetime="2018-01-18T03:02:33.000Z"  itemprop="datePublished">2018-01-18</time>
-
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInUpShort back-1">
+        <div class="post-time-wrapper">
+          <span>2018-01-18</span>
+          
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
-
-
-
+              <span class="post-category"><a href="/categories/技术/">技术</a></span>
             
-
+          
+          
+            
+              <aside class="post-tags syuanpi fadeInUpShort back-3">
+              
+                <a href="/tags/笔记/">笔记</a>
+              
+                <a href="/tags/zookeeper/">zookeeper</a>
+              
+              </aside>
+            
+          
         </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/书.PNG" width="60%"><br><a id="more"></a></p>
+      </div>
+      <h1 class="post-title syuanpi fadeInUpShort back-2">
+        
+          zookeeper学习笔记（1）2PC和3PC
+        
+      </h1>
+    </header>
+    <div class="post-content syuanpi fadeInUpShort back-3">
+      
+        <p><img src="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/书.PNG" width="60%"><br><a id="more"></a></p>
 <h1 id="分布式系统的挑战"><a href="#分布式系统的挑战" class="headerlink" title="分布式系统的挑战"></a>分布式系统的挑战</h1><h2 id="事务ACID"><a href="#事务ACID" class="headerlink" title="事务ACID"></a>事务ACID</h2><ul>
 <li>原子性</li>
 <li>一致性</li>
@@ -356,295 +404,234 @@
 <h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>降低了2PC参与者的阻塞范围</p>
 <h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p><strong>参与者收到preCommit后，如果协调者crash或者网络出现分区，此时协调者和参与者无法通信，此时参与者仍然将提交事务，会导致不一致性</strong></p>
 
-        </div>
-
-        <blockquote class="post-copyright">
+      
     
-    <div class="content">
-        
-<span class="post-time">
-    最后更新时间：<time datetime="2018-02-12T11:23:30.374Z" itemprop="dateUpdated">2018-02-12 19:23:30</time>
-</span><br>
-
-
-        
-        原始链接：<a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" target="_blank" rel="external">https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/</a>
-        
     </div>
     
-    <footer>
-        <a href="https://lincy.online">
-            <img src="/img/avatar.jpg" alt="Lincy">
-            Lincy
-        </a>
-    </footer>
-</blockquote>
+      
 
-        
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>作者 :</span>
+      <span>Lincy</span>
+    </div>
+    <div class="copy-url">
+      <span>地址 :</span>
+      <a href="https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/">https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/</a>
+    </div>
+    <div class="copy-origin">
+      <span>来源 :</span>
+      <a href="https://lincy.online">https://lincy.online</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
 
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+      <a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>zookeeper学习笔记（2）Paxos Made Simple【翻译】
+        </span>
+      </a>
+    
+    
+      <a href="/2018/01/17/性能指标/" id="art-right" class="art-right">
+        <span class="prev-title"> 
+          服务器性能指标<i class="iconfont icon-right"></i>  
+        </span>
+      </a>
+    
+  </nav>
 
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/">zookeeper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
-
-
-            
-<div class="page-share-wrap">
+    
+  <i id="com-switch" class="iconfont icon-more jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+    
     
 
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/&title=《zookeeper学习笔记（1）2PC和3PC》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/&title=《zookeeper学习笔记（1）2PC和3PC》 — Lincy's Blog&source=" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zookeeper学习笔记（1）2PC和3PC》 — Lincy's Blog&url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/&via=https://lincy.online" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
+    
+
+  </div>
 
 
 
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
+  
+  
+    
+  
+  <aside class="post-toc">
+    <span class="title" id="toc-switch"><span>文章导航</span></span>
+    <div class="toc-inner syuanpi back-1" style="display:none;">
+      <li class="title-link"><a href="javascript:;" class="toTop">zookeeper学习笔记（1）2PC和3PC</a></li>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分布式系统的挑战"><span class="toc-text">分布式系统的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#事务ACID"><span class="toc-text">事务ACID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP理论"><span class="toc-text">CAP理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BASE理论"><span class="toc-text">BASE理论</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一致性协议"><span class="toc-text">一致性协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2PC与3PC"><span class="toc-text">2PC与3PC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2PC"><span class="toc-text">2PC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优点"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点"><span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3PC"><span class="toc-text">3PC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优点-1"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点-1"><span class="toc-text">缺点</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </aside>
 
+
+
+  
 
 
         </div>
-    </div>
+      </main>
 
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（2）paxos协议/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">zookeeper学习笔记（2）Paxos Made Simple【翻译】</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2018/01/17/性能指标/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">服务器性能指标</h4>
-      </a>
-    </div>
-  
-</nav>
-
-
-
     
-
-
-
-
-
-<section class="comments" id="comments">
-    <div id="disqus_thread" align="center">
-        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+        
+            <a href="https://www.facebook.com/1" class="iconfont icon-facebook" title="facebook"></a>
+        
+        
+        
+    
+        
+        
+        
+            <a href="https://twitter.com/2" class="iconfont icon-twitter" title="twitter"></a>
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+            <a href="https://www.instagram.com/3" class="iconfont icon-ins" title="instagram"></a>
+        
+    
+        
+        
+            <a href="https://weibo.com/4" class="iconfont icon-weibo" title="weibo"></a>
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+            <a href="https://www.zhihu.com/people/5" class="iconfont icon-zhihu" title="zhihu"></a>
+        
+        
+        
+        
+    
+        
+            <a href="https://github.com/6" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+            <a href="https://www.linkedin.com/in/7" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+        
+    
+</div>
     </div>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</article>
-
-
-
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2016 ~ 2018</span>
+        <span>❤</span>
+        <span>Lincy</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
 </div>
 
-        <footer class="footer">
-    <div class="bottom">
-        
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
-            
-            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
-            <span>
-                
-                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
-                
-                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
-                
-            </span>
-        </p>
     </div>
+  </div>
 </footer>
+    </div>
+  </div>
+  <script src="/script/lib/jquery/jquery-3.2.1.min.js"></script>
 
-    </main>
+
+  <script src="/script/lib/lightbox/js/lightbox.min.js"></script>
+
+
+
+
+
+
+
+
+<script src="/script/src/nlvi.js"></script>
+
+  <script src="/script/scheme/banderole.js"></script>
+
+<script src="/script/bootstarp.js"></script>
+
+
+<div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+
+  <div class="search" id="search">
     <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+    <div class="search-wrapper syuanpi">
+      <h2 id="search-header" class="syuanpi">搜索一下？</h2>
+      <div class="input">
+        <input type="text" id="local-search-input" results="0" name="">
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
 
 
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/&title=《zookeeper学习笔记（1）2PC和3PC》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/&title=《zookeeper学习笔记（1）2PC和3PC》 — Lincy's Blog&source=" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《zookeeper学习笔记（1）2PC和3PC》 — Lincy's Blog&url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/&via=https://lincy.online" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2018/01/18/zookeeper学习笔记/zookeeper学习笔记（1）2PC和3PC/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADMElEQVR42u3aS24CMRAFQO5/6WQbKYG81w0SY8orBGTsMlJa/bnd4vX1YyWffv1aP99Pdvn9zce73F6xsLGxsS/C/nq47h333qePXz9+fvL95CTJX2FjY2Ofx773Hz45dBsdHgen2cot2NjY2NhJYEtgSabQJkjY2NjY2LNkI08PWlK7OzY2NvYns/Oiz2yz9vltnf+FtTRsbGzst2fPHv2er1/S38bGxsZ+Y/azCvGzZKNOHkYt4T/Oj42NjX0QezNwM2sGJ8M6ebkqOdvdHwMbGxv7CPam0NOO77RFn3bo5/FlYWNjY38COy8k7dsAbcO4vfR/ghk2Njb2QezZQTdXMMM8Tkja8hM2Njb2Sew8gNV3WTYDWsym7IWNjY39OexNGWifMCRhKb+auxEbGxsb++LspIH6infy8LMZBi0GMbGxsbEvy84bvcm4TFugb3fMh3j+OSE2Njb2Qey8SNQW7tty1Sx0tWf44/nY2NjYF2fPmq9JMWgWFDelqyLIYWNjYx/EXrVLy8LQZvQnKR7VzQZsbGzsg9htLb395qz0v7m+IgPDxsbGPoKdbzBLBpJ3nnV9ddzGxsbGPoi9CUuz0tIsHZoVlaJcBxsbG/uy7Flpvk0J2mGaV4zvYGNjY5/HniUMSXWqPdC+VVA0M7CxsbEPYufbt4Wh/aXMOhv5FWBjY2OfxJ6Fh3ZY51lpzGyvqD2AjY2NfUF2G2BmAzSzhCFfdbjFxsbGPojdHq7IaeKgMrvKTWMYGxsb+yR2XhLKeW2CsWkMPKErgo2NjX0Qez/OmDd383SiTVqKxAMbGxv7CHYbVJJ0YtZayNOMp414YmNjYx/BTrbfFHTycZzZM4fBDxsbG/sgdjvBUk8DxWEm3z0vckVxGxsbG/vi7NlwTF6gz5OQNoytgig2Njb2Qex85VfQBq12QKdtSLeBExsbG/uK7Dxo7UNdXvSfjQdFw5fY2NjYh7LbwDDbsv1OOwxUNLCxsbGxP5I9y29mgbAd30lOiI2NjY2dh4e2MbAPb/VPgo2NjX0cex8eNmNAsx9j1czAxsbGPog9O0QOnjUDZs+/PXdhY2Njvzv7G4HxRSih9H3fAAAAAElFTkSuQmCC" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script type="text/javascript">
-    (function(){
-        var storage = window.localStorage;
-        if(storage.getItem('hide_menu')){
-            var hide_menu = storage.getItem('hide_menu');
-            if(hide_menu != 1){
-                document.getElementById('top-menu').classList.add('disable');
-                document.getElementById('menu').classList.remove('hide');
-            }
-        } else {
-            storage.setItem('hide_menu', 1 );
-        }
-    })();
-</script>
-<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script src="/plugins/headroom.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="/js/main.min.js?v=1.7.2"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.7.2" async></script>
-
-
-
-    <script type="text/javascript">
-        var disqus_shortname = 'linchangyi';
-    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
-        $.ajax({
-            url: '//' + disqus_shortname + '.disqus.com/embed.js',
-            dataType: "script",
-            timeout: 3000,
-            success: function(){
-                
-                $('#comments').addClass('post-comments-card');
-                
-            }
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-<script src="/plugins/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-    
-        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
-    
-    
-        <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-    
 </body>
 </html>
