@@ -225,36 +225,6 @@
                 </div>
                 <div class="image-caption">配置中心实现原理</div>
             </figure>
-<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>把ZooKeeper作为一个服务的注册中心，在其中登记每个服务，每台服务器知道自己是属于哪个服务，在服务器启动时，自己向所属服务进行登记，这样，一个树形的服务结构就呈现出来了<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>服务的调用者到注册中心里面查找：能提供所需服务的服务器列表，然后自己根据负载均衡算法，从中选取一台服务器进行连接</p>
-<p>调用者取到服务器列表后，就可以缓存到自己内部，省得下次再取，当服务器列表发生变化，例如某台服务器宕机下线，或者新加了服务器，ZooKeeper会自动通知调用者重新获取服务器列表</p>
-<p>由于ZooKeeper并没有内置负载均衡策略，需要调用者自己实现，这个方案只是利用了ZooKeeper的树形数据结构、watcher机制等特性，把ZooKeeper作为服务的注册和变更通知中心，解决了Nginx负载均衡方案带来的问题:<br>（1）配置维护的成本变高，因为节点太多<br>（2）单点故障的风险增加了，因为热点服务的访问量很高，如果这个服务集群内的负载均衡服务出现问题，这个服务将失效</p>
-<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>通常实现分布式锁有几种方式:</p>
-<ol>
-<li>redis。 setNX 存在则会返回0， 不存在</li>
-<li>数据方式去实现, 2种方式<ul>
-<li>创建一个表， 通过索引唯一的方式<br>create table (id , methodname …)   methodname增加唯一索引<br>insert 一条数据XXX   delete 语句删除这条记录</li>
-<li>mysql innodb select for update</li>
-</ul>
-</li>
-</ol>
-<p>zookeeper实现：</p>
-<ul>
-<li>排他锁<br>客户端写入临时节点，利用节点名称不能相同的特性<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></li>
-<li>共享锁<br>  <strong>利用有序节点特性</strong>。<br>  分布式进程在读写一个共享数据时，可以先在某个公共目录下创建一个有序子目录，然后判断该目录id是否最小。<br>  目录id最小则获得锁并消费共享数据，然后删除该目录。否则则等待，直到自己的目录id成为最小后，才获得锁。<br>  zookeeper所有目录操作事件都可以注册监听器，所以分布式进程不必循环查询子目录判断自己的目录id是否最小，可以注册一个监听器在前一个目录上，监听前一个目录是否被删除。<br><img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png" alt=""></li>
-</ul>
-<h2 id="命名服务"><a href="#命名服务" class="headerlink" title="命名服务"></a>命名服务</h2><h2 id="master-选举"><a href="#master-选举" class="headerlink" title="master 选举"></a>master 选举</h2>
     
 
         <a href="/2018/09/22/分布式服务zookeeper应用场景/" class="post-more waves-effect waves-button">
