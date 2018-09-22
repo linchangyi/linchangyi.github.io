@@ -31,7 +31,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-18-03-51-36.png">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-19-22-10-07.png">
-<meta property="og:updated_time" content="2018-09-20T16:04:38.091Z">
+<meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-22-11-33-01.png">
+<meta property="og:updated_time" content="2018-09-22T14:18:22.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式协调服务zookeeper">
 <meta name="twitter:description" content="分布式环境的特点 分布式 并发性程序运行过程中，并发性操作是很常见的。比如同一个分布式系统中的多个节点，同时访问一个共享资源。数据库、分布式存储。 无序性进程间的消息通信，会出现顺序不一致的情况。">
@@ -194,7 +195,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分布式环境的特点"><span class="post-toc-number">1.</span> <span class="post-toc-text">分布式环境的特点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分布式面临的问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">分布式面临的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#中心化和去中心化"><span class="post-toc-number">3.</span> <span class="post-toc-text">中心化和去中心化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CAP-BASE-理论"><span class="post-toc-number">4.</span> <span class="post-toc-text">CAP/BASE 理论</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#CAP"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">CAP</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#BASE"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">BASE</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper能做什么"><span class="post-toc-number">5.</span> <span class="post-toc-text">zookeeper能做什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper的特性"><span class="post-toc-number">6.</span> <span class="post-toc-text">zookeeper的特性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper-安装"><span class="post-toc-number">7.</span> <span class="post-toc-text">zookeeper 安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#单机环境安装"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">单机环境安装</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#集群环境"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">集群环境</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper-的一些概念"><span class="post-toc-number">8.</span> <span class="post-toc-text">zookeeper 的一些概念</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookee-的命令操作"><span class="post-toc-number">9.</span> <span class="post-toc-text">zookee 的命令操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Java-API"><span class="post-toc-number">10.</span> <span class="post-toc-text">Java API</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper的实际应用场景"><span class="post-toc-number">11.</span> <span class="post-toc-text">zookeeper的实际应用场景</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分布式环境的特点"><span class="post-toc-number">1.</span> <span class="post-toc-text">分布式环境的特点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分布式面临的问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">分布式面临的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#中心化和去中心化"><span class="post-toc-number">3.</span> <span class="post-toc-text">中心化和去中心化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CAP-BASE-理论"><span class="post-toc-number">4.</span> <span class="post-toc-text">CAP/BASE 理论</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#CAP"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">CAP</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#BASE"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">BASE</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper能做什么"><span class="post-toc-number">5.</span> <span class="post-toc-text">zookeeper能做什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper的特性"><span class="post-toc-number">6.</span> <span class="post-toc-text">zookeeper的特性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper-安装"><span class="post-toc-number">7.</span> <span class="post-toc-text">zookeeper 安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#单机环境安装"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">单机环境安装</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#集群环境"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">集群环境</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper-的一些概念"><span class="post-toc-number">8.</span> <span class="post-toc-text">zookeeper 的一些概念</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookee-的命令操作"><span class="post-toc-number">9.</span> <span class="post-toc-text">zookee 的命令操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Java-API"><span class="post-toc-number">10.</span> <span class="post-toc-text">Java API</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper的实际应用场景"><span class="post-toc-number">11.</span> <span class="post-toc-text">zookeeper的实际应用场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper-集群角色"><span class="post-toc-number">12.</span> <span class="post-toc-text">zookeeper 集群角色</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#zookeeper-集群组成"><span class="post-toc-number">13.</span> <span class="post-toc-text">zookeeper 集群组成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#leader选举"><span class="post-toc-number">14.</span> <span class="post-toc-text">leader选举</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#FastLeaderElection-选举流程"><span class="post-toc-number">14.1.</span> <span class="post-toc-text">FastLeaderElection 选举流程</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -326,6 +327,53 @@
 <ul>
 <li>master选举</li>
 </ul>
+<hr>
+<h3 id="zookeeper-集群角色"><a href="#zookeeper-集群角色" class="headerlink" title="zookeeper 集群角色"></a>zookeeper 集群角色</h3><ul>
+<li><p>leader</p>
+<ol>
+<li>事务请求的唯一调度者和处理者，保证集群事务处理的顺序性</li>
+<li>集群内部各个服务器的调度者</li>
+</ol>
+</li>
+<li><p>follower</p>
+<ol>
+<li>处理客户端非事务请求，以及转发事务请求给leader服务器</li>
+<li>参与事务请求提议（proposal）的投票（客户端的一个事务请求，需要半数服务器投票通过以后才能通知leader commit； leader会发起一个提案，要求follower投票）</li>
+<li>参与leader选举的投票</li>
+</ol>
+</li>
+<li><p>observer<br>观察zookeeper集群中最新状态的变化并将这些状态同步到observer服务器上。增加observer不影响集群中事务处理能力，同时还能提升集群的非事务处理能力</p>
+</li>
+</ul>
+<!-- more -->
+<h3 id="zookeeper-集群组成"><a href="#zookeeper-集群组成" class="headerlink" title="zookeeper 集群组成"></a>zookeeper 集群组成</h3><p><strong>一般由2n+1太服务器组成</strong></p>
+<h3 id="leader选举"><a href="#leader选举" class="headerlink" title="leader选举"></a>leader选举</h3><p>三种算法：</p>
+<ul>
+<li>leaderElection</li>
+<li>AuthFastLeaderElection </li>
+<li>FastLeaderElection（默认）</li>
+</ul>
+<h4 id="FastLeaderElection-选举流程"><a href="#FastLeaderElection-选举流程" class="headerlink" title="FastLeaderElection 选举流程"></a>FastLeaderElection 选举流程</h4><p>几个概念:</p>
+<ul>
+<li>serverid : 在配置server集群的时候，给定服务器的标识id（myid）</li>
+<li>zxid  : 服务器在运行时产生的数据ID， zxid的值越大，表示数据越新</li>
+<li>Epoch: 选举的轮数</li>
+<li>server的状态：Looking、 Following、Observering、Leading</li>
+</ul>
+<p>选举流程，第一次初始化启动的时候服务器状态为Looking</p>
+<ul>
+<li>所有在集群中的server都会 <strong>推荐自己为leader</strong>，然后 <strong>把（myid、zxid、epoch）作为广播信息</strong>，广播给集群中的其他server, 然后 <strong>等待其他服务器返回</strong></li>
+<li>每个服务器都会 <strong>接收来自集群中的其他服务器的投票</strong>。集群中的每个服务器在接受到投票后，开始判断投票的有效性<ul>
+<li>判断逻辑时钟(Epoch) ，<strong>如果Epoch大于自己当前的Epoch，说明自己保存的Epoch是过期</strong>。更新Epoch，同时clear其他服务器发送过来的选举数据。判断是否需要更新当前自己的选举情况</li>
+<li>如果Epoch小于目前的Epoch，说明对方的epoch过期了，也就意味着对方服务器的选举轮数是过期的。这个时候，只需要讲自己的信息发送给对方</li>
+<li>如果epoch等于目前的epoch，根据规则来判断是否有资格获得leader<ul>
+<li>接收来自其他服务器的投票后，针对每一个投票，都需要将别人的投票和自己的投票进行PK zxid，zxid最大的服务器优先</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2018/09/17/分布式协调服务zookeeper/2018-09-22-11-33-01.png" alt=""></p>
 
         </div>
 
@@ -334,7 +382,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-09-20T16:04:38.091Z" itemprop="dateUpdated">2018-09-21 00:04:38</time>
+    最后更新时间：<time datetime="2018-09-22T14:18:22.469Z" itemprop="dateUpdated">2018-09-22 22:18:22</time>
 </span><br>
 
 
