@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-18-03-51-36.png">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-19-22-10-07.png">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-22-11-33-01.png">
-<meta property="og:updated_time" content="2018-09-22T14:18:22.469Z">
+<meta property="og:updated_time" content="2018-09-23T04:35:53.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式协调服务zookeeper">
 <meta name="twitter:description" content="分布式环境的特点 分布式 并发性程序运行过程中，并发性操作是很常见的。比如同一个分布式系统中的多个节点，同时访问一个共享资源。数据库、分布式存储。 无序性进程间的消息通信，会出现顺序不一致的情况。">
@@ -310,7 +310,9 @@
 <p><strong>stat信息</strong><br>cversion = 0       子节点的版本号<br>aclVersion = 0     表示acl的版本号，修改节点权限<br>dataVersion = 1    表示的是当前节点数据的版本号</p>
 <p>czxid    节点被创建时的事务ID<br>mzxid   节点最后一次被更新的事务ID<br>pzxid    当前节点下的子节点最后一次被修改时的事务ID</p>
 <p>ctime = Sat Aug 05 20:48:26 CST 2017<br>mtime = Sat Aug 05 20:48:50 CST 2017</p>
+<blockquote>
 <p>cZxid = 0x500000015<br>ctime = Sat Aug 05 20:48:26 CST 2017<br>mZxid = 0x500000016<br>mtime = Sat Aug 05 20:48:50 CST 2017<br>pZxid = 0x500000015<br>cversion = 0<br>dataVersion = 1<br>aclVersion = 0<br>ephemeralOwner = 0x0   创建临时节点的时候，会有一个sessionId 。 该值存储的就是这个sessionid<br>dataLength = 3    数据值长度<br>numChildren = 0  子节点数</p>
+</blockquote>
 <h3 id="Java-API"><a href="#Java-API" class="headerlink" title="Java API"></a>Java API</h3><p>权限控制模式<br>schema：授权对象<br>ip     : 192.168.1.1<br>Digest  : username:password<br>world  : 开放式的权限控制模式，数据节点的访问权限对所有用户开放。 world:anyone<br>super  ：超级用户，可以对zookeeper上的数据节点进行操作</p>
 <p>连接状态<br>KeeperStat.Expired  在一定时间内客户端没有收到服务器的通知， 则认为当前的会话已经过期了。<br>KeeperStat.Disconnected  断开连接的状态<br>KeeperStat.SyncConnected  客户端和服务器端在某一个节点上建立连接，并且完成一次version、zxid同步<br>KeeperStat.authFailed  授权失败<br>事件类型<br>NodeCreated  当节点被创建的时候，触发<br>NodeChildrenChanged  表示子节点被创建、被删除、子节点数据发生变化<br>NodeDataChanged    节点数据发生变化<br>NodeDeleted        节点被删除<br>None   客户端和服务器端连接状态发生变化的时候，事件类型就是None</p>
 <h3 id="zookeeper的实际应用场景"><a href="#zookeeper的实际应用场景" class="headerlink" title="zookeeper的实际应用场景"></a>zookeeper的实际应用场景</h3><ul>
@@ -346,7 +348,7 @@
 </li>
 </ul>
 <!-- more -->
-<h3 id="zookeeper-集群组成"><a href="#zookeeper-集群组成" class="headerlink" title="zookeeper 集群组成"></a>zookeeper 集群组成</h3><p><strong>一般由2n+1太服务器组成</strong></p>
+<h3 id="zookeeper-集群组成"><a href="#zookeeper-集群组成" class="headerlink" title="zookeeper 集群组成"></a>zookeeper 集群组成</h3><p>zk集群要求集群的机器数为奇数（2n+1），并且任何时刻，<strong>存活的机器必须大于n+1，否则集群挂掉</strong>；</p>
 <h3 id="leader选举"><a href="#leader选举" class="headerlink" title="leader选举"></a>leader选举</h3><p>三种算法：</p>
 <ul>
 <li>leaderElection</li>
@@ -382,7 +384,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-09-22T14:18:22.469Z" itemprop="dateUpdated">2018-09-22 22:18:22</time>
+    最后更新时间：<time datetime="2018-09-23T04:35:53.035Z" itemprop="dateUpdated">2018-09-23 12:35:53</time>
 </span><br>
 
 
