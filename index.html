@@ -183,6 +183,229 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-VMware-centos-无法连接网络问题解决"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-10-04 22:25:43" datetime="2018-10-04T14:25:43.000Z"  itemprop="datePublished">2018-10-04</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/杂七杂八/">杂七杂八</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/10/04/VMware-centos-无法连接网络问题解决/">VMware centos 无法连接网络问题解决</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>VMware 安装 CentOS 虚拟机，使用NAT模式联网，无法联网<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/10/04/VMware-centos-无法连接网络问题解决/2018-10-04-22-31-20.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>执行命令 <code>dhclient -v</code></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/10/04/VMware-centos-无法连接网络问题解决/2018-10-04-22-33-05.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="添加到启动任务"><a href="#添加到启动任务" class="headerlink" title="添加到启动任务"></a>添加到启动任务</h2><ul>
+<li><p>在 /etc/init.d/下创建文件，命名 “net-autostart”</p>
+<pre><code class="sh">  #!/bin/bash
+  # Solution for &quot;No Internet Connection from VMware&quot;
+  #
+  ### BEGIN INIT INFO
+  # Default-Start: 2 3 4 5
+  # Default-Stop: 0 1 6
+  ### END INIT INFO
+  dhclient -v
+</code></pre>
+</li>
+<li><p>更改权限<br><code>chmod 755 net-autostart</code></p>
+</li>
+<li><p>自动启动<br><code>chkconfig --add net-autostart</code></p>
+</li>
+</ul>
+
+    
+
+        <a href="/2018/10/04/VMware-centos-无法连接网络问题解决/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-分布式服务治理-Dubbo"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-09-23 17:26:52" datetime="2018-09-23T09:26:52.000Z"  itemprop="datePublished">2018-09-23</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/09/23/分布式服务治理-Dubbo/">分布式服务治理-Dubbo</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        <h1 id="Dubbo-是什么"><a href="#Dubbo-是什么" class="headerlink" title="Dubbo 是什么"></a>Dubbo 是什么</h1><p>Dubbo是一个分布式的服务框架，提供高性能的以及透明化的RPC远程服务调用解决方法，以及SOA服务治理方案。</p>
+<ul>
+<li>远程通信</li>
+<li>集群容错</li>
+<li>服务的自动发现</li>
+<li>负债均衡</li>
+</ul>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/09/23/分布式服务治理-Dubbo/2018-09-23-18-56-17.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h5 id="节点角色说明"><a href="#节点角色说明" class="headerlink" title="节点角色说明"></a>节点角色说明</h5><table>
+<thead>
+<tr>
+<th>节点</th>
+<th>角色说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Provider</code></td>
+<td>暴露服务的服务提供方</td>
+</tr>
+<tr>
+<td><code>Consumer</code></td>
+<td>调用远程服务的服务消费方</td>
+</tr>
+<tr>
+<td><code>Registry</code></td>
+<td>服务注册与发现的注册中心</td>
+</tr>
+<tr>
+<td><code>Monitor</code></td>
+<td>统计服务的调用次数和调用时间的监控中心</td>
+</tr>
+<tr>
+<td><code>Container</code></td>
+<td>服务运行容器</td>
+</tr>
+</tbody>
+</table>
+<h5 id="调用关系说明"><a href="#调用关系说明" class="headerlink" title="调用关系说明"></a>调用关系说明</h5><ol>
+<li>服务容器负责启动，加载，运行服务提供者。</li>
+<li>服务提供者在启动时，向注册中心注册自己提供的服务。</li>
+<li>服务消费者在启动时，向注册中心订阅自己所需的服务。</li>
+<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</li>
+<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</li>
+<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。</li>
+</ol>
+<p>Dubbo 架构具有以下几个特点，分别是连通性、健壮性、伸缩性、以及向未来架构的升级性。</p>
+<h2 id="连通性"><a href="#连通性" class="headerlink" title="连通性"></a>连通性</h2><ul>
+<li>注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小</li>
+<li>监控中心负责统计各服务调用次数，调用时间等，统计先在内存汇总后每分钟一次发送到监控中心服务器，并以报表展示</li>
+<li>服务提供者向注册中心注册其提供的服务，并汇报调用时间到监控中心，此时间不包含网络开销</li>
+<li>服务消费者向注册中心获取服务提供者地址列表，并根据负载算法直接调用提供者，同时汇报调用时间到监控中心，此时间包含网络开销</li>
+<li>注册中心，服务提供者，服务消费者三者之间均为长连接，监控中心除外</li>
+<li>注册中心通过长连接感知服务提供者的存在，服务提供者宕机，注册中心将立即推送事件通知消费者</li>
+<li>注册中心和监控中心全部宕机，不影响已运行的提供者和消费者，消费者在本地缓存了提供者列表</li>
+<li>注册中心和监控中心都是可选的，服务消费者可以直连服务提供者</li>
+</ul>
+<h2 id="健壮性"><a href="#健壮性" class="headerlink" title="健壮性"></a>健壮性</h2><ul>
+<li>监控中心宕掉不影响使用，只是丢失部分采样数据</li>
+<li>数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务</li>
+<li>注册中心对等集群，任意一台宕掉后，将自动切换到另一台</li>
+<li>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</li>
+<li>服务提供者无状态，任意一台宕掉后，不影响使用</li>
+<li>服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复</li>
+</ul>
+<h2 id="伸缩性"><a href="#伸缩性" class="headerlink" title="伸缩性"></a>伸缩性</h2><ul>
+<li>注册中心为对等集群，可动态增加机器部署实例，所有客户端将自动发现新的注册中心</li>
+<li>服务提供者无状态，可动态增加机器部署实例，注册中心将推送新的服务提供者信息给消费者</li>
+</ul>
+<h2 id="升级性"><a href="#升级性" class="headerlink" title="升级性"></a>升级性</h2><p>当服务集群规模进一步扩大，带动IT治理结构进一步升级，需要实现动态部署，进行流动计算，现有分布式服务架构不会带来阻力。下图是未来可能的一种架构：</p>
+<p><img src="/2018/09/23/分布式服务治理-Dubbo/2018-09-23-18-55-53.png" alt=""></p>
+<h5 id="节点角色说明-1"><a href="#节点角色说明-1" class="headerlink" title="节点角色说明"></a>节点角色说明</h5><table>
+<thead>
+<tr>
+<th>节点</th>
+<th>角色说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Deployer</code></td>
+<td>自动部署服务的本地代理</td>
+</tr>
+<tr>
+<td><code>Repository</code></td>
+<td>仓库用于存储服务应用发布包</td>
+</tr>
+<tr>
+<td><code>Scheduler</code></td>
+<td>调度中心基于访问压力自动增减服务提供者</td>
+</tr>
+<tr>
+<td><code>Admin</code></td>
+<td>统一管理控制台</td>
+</tr>
+<tr>
+<td><code>Registry</code></td>
+<td>服务注册与发现的注册中心</td>
+</tr>
+<tr>
+<td><code>Monitor</code></td>
+<td>统计服务的调用次数和调用时间的监控中心</td>
+</tr>
+</tbody>
+</table>
+
+    
+
+        <a href="/2018/09/23/分布式服务治理-Dubbo/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-分布式服务zookeeper应用场景"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -320,104 +543,12 @@
 
         </li>
     
-        <li class="post-list-item fade">
-            <article id="post-分布式通信-序列化"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-30 22:06:59" datetime="2018-08-30T14:06:59.000Z"  itemprop="datePublished">2018-08-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/30/分布式通信-序列化/">分布式通信-序列化</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h2 id="Java序列化机制-——-Serialize接口"><a href="#Java序列化机制-——-Serialize接口" class="headerlink" title="Java序列化机制 —— Serialize接口"></a>Java序列化机制 —— Serialize接口</h2><ul>
-<li>数据结果大、传输效率低</li>
-<li>不能跨语言</li></ul>
-    
-
-        <a href="/2018/08/30/分布式通信-序列化/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-分布式通信协议"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-30 02:26:33" datetime="2018-08-29T18:26:33.000Z"  itemprop="datePublished">2018-08-30</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/30/分布式通信协议/">分布式通信协议</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        <h1 id="网络协议"><a href="#网络协议" class="headerlink" title="网络协议"></a>网络协议</h1><h2 id="tcp-ip"><a href="#tcp-ip" class="headerlink" title="tcp/ip"></a>tcp/ip</h2><ul>
-<li>TCP五层模型<br><img src="/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png" alt=""></li>
-<li>OSI七层<ul>
-<li>OSI模型多了表达层、会话层</li>
-</ul>
-</li>
-</ul>
-    
-
-        <a href="/2018/08/30/分布式通信协议/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
     </ul>
 
     
 <nav id="page-nav">
     <div class="inner">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
     </div>
 </nav>
 
