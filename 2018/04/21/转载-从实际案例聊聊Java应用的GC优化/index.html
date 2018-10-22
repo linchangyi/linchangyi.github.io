@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-38.png">
 <meta property="og:image" content="https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-48.png">
 <meta property="og:image" content="https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-57.png">
-<meta property="og:updated_time" content="2018-10-21T00:12:25.497Z">
+<meta property="og:updated_time" content="2018-10-22T03:24:15.194Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转载]从实际案例聊聊Java应用的GC优化">
 <meta name="twitter:description" content="美团技术团队： https://tech.meituan.com/jvm_optimize.html  当Java程序性能达不到既定目标，且其他优化手段都已经穷尽时，通常需要调整垃圾回收器来进一步提高性能，称为GC优化。但GC算法复杂，影响GC性能的参数众多，且参数调整又依赖于应用各自的特点，这些因素很大程度上增加了GC优化的难度。即便如此，GC调优也不是无章可循，仍然有一些通用的思考方法。本篇">
@@ -234,6 +234,7 @@
 <blockquote>
 <p>优化前准备: 简单回顾JVM相关知识、介绍GC优化的一些通用策略。<br>优化方法: 介绍调优的一般流程：明确优化目标→优化→跟踪优化结果。<br>优化案例: 简述笔者所在团队遇到的GC问题以及优化方案。</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="一、优化前的准备"><a href="#一、优化前的准备" class="headerlink" title="一、优化前的准备"></a>一、优化前的准备</h1><h2 id="GC优化需知"><a href="#GC优化需知" class="headerlink" title="GC优化需知"></a>GC优化需知</h2><p>为了更好地理解本篇所介绍的内容，你需要了解如下内容。</p>
 <ol>
 <li><p>GC相关基础知识，包括但不限于：<br>a) GC工作原理。<br>b) 理解新生代、老年代、晋升等术语含义。<br>c) 可以看懂GC日志。</p>
@@ -466,7 +467,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-21T00:12:25.497Z" itemprop="dateUpdated">2018-10-21 08:12:25</time>
+    最后更新时间：<time datetime="2018-10-22T03:24:15.194Z" itemprop="dateUpdated">2018-10-22 11:24:15</time>
 </span><br>
 
 
@@ -508,7 +509,10 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/&title=《[转载]从实际案例聊聊Java应用的GC优化》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/&title=《[转载]从实际案例聊聊Java应用的GC优化》 — Lincy's Blog&source=
+美团技术团队： https://tech.meituan.com/jvm_optimize.html
+
+当Java程序性能达不到既定目标，且其他优化手段..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -637,7 +641,10 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/&title=《[转载]从实际案例聊聊Java应用的GC优化》 — Lincy's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/&title=《[转载]从实际案例聊聊Java应用的GC优化》 — Lincy's Blog&source=
+美团技术团队： https://tech.meituan.com/jvm_optimize.html
+
+当Java程序性能达不到既定目标，且其他优化手段..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
