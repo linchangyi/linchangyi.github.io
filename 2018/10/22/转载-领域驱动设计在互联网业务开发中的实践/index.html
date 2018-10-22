@@ -22,12 +22,12 @@
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，我们在开发中也越来越多地遇到传统行业软件开发中所面临的问题。本文就先来">
+    <meta name="description" content="美团技术团队： https://tech.meituan.com  前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转载]领域驱动设计在互联网业务开发中的实践">
 <meta property="og:url" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，我们在开发中也越来越多地遇到传统行业软件开发中所面临的问题。本文就先来">
+<meta property="og:description" content="美团技术团队： https://tech.meituan.com  前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-28.png">
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-58.png">
@@ -39,10 +39,10 @@
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-44.png">
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-06.png">
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-20.png">
-<meta property="og:updated_time" content="2018-10-22T03:29:37.244Z">
+<meta property="og:updated_time" content="2018-10-22T21:57:24.436Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转载]领域驱动设计在互联网业务开发中的实践">
-<meta name="twitter:description" content="前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，我们在开发中也越来越多地遇到传统行业软件开发中所面临的问题。本文就先来">
+<meta name="twitter:description" content="美团技术团队： https://tech.meituan.com  前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，">
 <meta name="twitter:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-28.png">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
@@ -224,7 +224,10 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，我们在开发中也越来越多地遇到传统行业软件开发中所面临的问题。本文就先来讲一下这些问题，然后再尝试在实践中用DDD的思想来解决这些问题。</p>
+            <blockquote>
+<p>美团技术团队： <a href="https://tech.meituan.com" target="_blank" rel="noopener">https://tech.meituan.com</a></p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，我们在开发中也越来越多地遇到传统行业软件开发中所面临的问题。本文就先来讲一下这些问题，然后再尝试在实践中用DDD的思想来解决这些问题。</p>
 <a id="more"></a>
 <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="过度耦合"><a href="#过度耦合" class="headerlink" title="过度耦合"></a>过度耦合</h2><p>业务初期，我们的功能大都非常简单，普通的CRUD就能满足，此时系统是清晰的。随着迭代的不断演化，业务逻辑变得越来越复杂，我们的系统也越来越冗杂。模块彼此关联，谁都很难说清模块的具体功能意图是啥。修改一个功能时，往往光回溯该功能需要的修改点就需要很长时间，更别提修改带来的不可预知的影响面。</p>
 <p>下图是一个常见的系统耦合病例。</p>
@@ -737,7 +740,7 @@ public class LotteryApplicationService {
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-22T03:29:37.244Z" itemprop="dateUpdated">2018-10-22 11:29:37</time>
+    最后更新时间：<time datetime="2018-10-22T21:57:24.436Z" itemprop="dateUpdated">2018-10-23 05:57:24</time>
 </span><br>
 
 
@@ -777,7 +780,10 @@ public class LotteryApplicationService {
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/&title=《[转载]领域驱动设计在互联网业务开发中的实践》 — Lincy's Blog&source=前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driv..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/&title=《[转载]领域驱动设计在互联网业务开发中的实践》 — Lincy's Blog&source=
+美团技术团队： https://tech.meituan.com
+
+前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -899,7 +905,10 @@ public class LotteryApplicationService {
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/&title=《[转载]领域驱动设计在互联网业务开发中的实践》 — Lincy's Blog&source=前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driv..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/&title=《[转载]领域驱动设计在互联网业务开发中的实践》 — Lincy's Blog&source=
+美团技术团队： https://tech.meituan.com
+
+前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="lincy.online/2016/10/22/RabbitMQ学习笔记/">
+    
+    
+    <title>RabbitMQ学习笔记 | Lincy&#39;s Blog | 归去来兮，Just Do IT.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="基本概念">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ学习笔记">
+<meta property="og:url" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/index.html">
+<meta property="og:site_name" content="Lincy&#39;s Blog">
+<meta property="og:description" content="基本概念">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-11-39.png">
+<meta property="og:image" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-25-29.png">
+<meta property="og:image" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-41-51.png">
+<meta property="og:image" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/2018-10-22-16-01-41.png">
+<meta property="og:image" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/2018-10-22-16-07-00.png">
+<meta property="og:updated_time" content="2018-10-22T12:52:27.659Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ学习笔记">
+<meta name="twitter:description" content="基本概念">
+<meta name="twitter:image" content="https://lincy.online/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-11-39.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lincy</h5>
+          <a href="mailto:talentlcy@hotmail.com" title="talentlcy@hotmail.com" class="mail">talentlcy@hotmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archieves
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/技术"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linchangyi" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-link"></i>
+                about
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+                <i class="icon icon-lg icon-navicon"></i>
+            </a>
+        <div class="top-menu" id="top-menu">
+            
+                <a href="/"title="Home" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-home"></i>
+                </a>
+            
+                <a href="/archives"title="Archieves" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-archives"></i>
+                </a>
+            
+                <a href="/categories/技术"title="Categories" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-th-list"></i>
+                </a>
+            
+                <a href="/tags"title="Tags" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-tags"></i>
+                </a>
+            
+                <a href="https://github.com/linchangyi"title="Github" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-github"></i>
+                </a>
+            
+                <a href="/about"title="about" class="header-icon waves-effect waves-circle waves-light on">
+                    <i class="icon icon-lg icon-link"></i>
+                </a>
+            
+        </div>
+        <span class="flex-col header-title ellipsis hidden" id="header-title">RabbitMQ学习笔记</span>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">RabbitMQ学习笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-22T07:03:26.000Z" itemprop="datePublished" class="page-time">
+  2016-10-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Producer"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Producer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Consumer"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Consumer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Broker"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Broker</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Queue"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Queue</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Exchange"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Exchange</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RoutingKey"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">RoutingKey</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Binding"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">Binding</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交换器类型"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">交换器类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#fanout"><span class="post-toc-number">1.5.3.1.</span> <span class="post-toc-text">fanout</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#direct"><span class="post-toc-number">1.5.3.2.</span> <span class="post-toc-text">direct</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#topic"><span class="post-toc-number">1.5.3.3.</span> <span class="post-toc-text">topic</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#headers"><span class="post-toc-number">1.5.3.4.</span> <span class="post-toc-text">headers</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Connection-和-Channel"><span class="post-toc-number">1.5.4.</span> <span class="post-toc-text">Connection 和 Channel</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RabbitMQ-开发"><span class="post-toc-number">2.</span> <span class="post-toc-text">RabbitMQ 开发</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#消费模式"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">消费模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#推模式"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">推模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拉模式"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">拉模式</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#消费者的确认与拒绝"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">消费者的确认与拒绝</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#确认"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">确认</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拒绝"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">拒绝</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#单条拒绝"><span class="post-toc-number">2.2.2.1.</span> <span class="post-toc-text">单条拒绝</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#批量拒绝"><span class="post-toc-number">2.2.2.2.</span> <span class="post-toc-text">批量拒绝</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关闭连接"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">关闭连接</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+
+<div class="container body-wrap">
+    <article id="post-RabbitMQ学习笔记"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">RabbitMQ学习笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-22 15:03:26" datetime="2016-10-22T07:03:26.000Z"  itemprop="datePublished">2016-10-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-11-39.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<a id="more"></a>
+<h2 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h2><h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><h2 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h2><p>消息中间件的服务节点</p>
+<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><h2 id="Exchange"><a href="#Exchange" class="headerlink" title="Exchange"></a>Exchange</h2><p>生产者将消息发送到Exchange，由交换器将消息路由到一个或多个队列。</p>
+<h3 id="RoutingKey"><a href="#RoutingKey" class="headerlink" title="RoutingKey"></a><strong>RoutingKey</strong></h3><p>路由键，指定路由规则。生产者将消息发给交换器的时候，一般会指定一个RoutingKey，用来指定这个消息的路由规则，而这个Routing Key需要与交换器类型和绑定键（BindingKey）联合使用才能最终生效。</p>
+<h3 id="Binding"><a href="#Binding" class="headerlink" title="Binding"></a><strong>Binding</strong></h3><p>绑定。RabbitMQ中通过绑定将交换器与队列关联起来，在绑定的时候一般会指定一个绑定键（<strong>BindingKey</strong>），这样RabbitMQ就知道如何正确地将消息路由到队列了。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-25-29.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>生产者将消息发送给交换器时，需要一个RoutingKey，当BindingKey和RoutingKey 相匹配时，消息会被路由到对应的队列中。</p>
+<h3 id="交换器类型"><a href="#交换器类型" class="headerlink" title="交换器类型"></a>交换器类型</h3><h4 id="fanout"><a href="#fanout" class="headerlink" title="fanout"></a>fanout</h4><p>它会把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中。</p>
+<h4 id="direct"><a href="#direct" class="headerlink" title="direct"></a>direct</h4><p>direct类型的交换器路由规则也很简单，它会把消息路由到那些BindingKey和RoutingKey完全匹配的队列中。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2016/10/22/RabbitMQ学习笔记/2018-10-22-15-41-51.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h4 id="topic"><a href="#topic" class="headerlink" title="topic"></a>topic</h4><p>topic类型的交换器在匹配规则上进行了扩展，它与direct类型的交换器相似，也是将消息路由到BindingKey和RoutingKey相匹配的队列中，但这里的匹配规则有些不同，它约定：</p>
+<ul>
+<li><strong>RoutingKey</strong> 为一个点号“.”分隔的字符串（被点号“.”分隔开的每一段独立的字符串称为一个单词），如“com.rabbitmq.client”、“java.util.concurrent”、“com.hidden.client”；</li>
+<li><strong>BindingKey</strong>和RoutingKey一样也是点号“.”分隔的字符串；</li>
+<li>BindingKey中可以存在两种特殊字符串“<em>”和“#”，用于做<strong>模糊匹配</strong>，其中“ </em> ”用于匹配一个单词，“ # ”用于匹配多个单词（可以是零个）。</li>
+</ul>
+<p>以图2-8中的配置为例：<br>· 路由键为“com.rabbitmq.client”的消息会同时路由到Queuel和Queue2；<br>· 路由键为“com.hidden.client”的消息只会路由到Queue2中；<br>· 路由键为“com.hidden.demo”的消息只会路由到Queue2中；<br>· 路由键为“java.rabbitmq.demo”的消息只会路由到Queue1中；<br>· 路由键为“java.util.concurrent”的消息将会被丢弃或者返回给生产者（需要设置mandatory参数），因为它没有匹配任何路由键。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2016/10/22/RabbitMQ学习笔记/2018-10-22-16-01-41.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h4 id="headers"><a href="#headers" class="headerlink" title="headers"></a>headers</h4><p>headers类型的交换器不依赖于路由键的匹配规则来路由消息，而是根据发送的消息内容中的headers属性进行匹配。在绑定队列和交换器时制定一组键值对，当发送消息到交换器时，RabbitMQ会获取到该消息的headers（也是一个键值对的形式），对比其中的键值对是否完全匹配队列和交换器绑定时指定的键值对，如果完全匹配则消息会路由到该队列，否则不会路由到该队列。<strong>headers类型的交换器性能会很差</strong>，而且也不实用，基本上不会看到它的存在。</p>
+<h3 id="Connection-和-Channel"><a href="#Connection-和-Channel" class="headerlink" title="Connection 和 Channel"></a>Connection 和 Channel</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2016/10/22/RabbitMQ学习笔记/2018-10-22-16-07-00.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>无论是生产者还是消费者，都需要和RabbitMQBroker建立连接，<strong>这个连接就是一条TCP连接，也就是Connection</strong>。一旦TCP连接建立起来，客户端紧接着可以创建一个AMQP信道（Channel），每个信道都会被指派一个唯一的ID。<strong>信道是建立在Connection之上的虚拟连接</strong>，RabbitMQ处理的每条AMQP指令都是通过信道完成的。（采用类似NIO的做法，选择TCP连接复用，不仅可以减少性能开销，同时也便于管理。）</p>
+<h1 id="RabbitMQ-开发"><a href="#RabbitMQ-开发" class="headerlink" title="RabbitMQ 开发"></a>RabbitMQ 开发</h1><h2 id="消费模式"><a href="#消费模式" class="headerlink" title="消费模式"></a>消费模式</h2><p>RabbitMQ的消费模式分两种：推（Push）模式和拉（Pull）模式。推模式采用Basic.Consume进行消费，而拉模式则是调用Basic.Get进行消费。</p>
+<h3 id="推模式"><a href="#推模式" class="headerlink" title="推模式"></a>推模式</h3><pre><code class="java">import com.rabbitmq.client.Consumer;
+import com.rabbitmq.client.DefaultConsumer;
+</code></pre>
+<pre><code class="java">boolean autoAck=false;
+channel. basicQos(64);
+//接收消息一般通过实现Consumer 接口或者继承 DefaultConsumer类来实现。
+//当调用与Consumer相关的API方法时，不同的订阅采用不同的消费者标签（consumerTag）来区分彼此，在同一个channel中的消费者也需要通过唯一的消费者标签以作区分
+channel. basicConsume(queueName, autoAck,&quot;myConsumerTag&quot;,
+    new DefaultConsumer(channel){
+    @override
+    public void handleDelivery(String consumerTag,
+                            Envelope envelope,
+                            AMQP.BasicProperties properties,
+                            byte[] body)
+        throws IOException
+    {
+        String routingkey =envelope. getRoutingKey();
+        String contentType=properties. getContentType();
+        long deliveryTag=envelope. getDeliveryTag();
+        //(process the message components here...)
+        channel. basicAck(deliveryTag, false);
+    }
+});
+</code></pre>
+<pre><code class="java">string basicConsume(
+                    String queue,boolean autoAck,String consumerTag, boolean noLocal,
+                    boolean exclusive,Map&lt;String,Object&gt;arguments,Consumer callback
+                ) throws IOException;
+</code></pre>
+<p>basicConsume 参数：</p>
+<ul>
+<li>queue：队列的名称；</li>
+<li>autonck：设置是否自动确认。建议设成false，即不自动确认；</li>
+<li>consumerTag：消费者标签，用来区分多个消费者；</li>
+<li>noLocal：设置为true则表示不能将同一个Connection中生产者发送的消息传送给这个Connection中的消费者；</li>
+<li>exclusive：设置是否排他；</li>
+<li>arguments；设置消费者的其他参数；</li>
+<li>callback：设置消费者的回调函数。用来处理RabbitMQ推送过来的消息，比如<ul>
+<li>Defaultconsumer，使用时需要客户端重写（override）其中的方法。</li>
+</ul>
+</li>
+</ul>
+<h3 id="拉模式"><a href="#拉模式" class="headerlink" title="拉模式"></a>拉模式</h3><p>通过channel.basicGet方法可以单条地获取消息，其返回值是GetRespone。Channel类的basicGet方法没有其他重载方法，只有：<br><code>GetResponse basicGet(String queue,boolean autoAck)throws IOException;</code></p>
+<h2 id="消费者的确认与拒绝"><a href="#消费者的确认与拒绝" class="headerlink" title="消费者的确认与拒绝"></a>消费者的确认与拒绝</h2><h3 id="确认"><a href="#确认" class="headerlink" title="确认"></a>确认</h3><ul>
+<li>当autoAck等于<strong>false</strong>时，RabbitMQ会等待消费者显式地回复确认信号后才从内存（或者磁盘）中移去消息（实质上是先打上删除标记，之后再删除）</li>
+<li>当autoAck等于<strong>true</strong>时，RabbitMQ会自动把发送出去的消息置为确认，然后从内存（或者磁盘）中删除，而不管消费者是否真正地消费到了这些消息。</li>
+</ul>
+<p>当autoAck参数置为false，对于RabbitMQ服务端而言，队列中的消息分成了两个部分：</p>
+<ul>
+<li>一部分是等待投递给消费者的消息；</li>
+<li>一部分是已经投递给消费者，但是还没有收到消费者确认信号的消息。</li>
+</ul>
+<p>如果RabbitMQ一直没有收到消费者的确认信号，并且消费此消息的消费者已经断开连接，则RabbitMQ会<strong>安排该消息重新进入队列，等待投递给下一个消费者</strong>，当然也有可能还是原来的那个消费者。</p>
+<h3 id="拒绝"><a href="#拒绝" class="headerlink" title="拒绝"></a>拒绝</h3><h4 id="单条拒绝"><a href="#单条拒绝" class="headerlink" title="单条拒绝"></a>单条拒绝</h4><p> <code>void basicReject(long deliveryTag,boolean requeue)throws IOException;</code></p>
+<ul>
+<li>deliveryTag可以看作消息的编号，它是一个64位的长整型值，最大值是9223372036854775807。</li>
+<li>requeue参数设置为true，则RabbitMQ会重新将这条消息存入队列，以便可以发送给下一个订阅的消费者；</li>
+<li>如果 requeue参数设置为false，则RabbitMQ立即会把消息从队列中移除，而不会把它发送给新的消费者。</li>
+</ul>
+<h4 id="批量拒绝"><a href="#批量拒绝" class="headerlink" title="批量拒绝"></a>批量拒绝</h4><p><code>void basicNack(long deliveryTag,boolean multiple,boolean requeue)throws IOException;</code></p>
+<p>multiple参数：</p>
+<ul>
+<li>false：表示拒绝编号为deliveryTag的这一条消息，这时候basicNack和basicReject方法一样；</li>
+<li>true：拒绝 <strong>deliveryTag编号之前</strong>所有未被当前消费者确认的消息。</li>
+</ul>
+<blockquote>
+<p>将channel.basicReject或者channel.basicNack中的requeue设置为false，可以启用“死信队列”的功能。</p>
+</blockquote>
+<h3 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h3><pre><code class="java">//显式地关闭 Channe1是个好习惯，但这不是必须的，在Connection关闭的时候，Channe1也会自动关闭。
+channel. close(); 
+conn. close();
+</code></pre>
+<p>AMQP协议中的Connection和Channe1采用同样的方式来管理网络失败、内部错误和显式地关闭连接。Connection和Channel所具备的生命周期如下所述。</p>
+<ul>
+<li>open：开启状态，代表当前对象可以使用。</li>
+<li>Closing：正在关闭状态。当前对象被显式地通知调用关闭方法（shutdown），这样就产生了一个关闭请求让其内部对象进行相应的操作，并等待这些关闭操作的完成。</li>
+<li>Closed：已经关闭状态。当前对象已经接收到所有的内部对象已完成关闭动作的通知，并且其也关闭了自身。</li>
+</ul>
+<p>Connection和Channel最终都是会成为Closed的状态，不论是程序正常调用的关闭方法，或者是客户端的异常，再或者是发生了网络异常。</p>
+<p>在Connection和channe1中，与关闭相关的方法有<code>addshutdownListener
+(ShutdownListener listener)</code>和<code>removeShutdownListener(ShutdownListner listener)</code>。当Connection或者Channel的状态转变为closed的时候会调用shutdownListener。而且如果将一个ShutdownListener 注册到一个已经处于closed状态的对象（这里特指Connection和Channe1对象）时，会立刻调用shutdownListener。</p>
+<pre><code class="java">connection.addShutdownListener(new ShutdownListener(){
+    public void shutdownCompleted(ShutdownSignalException cause)
+    {
+        //ShutdownsignalException 提供了多个方法来分析关闭的原因
+        if(cause. isHardError())
+            Connection conn=(Connection) cause. getReference();
+            if(! cause. isInitiatedByApplication()){           
+                Method reason=cause. getReason();
+                ...
+            } else{
+                Channel ch=(Channe1) cause. getReference();
+                ...
+            }
+        }
+);
+</code></pre>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-22T12:52:27.659Z" itemprop="dateUpdated">2018-10-22 20:52:27</time>
+</span><br>
+
+
+        
+        原始链接：<a href="/2016/10/22/RabbitMQ学习笔记/" target="_blank" rel="external">https://lincy.online/2016/10/22/RabbitMQ学习笔记/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lincy.online">
+            <img src="/img/avatar.jpg" alt="Lincy">
+            Lincy
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/&title=《RabbitMQ学习笔记》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/&title=《RabbitMQ学习笔记》 — Lincy's Blog&source=基本概念
+                
+                    
+                    
+             ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2016/10/22/RabbitMQ学习笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RabbitMQ学习笔记》 — Lincy's Blog&url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/02/27/代理模式/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">代理模式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/10/05/Spring-IOC-体系结构/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Spring IOC 笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread" align="center">
+        <font style="color:#c8c8c8;font-weight:bold;">查看评论「请确保您的网络可以访问disqus.com」</font>
+    </div>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+        <p><span>Lincy &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
+                
+                    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/&title=《RabbitMQ学习笔记》 — Lincy's Blog&pic=https://lincy.online/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/&title=《RabbitMQ学习笔记》 — Lincy's Blog&source=基本概念
+                
+                    
+                    
+             ..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lincy.online/2016/10/22/RabbitMQ学习笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RabbitMQ学习笔记》 — Lincy's Blog&url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/&via=https://lincy.online" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lincy.online/2016/10/22/RabbitMQ学习笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aQY7CMAwF0Ln/pZktElD975TRNH1dIRqavC6MY+fnJ74eh9fzmNfxx3efv38defKFgYFxWUa+xNmyPj3hePZ8bRgYGPdhfJr4+HM+/jiwrsyFgYGB0Y5JguMsrGNgYGCsMJKkMP8VBgYGxsomdrYpXWF/ZS+OgYFxQUZedf/7z1/pb2BgYFyK8SivNizmrc2VCwMDY29GHuCSxa2khm3ah4GBcR/GrLDVluHapPB4xjffYGBg3IaRBN+86NYucdYkeBNwMTAwtmYkRx+KR8d385Bd/G9gYGBsx1g5zpW3JPNksd4kY2BgbM3I08EWOUsH82ZDlLdiYGBswcjLW0Xxa3nrm7/oN/8bGBgYN2O0Ry7abeoK+GOGi4GBcQNGkrS11LbBmc8Y5aQYGBgXZ5y1cV3hzQ5bJCkpBgbGfoz2INd6snjy4TAMDIxNGSutyrYxMAMnW18MDIw7ML53hKttYQ6bEBgYGFszVhqNwyJ+GYjz8h8GBsbejLMK+u1CV4p3b8ZjYGDcgJG0B/JQe0xK7uavFQMD4z6MtmHZFuNmWVxxRAMDA2NTxqO82k1mHqZnbc66j4GBgXFBxlkxOwm1s4SvPZCBgYGxK6MNsnXuGZfP2pcSPRoDA2MjRhv4ZgW19X+Aj0gMDAyMIODODpOtB3EMDAyMdsrZ09pk8YsBFwMD4x8zVtK7JGVcaQ9ExTsMDIytGfnWcdYxnC26bWpiYGBsyvgFo05gvunUV9wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script type="text/javascript">
+    (function(){
+        var storage = window.localStorage;
+        if(storage.getItem('hide_menu')){
+            var hide_menu = storage.getItem('hide_menu');
+            if(hide_menu != 1){
+                document.getElementById('top-menu').classList.add('disable');
+                document.getElementById('menu').classList.remove('hide');
+            }
+        } else {
+            storage.setItem('hide_menu', 1 );
+        }
+    })();
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/plugins/headroom.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+    <script type="text/javascript">
+        var disqus_shortname = 'linchangyi';
+    // lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+        $.ajax({
+            url: '//' + disqus_shortname + '.disqus.com/embed.js',
+            dataType: "script",
+            timeout: 3000,
+            success: function(){
+                
+                $('#comments').addClass('post-comments-card');
+                
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+        <script type="text/javascript" alpha="0.2" src="/plugins/ribbon.min.js"></script>
+    
+    
+        <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    
+</body>
+</html>
