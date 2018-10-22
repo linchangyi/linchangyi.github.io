@@ -22,18 +22,21 @@
     
     
     <meta name="keywords" content="JVM,笔记">
-    <meta name="description" content="对象优先分配在Eden">
+    <meta name="description" content="前言如何查看GC日志：">
 <meta name="keywords" content="JVM,笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解JVM-（4）内存分配与回收策略">
 <meta property="og:url" content="https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/index.html">
 <meta property="og:site_name" content="Lincy&#39;s Blog">
-<meta property="og:description" content="对象优先分配在Eden">
+<meta property="og:description" content="前言如何查看GC日志：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-17T17:10:27.414Z">
+<meta property="og:image" content="https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-23-56.png">
+<meta property="og:image" content="https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-24-40.png">
+<meta property="og:updated_time" content="2018-10-22T22:24:50.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM-（4）内存分配与回收策略">
-<meta name="twitter:description" content="对象优先分配在Eden">
+<meta name="twitter:description" content="前言如何查看GC日志：">
+<meta name="twitter:image" content="https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-23-56.png">
     
         <link rel="alternate" type="application/atom+xml" title="Lincy&#39;s Blog" href="/atom.xml">
     
@@ -194,7 +197,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对象优先分配在Eden"><span class="post-toc-number">1.</span> <span class="post-toc-text">对象优先分配在Eden</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#大对象直接进入老年代"><span class="post-toc-number">2.</span> <span class="post-toc-text">大对象直接进入老年代</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#长期存活的对象直接进入老年代"><span class="post-toc-number">3.</span> <span class="post-toc-text">长期存活的对象直接进入老年代</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#空间分配担保"><span class="post-toc-number">4.</span> <span class="post-toc-text">空间分配担保</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对象优先分配在Eden"><span class="post-toc-number">2.</span> <span class="post-toc-text">对象优先分配在Eden</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#大对象直接进入老年代"><span class="post-toc-number">3.</span> <span class="post-toc-text">大对象直接进入老年代</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#长期存活的对象直接进入老年代"><span class="post-toc-number">4.</span> <span class="post-toc-text">长期存活的对象直接进入老年代</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#空间分配担保"><span class="post-toc-number">5.</span> <span class="post-toc-text">空间分配担保</span></a></li></ol>
         </nav>
     </aside>
     
@@ -218,7 +221,22 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="对象优先分配在Eden"><a href="#对象优先分配在Eden" class="headerlink" title="对象优先分配在Eden"></a>对象优先分配在Eden</h1><a id="more"></a>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>如何查看GC日志：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-23-56.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-24-40.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="对象优先分配在Eden"><a href="#对象优先分配在Eden" class="headerlink" title="对象优先分配在Eden"></a>对象优先分配在Eden</h1><a id="more"></a>
 <p>使用JDK7实验新生代的GC：</p>
 <pre><code class="java">public class CH03_05 {
     private static final int _1MB = 1024 * 1024;
@@ -332,7 +350,7 @@ Heap
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-07-17T17:10:27.414Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
+    最后更新时间：<time datetime="2018-10-22T22:24:50.404Z" itemprop="dateUpdated">2018-10-23 06:24:50</time>
 </span><br>
 
 
@@ -374,7 +392,12 @@ Heap
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/&title=《深入理解JVM-（4）内存分配与回收策略》 — Lincy's Blog&source=对象优先分配在Eden" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/&title=《深入理解JVM-（4）内存分配与回收策略》 — Lincy's Blog&source=前言如何查看GC日志：
+
+                
+                    
+                    
+     ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -503,7 +526,12 @@ Heap
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/&title=《深入理解JVM-（4）内存分配与回收策略》 — Lincy's Blog&source=对象优先分配在Eden" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lincy.online/2018/03/15/深入理解JVM-（4）内存分配与回收策略/&title=《深入理解JVM-（4）内存分配与回收策略》 — Lincy's Blog&source=前言如何查看GC日志：
+
+                
+                    
+                    
+     ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
