@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-54-54.png">
 <meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-49-52.png">
 <meta property="og:image" content="https://lincy.online/2018/08/30/分布式通信协议/2018-08-30-02-50-01.png">
-<meta property="og:updated_time" content="2018-10-23T21:16:09.105Z">
+<meta property="og:updated_time" content="2018-10-23T22:01:54.990Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式通信协议">
 <meta name="twitter:description" content="网络协议tcp/ip TCP五层模型 OSI七层 OSI模型多了表达层、会话层">
@@ -228,7 +228,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <h1 id="网络协议"><a href="#网络协议" class="headerlink" title="网络协议"></a>网络协议</h1><h2 id="tcp-ip"><a href="#tcp-ip" class="headerlink" title="tcp/ip"></a>tcp/ip</h2><ul>
-<li>TCP五层模型<br><img src="/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png" alt=""></li>
+<li>TCP五层模型<br><img src="/2018/08/30/分布式通信协议/2018-08-30-02-31-04.png" alt></li>
 <li>OSI七层<ul>
 <li>OSI模型多了表达层、会话层</li>
 </ul>
@@ -238,7 +238,7 @@
 <h3 id="tcp三次握手"><a href="#tcp三次握手" class="headerlink" title="tcp三次握手"></a>tcp三次握手</h3><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-32-52.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-32-52.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -251,7 +251,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-37-26.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-37-26.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -261,14 +261,14 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-42-03.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-42-03.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
 <h4 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h4><p>发送方和接收方都会维护一个数据帧的序列，这个序列被称作窗口。发送方的窗口大小由接收方确认，目的是控制发送速度，以免接收方的缓存不够大导致溢出，同时控制流量也可以避免网络拥塞。<br>下面图中的4,5,6号数据帧已经被发送出去，但是未收到关联的ACK，7,8,9帧则是等待发送。可以看出发送端的窗口大小为6，这是由接受端告知的（事实上必须考虑拥塞窗口cwnd，这里暂且考虑cwnd&gt;rwnd）。此时如果发送端收到4号ACK，则窗口的左边缘向右收缩，窗口的右边缘则向右扩展，此时窗口就向前“滑动了”，即数据帧10也可以被发送<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-47-14.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-47-14.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br>明白了Socket读写数据的底层原理，我们就很容易理解“阻塞模式”：对于读取Socket数据的过程而言，如果接收缓冲区为空，则调用Socket的read方法的线程会阻塞，知道有数据进入接收缓冲区；而对于写数据到Socket中的线程来说，如果待发送的数据长度大于发送缓冲区空余长度，则会阻塞在write方法上，等待发送缓冲区的报文被发送到网络上，然后继续发送下一段数据，循环上述过程直到数据都被写入到发送缓冲区为止</p>
@@ -276,7 +276,7 @@
 <p>BIO（同步阻塞）<br>NIO（同步非阻塞）<br>AIO（异步非阻塞）<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-54-54.png" alt="" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-54-54.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -289,7 +289,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-50-01.png" alt="java api socket操作" title="">
+                    <img src="/2018/08/30/分布式通信协议/2018-08-30-02-50-01.png" alt="java api socket操作" title>
                 </div>
                 <div class="image-caption">java api socket操作</div>
             </figure>
@@ -301,7 +301,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-23T21:16:09.105Z" itemprop="dateUpdated">2018-10-24 05:16:09</time>
+    最后更新时间：<time datetime="2018-10-23T22:01:54.990Z" itemprop="dateUpdated">2018-10-24 06:01:54</time>
 </span><br>
 
 
@@ -447,7 +447,7 @@ OSI模型多了表达层、会话层
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

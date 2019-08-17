@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png">
 <meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png">
 <meta property="og:image" content="https://lincy.online/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png">
-<meta property="og:updated_time" content="2018-10-23T21:14:56.860Z">
+<meta property="og:updated_time" content="2018-10-23T22:02:37.251Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式服务zookeeper应用场景">
 <meta name="twitter:description" content="数据发布订阅/配置中心实现配置信息的集中式管理和数据的动态更新 实现配置中心有两种模式：push 、pull。 zookeeper采用的是推拉相结合的方式。 客户端向服务器端注册自己需要关注的节点。一旦节点数据发生变化，那么服务器端就会向客户端发送watcher事件通知。客户端收到通知后，主动到服务器端获取更新后的数据。 配置中心数据要求：  数据量比较小 数据内容在运行时会发生动态变更 集群中的">
@@ -235,7 +235,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png" alt="配置中心实现原理" title="">
+                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-06-51.png" alt="配置中心实现原理" title>
                 </div>
                 <div class="image-caption">配置中心实现原理</div>
             </figure>
@@ -243,7 +243,7 @@
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>把ZooKeeper作为一个服务的注册中心，在其中登记每个服务，每台服务器知道自己是属于哪个服务，在服务器启动时，自己向所属服务进行登记，这样，一个树形的服务结构就呈现出来了<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png" alt="" title="">
+                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-13-00.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br>服务的调用者到注册中心里面查找：能提供所需服务的服务器列表，然后自己根据负载均衡算法，从中选取一台服务器进行连接</p>
@@ -263,11 +263,11 @@
 <li>排他锁<br>客户端写入临时节点，利用节点名称不能相同的特性<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png" alt="" title="">
+                    <img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-00-22-13.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></li>
-<li>共享锁<br>  <strong>利用有序节点特性</strong>。<br>  分布式进程在读写一个共享数据时，可以先在某个公共目录下创建一个有序子目录，然后判断该目录id是否最小。<br>  目录id最小则获得锁并消费共享数据，然后删除该目录。否则则等待，直到自己的目录id成为最小后，才获得锁。<br>  zookeeper所有目录操作事件都可以注册监听器，所以分布式进程不必循环查询子目录判断自己的目录id是否最小，可以注册一个监听器在前一个目录上，监听前一个目录是否被删除。<br><img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png" alt=""></li>
+<li>共享锁<br>  <strong>利用有序节点特性</strong>。<br>  分布式进程在读写一个共享数据时，可以先在某个公共目录下创建一个有序子目录，然后判断该目录id是否最小。<br>  目录id最小则获得锁并消费共享数据，然后删除该目录。否则则等待，直到自己的目录id成为最小后，才获得锁。<br>  zookeeper所有目录操作事件都可以注册监听器，所以分布式进程不必循环查询子目录判断自己的目录id是否最小，可以注册一个监听器在前一个目录上，监听前一个目录是否被删除。<br><img src="/2018/09/22/分布式服务zookeeper应用场景/2018-09-22-01-11-52.png" alt></li>
 </ul>
 <h2 id="命名服务"><a href="#命名服务" class="headerlink" title="命名服务"></a>命名服务</h2><h2 id="master-选举"><a href="#master-选举" class="headerlink" title="master 选举"></a>master 选举</h2>
         </div>
@@ -277,7 +277,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-23T21:14:56.860Z" itemprop="dateUpdated">2018-10-24 05:14:56</time>
+    最后更新时间：<time datetime="2018-10-23T22:02:37.251Z" itemprop="dateUpdated">2018-10-24 06:02:37</time>
 </span><br>
 
 
@@ -419,7 +419,7 @@ zookeeper采用的是推拉相结合的方式..." data-title=" QQ">
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://lincy.online/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-45-02.png">
 <meta property="og:image" content="https://lincy.online/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-46-38.png">
 <meta property="og:image" content="https://lincy.online/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-53-38.png">
-<meta property="og:updated_time" content="2018-10-04T20:12:48.429Z">
+<meta property="og:updated_time" content="2018-11-15T15:48:16.898Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring IOC 笔记">
 <meta name="twitter:description" content="主要接口BeanFactorySpring Bean的创建是典型的工厂模式，这一系列的Bean工厂，也即IOC容器为开发者管理对象间的依赖关系提供了很多便利和基础服务，在Spring中有许多的IOC容器的实现供用户选择和使用，其相互关系如下：">
@@ -223,7 +223,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-27-57.png" alt="" title="">
+                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-27-57.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -258,7 +258,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-45-02.png" alt="" title="">
+                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-45-02.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -266,7 +266,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-46-38.png" alt="" title="">
+                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-46-38.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -274,7 +274,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-53-38.png" alt="" title="">
+                    <img src="/2016/10/05/Spring-IOC-体系结构/2018-10-05-01-53-38.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -386,7 +386,7 @@ public void setConfigLocations（String[] locations）{
 }
 </code></pre>
 <p>通过这两个方法的源码我们可以看出，我们既可以使用一个字符串来配置多个Spring Bean 定义资源文件，也可以使用字符串数组，即下面两种方式都是可以的：<br>A. ClasspathResource res =new ClasspathResource（“a.xml，b.xml，……”）；多个资源文件路径之间可以是用”，；/t/n”等分隔。<br>B. ClasspathResource res =new ClasspathResource（newString[]{“a.xml”，”b.xml”，……}）；至此，Spring IOC容器在初始化时将配置的Bean定义资源文件定位为Spring 封装的Resource。</p>
-<ol>
+<ol start="3">
 <li><strong>AbstractApplicationContext的 refresh 函数载入Bean定义过程</strong>：</li>
 </ol>
 <p>Spring IOC容器对Bean 定义资源的载入是从refresh（）函数开始的，refresh（）是一个模板方法，refresh（）方法的作用是：在创建IOC容器前，如果己经有容器存在，则需要把己有的容器销毁和关闭，以保证在refresh之后使用的是新建立起来的IOC容器。refresh的作用类似于对IOC容器的重启，在新建立好的容器中对容器进行初始化，对Bean定义资源进行载入FileSystemXmlApplicationContext 通过调用其父类AbstractApplicationContext的 refresh（）函数启动整个IoC容器对Bean定义的载入过程：</p>
@@ -464,7 +464,7 @@ public void setConfigLocations（String[] locations）{
 }
 </code></pre>
 <p>在这个方法中，先判断BeanFactory是否存在，如果存在则先销毁beans 并关闭beanFactory，接着创建DefaultListableBeanFactory，并调用loadBeanDefinitions（beanFactory）装载bean定义。</p>
-<ol>
+<ol start="4">
 <li><code>AbstractRefreshableApplicationContext</code> 子类的 <code>loadBeanDefinitions</code>方法：</li>
 </ol>
 <p>AbstractRefreshableApplicationContext 中只定义了抽象的loadBeanDefinitions方法，容器真正调用的是其子类AbstractXmlApplicationContext对该方法的实现，AbstractXmlApplicationContext的主要源码如下：</p>
@@ -513,7 +513,7 @@ protected void loadBeanDefinitions（XmlBeanDefinitionReader reader） throws Be
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-04T20:12:48.429Z" itemprop="dateUpdated">2018-10-05 04:12:48</time>
+    最后更新时间：<time datetime="2018-11-15T15:48:16.898Z" itemprop="dateUpdated">2018-11-15 23:48:16</time>
 </span><br>
 
 
@@ -646,7 +646,7 @@ protected void loadBeanDefinitions（XmlBeanDefinitionReader reader） throws Be
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

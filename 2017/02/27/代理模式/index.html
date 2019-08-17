@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -31,7 +31,7 @@
 <meta property="og:description" content="静态代理                                                                                             代理模式">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2017/02/27/代理模式/代理模式静态.PNG">
-<meta property="og:updated_time" content="2018-03-01T15:26:05.486Z">
+<meta property="og:updated_time" content="2018-12-11T02:58:31.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代理模式">
 <meta name="twitter:description" content="静态代理                                                                                             代理模式">
@@ -223,7 +223,7 @@
             <h1 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2017/02/27/代理模式/代理模式静态.PNG" alt="代理模式" title="">
+                    <img src="/2017/02/27/代理模式/代理模式静态.PNG" alt="代理模式" title>
                 </div>
                 <div class="image-caption">代理模式</div>
             </figure>
@@ -264,7 +264,7 @@ public class Proxy implements Subject{
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //在调用目标对象方法之前，执行一些功能处理
-        return method.invoke(proxy, args);
+        return method.invoke(subject, args);
         //在调用目标对象方法之后，执行一些功能处理
     }
 }
@@ -284,7 +284,7 @@ public class Client {
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-01T15:26:05.486Z" itemprop="dateUpdated">2018-03-01 23:26:05</time>
+    最后更新时间：<time datetime="2018-12-11T02:58:31.797Z" itemprop="dateUpdated">2018-12-11 10:58:31</time>
 </span><br>
 
 
@@ -428,7 +428,7 @@ public class Client {
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

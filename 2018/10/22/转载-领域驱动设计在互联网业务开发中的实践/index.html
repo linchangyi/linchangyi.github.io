@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -21,8 +21,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="架构">
     <meta name="description" content="美团技术团队： https://tech.meituan.com  前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，">
+<meta name="keywords" content="架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转载]领域驱动设计在互联网业务开发中的实践">
 <meta property="og:url" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/index.html">
@@ -39,7 +40,7 @@
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-44.png">
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-06.png">
 <meta property="og:image" content="https://lincy.online/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-20.png">
-<meta property="og:updated_time" content="2018-10-22T21:57:24.436Z">
+<meta property="og:updated_time" content="2018-11-18T14:18:39.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转载]领域驱动设计在互联网业务开发中的实践">
 <meta name="twitter:description" content="美团技术团队： https://tech.meituan.com  前言至少30年以前，一些软件设计人员就已经意识到领域建模和设计的重要性，并形成一种思潮，Eric Evans将其定义为领域驱动设计（Domain-Driven Design，简称DDD）。在互联网开发“小步快跑，迭代试错”的大环境下，DDD似乎是一种比较“古老而缓慢”的思想。然而，由于互联网公司也逐渐深入实体经济，业务日益复杂，">
@@ -188,6 +189,8 @@
 </time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
             
         </h5>
     </div>
@@ -218,6 +221,8 @@
             <time class="post-time" title="2018-10-22 11:25:36" datetime="2018-10-22T03:25:36.000Z"  itemprop="datePublished">2018-10-22</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
 
 
             
@@ -234,7 +239,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-28.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-28.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -259,7 +264,7 @@
 <p>先设计奖池和奖项的库表配置。</p>
 </li>
 </ul>
-<p><img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-58.png" alt=""></p>
+<p><img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-26-58.png" alt></p>
 <ul>
 <li>设计AwardPool和Award两个对象，只有简单的get和set属性的方法</li>
 </ul>
@@ -282,6 +287,7 @@ class Award {
 
    ......
 }
+
 </code></pre><ul>
 <li><p>Service代码实现</p>
 <p>设计一个LotteryService，在其中的drawLottery()方法写服务逻辑</p>
@@ -291,6 +297,7 @@ class Award {
 for (Award award : awardPool.getAwards()) {
    //寻找到符合award.getProbability()概率的award
 }
+
 </code></pre><ul>
 <li>按照我们通常思路实现，可以发现：在业务领域里非常重要的抽奖，我的业务逻辑都是写在Service中的，Award充其量只是个数据载体，没有任何行为。<strong>简单的业务系统采用这种贫血模型和过程化设计是没有问题的，</strong>但在业务逻辑复杂了，业务逻辑、状态会散落到在大量方法中，原本的代码意图会渐渐不明确，我们将这种情况称为由贫血症引起的失忆症。</li>
 </ul>
@@ -317,7 +324,7 @@ for (Award award : awardPool.getAwards()) {
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-27-20.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-27-20.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -346,7 +353,7 @@ for (Award award : awardPool.getAwards()) {
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-27-38.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-27-38.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -357,11 +364,12 @@ for (Award award : awardPool.getAwards()) {
 3. 奖品有自身的奖品配置，例如库存量，被抽中的概率等，最多被一个用户抽中的次数等等；
 4. 用户群体有多种区别方式，如按照用户所在城市区分，按照新老客区分等；
 5. 活动具有风控配置，能够限制用户参与抽奖的频率。
+
 </code></pre><p>根据产品的需求，我们提取了一些关键性的概念作为子域，形成我们的限界上下文。</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-27-51.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-27-51.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -407,7 +415,7 @@ for (Award award : awardPool.getAwards()) {
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-06.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-06.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -423,7 +431,7 @@ for (Award award : awardPool.getAwards()) {
 <p>在实践上建议将属性的验证放到实体中。</p>
 <blockquote>
 <p><strong>值对象</strong></p>
-<p>当一个对象用于对事务进行描述而没有唯一标识时，它被称作值对象（Value Object）。</p>
+<p>当一个对象用于对事务进行描述而没有唯一标识时，它被称作值对象（Value Object）</p>
 <p>例：比如颜色信息，我们只需要知道{“name”:”黑色”，”css”:”#000000”}这样的值信息就能够满足要求了，这避免了我们对标识追踪带来的系统复杂性。</p>
 </blockquote>
 <p>值对象很重要，在习惯了使用数据库的数据建模后，很容易将所有对象看作实体。使用值对象，可以更好地做系统优化、精简设计。</p>
@@ -455,7 +463,7 @@ for (Award award : awardPool.getAwards()) {
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-21.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-21.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -471,6 +479,7 @@ import com.company.team.bussiness.riskcontrol.*;//风控上下文
 import com.company.team.bussiness.counter.*;//计数上下文
 import com.company.team.bussiness.condition.*;//活动准入上下文
 import com.company.team.bussiness.stock.*;//库存上下文
+
 </code></pre><p>代码演示1 模块的组织</p>
 <p>对于模块内的组织结构，一般情况下我们是按照领域对象、领域服务、领域资源库、防腐层等组织方式定义的。</p>
 <pre><code>import com.company.team.bussiness.lottery.domain.valobj.*;//领域对象-值对象
@@ -479,6 +488,7 @@ import com.company.team.bussiness.lottery.domain.aggregate.*;//领域对象-聚�
 import com.company.team.bussiness.lottery.service.*;//领域服务
 import com.company.team.bussiness.lottery.repo.*;//领域资源库
 import com.company.team.bussiness.lottery.facade.*;//领域防腐层
+
 </code></pre><p>代码演示2 模块的组织</p>
 <p>每个模块的具体实现，我们将在下文中展开。</p>
 <h3 id="领域对象"><a href="#领域对象" class="headerlink" title="领域对象"></a>领域对象</h3><p>前文提到，领域驱动要解决的一个重要的问题，就是解决对象的贫血问题。这里我们用之前定义的抽奖（DrawLottery）聚合根和奖池（AwardPool）值对象来具体说明。</p>
@@ -521,6 +531,7 @@ public class DrawLottery {
     //根据抽奖活动得分选择奖池
     private AwardPool chooseAwardPoolByScore(List&lt;AwardPool&gt; awardPools, int gameScore) {...}
 }
+
 </code></pre><p>代码演示3 DrawLottery</p>
 <p>在匹配到一个具体的奖池之后，需要确定最后给用户的奖品是什么。这部分的领域功能在AwardPool内。</p>
 <pre><code>package com.company.team.bussiness.lottery.domain.valobj;
@@ -555,6 +566,7 @@ public class AwardPool {
         return null;
     }
 }
+
 </code></pre><p>代码演示4 AwardPool</p>
 <p>与以往的仅有getter、setter的业务对象不同，领域对象具有了行为，对象更加丰满。同时，比起将这些逻辑写在服务内（例如**Service），领域功能的内聚性更强，职责更加明确。</p>
 <h3 id="资源库"><a href="#资源库" class="headerlink" title="资源库"></a>资源库</h3><p>领域对象需要资源存储，存储的手段可以是多样化的，常见的无非是数据库，分布式缓存，本地缓存等。资源库（Repository）的作用，就是对领域的存储和访问进行统一管理的对象。在抽奖平台中，我们是通过如下的方式组织资源库的。</p>
@@ -566,6 +578,7 @@ import com.company.team.bussiness.lottery.repo.dao.po.AwardPoolPO;//数据库持
 
 import com.company.team.bussiness.lottery.repo.cache.DrawLotteryCacheAccessObj;//分布式缓存访问对象-抽奖缓存访问
 import com.company.team.bussiness.lottery.repo.repository.DrawLotteryRepository;//资源库访问对象-抽奖资源库
+
 </code></pre><p>代码演示5 Repository组织结构</p>
 <p>资源库对外的整体访问由Repository提供，它聚合了各个资源库的数据信息，同时也承担了资源存储的逻辑（例如缓存更新机制等）。</p>
 <p>在抽奖资源库中，我们屏蔽了对底层奖池和奖品的直接访问，而是仅对抽奖的聚合根进行资源管理。代码示例中展示了抽奖资源获取的方法（最常见的Cache Aside Pattern）。</p>
@@ -594,6 +607,7 @@ public class DrawLotteryRepository {
 
     private DrawLottery getDrawLotteryFromDB(int lotteryId) {...}
 }
+
 </code></pre><p>代码演示6 DrawLotteryRepository</p>
 <h3 id="防腐层"><a href="#防腐层" class="headerlink" title="防腐层"></a>防腐层</h3><p>亦称适配层。在一个上下文中，有时需要对外部上下文进行访问，通常会引入防腐层的概念来对外部上下文的访问进行一次转义。</p>
 <p>有以下几种情况会考虑引入防腐层：</p>
@@ -623,6 +637,7 @@ public class UserCityInfoFacade {
 
     private MtCityInfo buildMtCityInfo(LbsResponse resp) {...}
 }
+
 </code></pre><p>代码演示7 UserCityInfoFacade</p>
 <h3 id="领域服务"><a href="#领域服务" class="headerlink" title="领域服务"></a>领域服务</h3><p>上文中，我们将领域行为封装到领域对象中，将资源管理行为封装到资源库中，将外部上下文的交互行为封装到防腐层中。此时，我们再回过头来看领域服务时，能够发现领域服务本身所承载的职责也就更加清晰了，即就是通过串联领域对象、资源库和防腐层等一系列领域内的对象的行为，对其他上下文提供交互的接口。</p>
 <p>我们以抽奖服务为例（issueLottery），可以看到在省略了一些防御性逻辑（异常处理，空值判断等）后，领域服务的逻辑已经足够清晰明了。</p>
@@ -651,11 +666,12 @@ public class LotteryServiceImpl implements LotteryService {
 
     private IssueResponse buildIssueResponse(AwardSendResponse awardSendResponse) {...}
 }
+
 </code></pre><p>代码演示8 LotteryService</p>
 <h3 id="数据流转"><a href="#数据流转" class="headerlink" title="数据流转"></a>数据流转</h3><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-44.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-28-44.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -670,7 +686,7 @@ public class LotteryServiceImpl implements LotteryService {
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-06.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-06.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -680,7 +696,7 @@ public class LotteryServiceImpl implements LotteryService {
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-20.png" alt="" title="">
+                    <img src="/2018/10/22/转载-领域驱动设计在互联网业务开发中的实践/2018-10-22-11-29-20.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -722,6 +738,7 @@ public class LotteryApplicationService {
     private Response&lt;PrizeInfo, ErrorData&gt; buildErrorResponse (int code, String msg){...}
     private Response&lt;PrizeInfo, ErrorData&gt; buildSuccessResponse (PrizeInfo prizeInfo){...}
 }
+
 </code></pre><p>代码演示9 LotteryApplicationService</p>
 <h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>在本文中，我们采用了分治的思想，从抽象到具体阐述了DDD在互联网真实业务系统中的实践。通过领域驱动设计这个强大的武器，我们将系统解构的更加合理。</p>
 <p>但值得注意的是，如果你面临的系统很简单或者做一些SmartUI之类，那么你不一定需要DDD。尽管本文对贫血模型、演进式设计提出了些许看法，但它们在特定范围和具体场景下会更高效。读者需要针对自己的实际情况，做一定取舍，适合自己的才是最好的。</p>
@@ -731,7 +748,7 @@ public class LotteryApplicationService {
 <h1 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h1><blockquote>
 <p>Eric Evans.领域驱动设计.赵俐 盛海艳 刘霞等译.人民邮电出版社，2016.<br>Vaughn Vernon.实现领域驱动设计.滕云译.电子工业出版社，2014.</p>
 </blockquote>
-<h1 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h1><p>文彬、子维，美团资深研发工程师，毕业于南京大学，现从事美团外卖营销相关的研发工作。<br>最后打波硬广，美团外卖上海研发中心长期招聘前端、客户端、后端、数据仓库和数据挖掘相关的工程师，欢迎有兴趣的同学发送简历到wenbin.lu@dianping.com。</p>
+<h1 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h1><p>文彬、子维，美团资深研发工程师，毕业于南京大学，现从事美团外卖营销相关的研发工作。<br>最后打波硬广，美团外卖上海研发中心长期招聘前端、客户端、后端、数据仓库和数据挖掘相关的工程师，欢迎有兴趣的同学发送简历到<a href="mailto:wenbin.lu@dianping.com" target="_blank" rel="noopener">wenbin.lu@dianping.com</a>。</p>
 
         </div>
 
@@ -740,7 +757,7 @@ public class LotteryApplicationService {
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-22T21:57:24.436Z" itemprop="dateUpdated">2018-10-23 05:57:24</time>
+    最后更新时间：<time datetime="2018-11-18T14:18:39.673Z" itemprop="dateUpdated">2018-11-18 22:18:39</time>
 </span><br>
 
 
@@ -762,6 +779,8 @@ public class LotteryApplicationService {
 
         <div class="post-footer">
             
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+
 
             
 <div class="page-share-wrap">
@@ -818,7 +837,14 @@ public class LotteryApplicationService {
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/22/titanic_advanced/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Titanic - Machine Learning from Disaster</h4>
+      </a>
+    </div>
   
 
   
@@ -874,7 +900,7 @@ public class LotteryApplicationService {
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

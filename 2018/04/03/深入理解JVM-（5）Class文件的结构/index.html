@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-14.png">
 <meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-56.png">
 <meta property="og:image" content="https://lincy.online/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-08-16-06-17.png">
-<meta property="og:updated_time" content="2018-07-17T17:10:27.415Z">
+<meta property="og:updated_time" content="2018-07-17T17:10:27.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM-（5）Class文件的结构">
 <meta name="twitter:description" content="Class文件结构">
@@ -241,7 +241,7 @@
             <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-20-01.png" alt="Class文件结构" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-20-01.png" alt="Class文件结构" title>
                 </div>
                 <div class="image-caption">Class文件结构</div>
             </figure>
@@ -249,21 +249,21 @@
 <h2 id="magic"><a href="#magic" class="headerlink" title="magic"></a>magic</h2><p>魔数，4个字节，表明这是一个Class文件，0xCAFEBABE<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-24-44.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-24-44.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <h2 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h2><p>minor_version，major_version各两个字节<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-22-42.png" alt="Class文件版本号" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-22-42.png" alt="Class文件版本号" title>
                 </div>
                 <div class="image-caption">Class文件版本号</div>
             </figure></p>
 <h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><h3 id="constant-pool-count，u2"><a href="#constant-pool-count，u2" class="headerlink" title="constant_pool_count，u2"></a>constant_pool_count，u2</h3><p>常量池容量计数（从1开始），第0项表达“<strong>不引用任何一个常量池项目</strong>”。如:0x0016(十进制的22)标识有21常量，索引值范围为1~21.<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-21.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-21.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -282,33 +282,33 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-57-49.png" alt="常量池的项目类型" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-16-57-49.png" alt="常量池的项目类型" title>
                 </div>
                 <div class="image-caption">常量池的项目类型</div>
             </figure>
 <p>例子（下图）：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-52.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-33-52.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br>0x07从上图可知为：CONSTANT_Class_info类型常量。而COMSTANT_Class_info的结构如下图，tag就是0x07，name_index（代表这个类或接口的全限定名）（0x0002）指向常量池的第二项。<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-35-45.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-35-45.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <p>看第二项的tag标识0x01，从上面的常量池的类型图可以看出，此项为CONSTANT_UTF8_info。CONSTANT_Utf8_info的结构如下：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-43-33.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-43-33.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br>所以第二项的内容三部分如下:<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-45-40.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-45-40.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br>第三部分的utf编码转换为字符串为<code>org/fenixsoft/clazz/TestClass</code>，就是第一个常量（CONSTANT_Class_info）的值。</p>
@@ -316,27 +316,27 @@
 <p>可以使用javap工具输出TestClass.class的文件字节码内容（省略了常量池意外的信息）：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-58-26.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-58-26.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <p><strong>常量池的14种常量的结构：</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-24.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-24.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-37.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-49-37.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <h2 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h2><p>在常量池结束后，紧接着<strong>2个字节</strong>代表访问标志，用于识别<strong>类或接口层次的访问信息</strong>。<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-51-36.png" alt="" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-03-21-51-36.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br>access_flags一共有16个标志位可用，当前只定义了其中8个。</p>
@@ -348,14 +348,14 @@
 <p>字段表（field_info），描述接口或者类中声明的变量。<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-23-36.png" alt="字段表结构" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-23-36.png" alt="字段表结构" title>
                 </div>
                 <div class="image-caption">字段表结构</div>
             </figure></p>
 <p>access_flags: 标志位，如下图<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-25-54.png" alt="字段访问标志" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-14-25-54.png" alt="字段访问标志" title>
                 </div>
                 <div class="image-caption">字段访问标志</div>
             </figure></p>
@@ -363,7 +363,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-15-00-46.png" alt="描述符标识字符含义" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-15-00-46.png" alt="描述符标识字符含义" title>
                 </div>
                 <div class="image-caption">描述符标识字符含义</div>
             </figure>
@@ -381,21 +381,21 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-14.png" alt="虚拟机预定义的属性类型(1)" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-14.png" alt="虚拟机预定义的属性类型(1)" title>
                 </div>
                 <div class="image-caption">虚拟机预定义的属性类型(1)</div>
             </figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-56.png" alt="虚拟机预定义的属性类型(2)" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-04-16-34-56.png" alt="虚拟机预定义的属性类型(2)" title>
                 </div>
                 <div class="image-caption">虚拟机预定义的属性类型(2)</div>
             </figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-08-16-06-17.png" alt="属性表结构" title="">
+                    <img src="/2018/04/03/深入理解JVM-（5）Class文件的结构/2018-04-08-16-06-17.png" alt="属性表结构" title>
                 </div>
                 <div class="image-caption">属性表结构</div>
             </figure>
@@ -406,7 +406,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-07-17T17:10:27.415Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
+    最后更新时间：<time datetime="2018-07-17T17:10:27.416Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
 </span><br>
 
 
@@ -551,7 +551,7 @@
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

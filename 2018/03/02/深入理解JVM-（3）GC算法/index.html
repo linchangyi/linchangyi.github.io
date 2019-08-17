@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG">
 <meta property="og:image" content="https://lincy.online/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG">
-<meta property="og:updated_time" content="2018-07-17T17:10:27.413Z">
+<meta property="og:updated_time" content="2018-07-17T17:10:27.414Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM-（3）GC算法">
 <meta name="twitter:description" content="标记清除算法标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象">
@@ -232,7 +232,7 @@
             <h1 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h1><p><strong>标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记清除算法.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure><br><a id="more"></a><br>缺点：</p>
@@ -244,7 +244,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/复制算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/复制算法.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -264,7 +264,7 @@
 <p><strong>标记过程和标记清除算法一样</strong>，后续步骤<strong>让所有存活的对象都向一端移动，然后清理掉边界以外的内存</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记整理算法.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/标记整理算法.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -273,7 +273,7 @@
 <h1 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/垃圾收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/垃圾收集器.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -281,14 +281,14 @@
 <h2 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h2><p>最基本最悠久的收集器，<strong>单线程收集器</strong>，<em>新生代</em>采用<strong>复制算法</strong>。gc时，必须暂停其他所有的工作线程（Stop The World）。<br>单个CPU环境下，效率较高，对于运行在Client模式下的虚拟机是个好选择。<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <h2 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h2><p><strong>Serial收集器的多线程版本</strong><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParNew收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParNew收集器.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -306,7 +306,7 @@
 <h2 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h2><p>Serial收集器的老年代版本<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/serial收集器.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -314,7 +314,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG" alt="" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/ParallelOld收集器.PNG" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -329,7 +329,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG" alt="CMS收集器" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/cms收集器.PNG" alt="CMS收集器" title>
                 </div>
                 <div class="image-caption">CMS收集器</div>
             </figure>
@@ -344,7 +344,7 @@
 <h1 id="GC常用参数总结"><a href="#GC常用参数总结" class="headerlink" title="GC常用参数总结"></a>GC常用参数总结</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG" alt="CMS收集器" title="">
+                    <img src="/2018/03/02/深入理解JVM-（3）GC算法/GC常用参数.PNG" alt="CMS收集器" title>
                 </div>
                 <div class="image-caption">CMS收集器</div>
             </figure>
@@ -356,7 +356,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-07-17T17:10:27.413Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
+    最后更新时间：<time datetime="2018-07-17T17:10:27.414Z" itemprop="dateUpdated">2018-07-18 01:10:27</time>
 </span><br>
 
 
@@ -499,7 +499,7 @@
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

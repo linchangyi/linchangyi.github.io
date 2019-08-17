@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -225,14 +225,14 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-23-56.png" alt="" title="">
+                    <img src="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-23-56.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-24-40.png" alt="" title="">
+                    <img src="/2018/03/15/深入理解JVM-（4）内存分配与回收策略/2018-10-23-06-24-40.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -290,6 +290,7 @@ Heap
     public static void main(String[] args) {
         testTenuringThreshold();
     }
+
 </code></pre>
 <p>MaxTenuringThreshold=1，第一回收，allocation1依然在新生代（新生代占用784K）；第二次回收，allocation1已经转移到老年代（新生代0K）: </p>
 <pre><code>[GC[DefNew
@@ -495,7 +496,7 @@ Heap
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

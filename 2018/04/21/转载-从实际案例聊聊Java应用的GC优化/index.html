@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -249,7 +249,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-00-37.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-00-37.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -295,7 +295,7 @@
 </table>
 <p>例如，根据GC日志获得老年代的活跃数据大小为300M，那么各分区大小可以设为：</p>
 <blockquote>
-<p>总堆：1200MB = 300MB × 4<em><br>新生代：450MB = 300MB × 1.5</em><br>老年代： 750MB = 1200MB - 450MB*</p>
+<p>总堆：1200MB = 300MB × 4_<br>新生代：450MB = 300MB × 1.5_<br>老年代： 750MB = 1200MB - 450MB*</p>
 </blockquote>
 <p>这部分设置仅仅是堆大小的初始值，后面的优化中，可能会调整这些值，具体情况取决于应用程序的特性和需求。</p>
 <h1 id="二、优化步骤"><a href="#二、优化步骤" class="headerlink" title="二、优化步骤"></a>二、优化步骤</h1><p>GC优化一般步骤可以概括为：确定目标、优化参数、验收结果。</p>
@@ -311,7 +311,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-02-02.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-02-02.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -329,7 +329,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-02-48.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-02-48.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -343,7 +343,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-03-05.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-03-05.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -357,14 +357,14 @@
 <p>调整前：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-03-31.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-03-31.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
 <p>调整后：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-03-46.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-03-46.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -383,7 +383,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-03.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-03.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -397,25 +397,25 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-16.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-16.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
 <p>可见，Remark阶段主要是通过扫描堆来判断对象是否存活。那么准确判断对象是否存活，需要扫描哪些对象？CMS对老年代做回收，Remark阶段仅扫描老年代是否可行？结论是不可行，原因如下：  </p>
-<p><img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-25.png" alt=""></p>
+<p><img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-25.png" alt></p>
 <p>如果仅扫描老年代中对象，即以老年代中对象为根，判断对象是否存在引用，上图中，对象A因为引用存在新生代中，它在Remark阶段就不会被修正标记为可达，GC时会被错误回收。<br>新生代对象持有老年代中对象的引用，这种情况称为<strong>“跨代引用”</strong>。因它的存在，Remark阶段必须扫描整个堆来判断对象是否存活，包括图中灰色的不可达对象。</p>
 <p>灰色对象已经不可达，但仍然需要扫描的原因：<strong>新生代GC和老年代的GC是各自分开独立进行的</strong>，只有Minor GC时才会使用根搜索算法，标记新生代对象是否可达，也就是说虽然一些对象已经不可达，但在Minor GC发生前不会被标记为不可达，CMS也无法辨认哪些对象存活，只能全堆扫描（新生代+老年代）。由此可见堆中对象的数目影响了Remark阶段耗时。<br>分析GC日志可以得出同样的规律，Remark耗时&gt;500ms时，新生代使用率都在75%以上。这样降低Remark阶段耗时问题转换成如何减少新生代对象数量。</p>
 <p>新生代中对象的特点是“朝生夕灭”，这样如果Remark前执行一次Minor GC，大部分对象就会被回收。CMS就采用了这样的方式，在Remark前增加了一个可中断的并发预清理（CMS-concurrent-abortable-preclean），该阶段主要工作仍然是并发标记对象是否存活，只是这个过程可被中断。此阶段在Eden区使用超过2M时启动，当然2M是默认的阈值，可以通过参数修改。如果此阶段执行时等到了Minor GC，那么上述灰色对象将被回收，Reamark阶段需要扫描的对象就少了。</p>
 <p>除此之外CMS为了避免这个阶段没有等到Minor GC而陷入无限等待，提供了参数CMSMaxAbortablePrecleanTime ，默认为5s，含义是如果可中断的预清理执行超过5s，不管发没发生Minor GC，都会中止此阶段，进入Remark。<br>根据GC日志红色标记2处显示，可中断的并发预清理执行了5.35s，超过了设置的5s被中断，期间没有等到Minor GC ，所以Remark时新生代中仍然有很多对象。</p>
 <p>对于这种情况，CMS提供CMSScavengeBeforeRemark参数，用来保证Remark前强制进行一次Minor GC。</p>
-<h3 id="优化结果-1"><a href="#优化结果-1" class="headerlink" title="优化结果"></a>优化结果</h3><p>经过增加CMSScavengeBeforeRemark参数，单次执行时间&gt;200ms的GC停顿消失，从监控上观察，GCtime和业务波动保持一致，不再有明显的毛刺。<br><img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-38.png" alt=""></p>
+<h3 id="优化结果-1"><a href="#优化结果-1" class="headerlink" title="优化结果"></a>优化结果</h3><p>经过增加CMSScavengeBeforeRemark参数，单次执行时间&gt;200ms的GC停顿消失，从监控上观察，GCtime和业务波动保持一致，不再有明显的毛刺。<br><img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-38.png" alt></p>
 <h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>通过案例分析了解到，由于跨代引用的存在，CMS在Remark阶段必须扫描整个堆，同时为了避免扫描时新生代有很多对象，增加了可中断的预清理阶段用来等待Minor GC的发生。只是该阶段有时间限制，如果超时等不到Minor GC，Remark时新生代仍然有很多对象，我们的调优策略是，通过参数强制Remark前进行一次Minor GC，从而降低Remark阶段的时间。</p>
 <h3 id="更多思考-1"><a href="#更多思考-1" class="headerlink" title="更多思考"></a>更多思考</h3><p>案例中只涉及老年代GC，其实新生代GC存在同样的问题，即老年代可能持有新生代对象引用，所以Minor GC时也必须扫描老年代。</p>
 <p><strong>JVM是如何避免Minor GC时扫描全堆的？</strong><br>经过统计信息显示，老年代持有新生代对象引用的情况不足1%，根据这一特性JVM引入了卡表（card table）来实现这一目的。如下图所示：</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-48.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-48.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -425,7 +425,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-57.png" alt="" title="">
+                    <img src="/2018/04/21/转载-从实际案例聊聊Java应用的GC优化/2018-10-21-08-04-57.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -610,7 +610,7 @@
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 

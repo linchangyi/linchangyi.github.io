@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     
 
     
@@ -32,10 +32,10 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-18-03-51-36.png">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-19-22-10-07.png">
-<meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-22-11-33-01.png">
+<meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/zookeeper几个原理分析/2018-09-22-11-33-01.png">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-23-15-46-10.png">
 <meta property="og:image" content="https://lincy.online/2018/09/17/分布式协调服务zookeeper/2018-09-23-17-13-05.png">
-<meta property="og:updated_time" content="2018-10-23T21:14:39.579Z">
+<meta property="og:updated_time" content="2018-10-23T22:02:43.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式协调服务zookeeper">
 <meta name="twitter:description" content="分布式环境的特点 分布式 并发性程序运行过程中，并发性操作是很常见的。比如同一个分布式系统中的多个节点，同时访问一个共享资源。数据库、分布式存储。 无序性进程间的消息通信，会出现顺序不一致的情况。">
@@ -265,7 +265,7 @@
 <li>observer不参与投票。 只接收投票结果。</li>
 <li>不属于zookeeper的关键部位。</li>
 </ol>
-<p><img src="/2018/09/17/分布式协调服务zookeeper/2018-09-18-03-51-36.png" alt=""></p>
+<p><img src="/2018/09/17/分布式协调服务zookeeper/2018-09-18-03-51-36.png" alt></p>
 <p><strong>集群配置</strong></p>
 <p>每一行此配置表示一个集群中的一台服务器。其中id为Server ID，用来标识该机器在集群中的编号。同时，在所在服务器的数据目录（/tmp/zookeeper）下创建一个myid文件，该文件只有一行内容，并且是一个数字，就是对应每台服务器的Server ID数字。</p>
 <p>比如server.1=IP1:2888:3888的myid中的内容就是1。不同服务器的ID需要保持不同，并且和zoo.cfg文件中server.id中的id和myid文件的内容保持一致。id的取值范围为1~255。</p>
@@ -295,18 +295,18 @@
 <blockquote>
 <p><strong>ACL</strong><br>  zookeeper提供控制节点访问权限的功能，用于有效的保证zookeeper中数据的安全性。避免误操作而导致系统出现重大事故。<br>  CREATE /READ/WRITE/DELETE/ADMIN</p>
 </blockquote>
-<ol>
+<ol start="2">
 <li>get path [watch]<br>获得指定 path的信息<blockquote>
 <p> <strong>Watcher</strong><br>zookeeper提供了分布式数据发布/订阅,zookeeper允许客户端向服务器注册一个watcher监听。当服务器端的节点触发指定事件的时候会触发watcher。服务端会向客户端发送一个事件通知 <strong>watcher的通知是一次性，一旦触发一次通知后，该watcher就失效</strong></p>
 </blockquote>
 </li>
 </ol>
-<ol>
+<ol start="3">
 <li><p>set path data [version]<br>修改节点 path对应的data<br>乐观锁的概念<br>数据库里面有一个 version 字段去控制数据行的版本号</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/09/17/分布式协调服务zookeeper/2018-09-19-22-10-07.png" alt="" title="">
+                    <img src="/2018/09/17/分布式协调服务zookeeper/2018-09-19-22-10-07.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -382,7 +382,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/2018/09/17/分布式协调服务zookeeper/2018-09-22-11-33-01.png" alt=""></p>
+<p><img src="/2018/09/17/分布式协调服务zookeeper/zookeeper几个原理分析/2018-09-22-11-33-01.png" alt></p>
 <hr>
 <h3 id="ZAB协议"><a href="#ZAB协议" class="headerlink" title="ZAB协议"></a>ZAB协议</h3><p>ZAB协议（Zookeeper atomic broadcast），基于paxos协议的一个改进。</p>
 <ol>
@@ -394,7 +394,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/09/17/分布式协调服务zookeeper/2018-09-23-15-46-10.png" alt="" title="">
+                    <img src="/2018/09/17/分布式协调服务zookeeper/2018-09-23-15-46-10.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -423,7 +423,7 @@
 <p>DataLogDir: 存储事务日志<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/09/17/分布式协调服务zookeeper/2018-09-23-17-13-05.png" alt="" title="">
+                    <img src="/2018/09/17/分布式协调服务zookeeper/2018-09-23-17-13-05.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
@@ -437,7 +437,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-23T21:14:39.579Z" itemprop="dateUpdated">2018-10-24 05:14:39</time>
+    最后更新时间：<time datetime="2018-10-23T22:02:43.237Z" itemprop="dateUpdated">2018-10-24 06:02:43</time>
 </span><br>
 
 
@@ -580,7 +580,7 @@
             
             <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
-        <p><span>Lincy &copy; 2017 - 2018</span>
+        <p><span>Lincy &copy; 2017 - 2019</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a> 
