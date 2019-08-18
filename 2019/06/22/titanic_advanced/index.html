@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://lincy.online/2019/06/22/titanic_advanced/output_67_0.png">
 <meta property="og:image" content="https://lincy.online/2019/06/22/titanic_advanced/output_102_1.png">
 <meta property="og:image" content="https://lincy.online/2019/06/22/titanic_advanced/output_106_0.png">
-<meta property="og:updated_time" content="2019-08-17T07:44:00.831Z">
+<meta property="og:updated_time" content="2019-08-18T00:25:18.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Titanic - Machine Learning from Disaster">
 <meta name="twitter:description" content="Titanic: Machine Learning from DisasterLibraries">
@@ -57,7 +57,7 @@
 
     <!-- custom head -->
     
-    <link rel="stylesheet" href="/plugins/highlight/styles/vs.css">
+    <link rel="stylesheet" href="/plugins/highlight/styles/atom-one-dark.css">
 </head>
 
 <body>
@@ -1241,7 +1241,11 @@ axs[1].set_title(&#39;Test Set Correlations&#39;, size=15)
 plt.show()
 </code></pre>
 <p><img src="/2019/06/22/titanic_advanced/output_50_0.png" alt="png"></p>
-<h3 id="各个特征的生存分布"><a href="#各个特征的生存分布" class="headerlink" title="各个特征的生存分布"></a>各个特征的生存分布</h3><h4 id="连续型特征"><a href="#连续型特征" class="headerlink" title="连续型特征"></a>连续型特征</h4><p>-两个特征都有明显的分割点和尖峰，这有利于决策树算法<br>-低于十五岁的乘客有更高的生存率<br>-船费特征中，生存率在分布末段更高</p>
+<h3 id="各个特征的生存分布"><a href="#各个特征的生存分布" class="headerlink" title="各个特征的生存分布"></a>各个特征的生存分布</h3><h4 id="连续型特征"><a href="#连续型特征" class="headerlink" title="连续型特征"></a>连续型特征</h4><ul>
+<li>两个特征都有明显的分割点和尖峰，这有利于决策树算法</li>
+<li>低于十五岁的乘客有更高的生存率</li>
+<li>船费特征中，生存率在分布末段更高</li>
+</ul>
 <pre><code class="python">cont_features = [&#39;Age&#39;, &#39;Fare&#39;]
 surv = df_train[&#39;Survived&#39;] == 1
 
@@ -2225,7 +2229,7 @@ pandas_df_to_markdown_table(submission_df.head(10))
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-08-17T07:44:00.831Z" itemprop="dateUpdated">2019-08-17 15:44:00</time>
+    最后更新时间：<time datetime="2019-08-18T00:25:18.516Z" itemprop="dateUpdated">2019-08-18 08:25:18</time>
 </span><br>
 
 
